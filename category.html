@@ -1,0 +1,143 @@
+<h1>{$category.name}</h1>
+<div class="row">
+    <div class="col-sm-12">
+        {if $category.description}
+            {$category.description}
+        {/if}
+    </div>
+</div>
+{if $category.subcategories}
+    <div class="category-list-thumb row">
+        {foreach $category.subcategories as $sc}
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                <a href="{$sc.url}">
+                    {if class_exists(shopLogocategoryPlugin) && shopLogocategoryPlugin::getImgUrl($sc.id)}
+                        <img src="{shopLogocategoryPlugin::getImgUrl($category.id)}" alt="{$sc.name|escape}" />
+                    {else}
+                        <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}" />
+                    {/if}
+                </a>
+                <a href="{$sc.url}">{$sc.name}</a> 
+            </div>
+        {/foreach}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $screensize = $(window).width();
+
+            if ($screensize > 991) {
+                $('.category-list-thumb > div:nth-child(6n)').after('<div class="clearfix visible-lg-block visible-md-block visible-sm-block"></div>');
+            }
+            if ($screensize < 767) {
+                $('.category-list-thumb > div:nth-child(3n)').after('<div class="clearfix visible-lg-block visible-md-block visible-xs-block"></div>');
+            }
+            $(window).resize(function () {
+                $screensize = $(window).width();
+
+                if ($screensize > 991) {
+                    $(".category-list-thumb > .clearfix.visible-lg-block").remove();
+                    $('.category-list-thumb > div:nth-child(6n)').after('<div class="clearfix visible-lg-block visible-md-block visible-sm-block"></div>');
+                }
+                if ($screensize < 767) {
+                    $(".category-list-thumb > .clearfix.visible-lg-block").remove();
+                    $('.category-list-thumb > div:nth-child(3n)').after('<div class="clearfix visible-lg-block visible-md-block visible-xs-block"></div>');
+                }
+            });
+        });
+    </script>
+{/if}
+<div class="product-filter">
+    <div class="row">
+        <div class="col-md-4 col-sm-5">
+            <div class="btn-group">
+                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
+                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
+            </div>
+            <a href="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/compare" id="compare-total">Product Compare (0)</a> </div>
+        <div class="col-sm-2 text-right">
+            <label class="control-label" for="input-sort">Sort By:</label>
+        </div>
+        <div class="col-md-3 col-sm-2 text-right">
+            <select id="input-sort" class="form-control col-sm-3" onchange="location = this.value;">
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
+            </select>
+        </div>
+        <div class="col-sm-1 text-right">
+            <label class="control-label" for="input-limit">Show:</label>
+        </div>
+        <div class="col-sm-2 text-right">
+            <select id="input-limit" class="form-control" onchange="location = this.value;">
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=20" selected="selected">20</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=25">25</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=50">50</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=75">75</option>
+                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=100">100</option>
+            </select>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row products-category">
+    {include file='list-thumbs.html'}
+</div>
+<div class="row">
+    <div class="col-sm-6 text-left"></div>
+    <div class="col-sm-6 text-right">Showing 1 to 5 of 5 (1 Pages)</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on('click', '#grid-view', function (e) {
+            $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-5ths col-md-5ths col-sm-3 col-xs-12');
+
+            $screensize = $(window).width();
+            if ($screensize > 1199) {
+                $(".products-category > .clearfix").remove();
+                $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block"></span>');
+            }
+            if ($screensize < 1199) {
+                $(".products-category > .clearfix").remove();
+                $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block visible-md-block"></span>');
+            }
+            if ($screensize < 991) {
+                $(".products-category > .clearfix").remove();
+                $('.product-grid:nth-child(4n)').after('<span class="clearfix visible-lg-block visible-sm-block"></span>');
+            }
+            $(window).resize(function () {
+                $screensize = $(window).width();
+                if ($screensize > 1199) {
+                    $(".products-category > .clearfix").remove();
+                    $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block"></span>');
+                }
+                if ($screensize < 1199) {
+                    $(".products-category > .clearfix").remove();
+                    $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block visible-md-block"></span>');
+                }
+                if ($screensize < 991) {
+                    $(".products-category > .clearfix").remove();
+                    $('.product-grid:nth-child(4n)').after('<span class="clearfix visible-lg-block visible-sm-block"></span>');
+                }
+                if ($screensize < 767) {
+                    $(".products-category > .clearfix").remove();
+                }
+            });
+            localStorage.setItem('display', 'grid');
+            $('.btn-group').find('#grid-view').addClass('selected');
+            $('.btn-group').find('#list-view').removeClass('selected');
+        });
+
+        if (localStorage.getItem('display') == 'list') {
+            $('#list-view').trigger('click');
+        } else {
+            $('#grid-view').trigger('click');
+        }
+    });
+</script>

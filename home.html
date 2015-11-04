@@ -1,0 +1,113 @@
+
+<div class="slider-wrapper">
+    <div id="slideshow0" class="nivoSlider">
+        <a href="#"><img src="{$wa_theme_url}content/iPhone6-920x380.jpg" alt="banner-admin" /></a>
+        <a href="#"><img src="{$wa_theme_url}content/MacBookAir-920x380.jpg" alt="banner-responsive" /></a>
+        <a href="#"><img src="{$wa_theme_url}content/banner-opencart-920x380.jpg" alt="banner-opencart" /></a>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#slideshow0').nivoSlider({
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+        });
+    });
+</script>
+
+{include file="products-list.html" products=$wa->shop->products('set/bestsellers') list_title='Featured' class='owl-carousel featured_carousel'}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#content .owl-carousel.featured_carousel").owlCarousel({
+            itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+            lazyLoad: true,
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            scrollPerPage: true
+        });
+    });
+</script>
+
+
+
+
+<div id="marketshop-banner0" class="marketshop-banner">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 moderns"><a href="#"><img src="{$wa_theme_url}content/sample-banner-3-400x200.jpg" alt="Sample Banner 2" title="Sample Banner 2" /></a></div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 moderns"><a href="#"><img src="{$wa_theme_url}content/sample-banner-1-400x200.jpg" alt="Sample Banner" title="Sample Banner" /></a></div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 moderns"><a href="#"><img src="{$wa_theme_url}content/sample-banner-2-400x200.jpg" alt="Sample Banner 3" title="Sample Banner 3" /></a></div>
+    </div>
+</div>
+
+<div class="category-module" id="latest_category0">
+    <h3>Electronics - <a class="viewall" href="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=66">view all</a>
+    </h3>
+    <div class="category-module-content">
+        <ul id="sub-cat0" class="tabs">
+            <li><a href="#tab-1">Laptops</a></li>
+            <li><a href="#tab-2">Mobiles</a></li>
+        </ul>
+        <div id="tab-1" class="tab_content">
+            {include file="products-list.html" products=$wa->shop->products('set/bestsellers') class='owl-carousel latest_category_tabs'}
+        </div>
+        <div id="tab-2" class="tab_content">
+            {include file="products-list.html" products=$wa->shop->products('category/7') class='owl-carousel latest_category_tabs'}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#content #latest_category0 .owl-carousel.latest_category_tabs").owlCarousel({
+            itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+            lazyLoad: true,
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            scrollPerPage: true,
+        });
+        $("#latest_category0 .tab_content").addClass("deactive");
+        $("#latest_category0 .tab_content:first").show();
+        //Default Action
+        $("#latest_category0 ul#sub-cat0 li:first").addClass("active").show(); //Activate first tab
+        //On Click Event
+        $("#latest_category0 ul#sub-cat0 li").click(function () {
+            $("#latest_category0 ul#sub-cat0 li").removeClass("active"); //Remove any "active" class
+            $(this).addClass("active"); //Add "active" class to selected tab
+            $("#latest_category0 .tab_content").hide();
+            var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active content
+            return false;
+        });
+    });
+</script>
+<div id="marketshop-banner1" class="marketshop-banner">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns"><a href="#"><img src="{$wa_theme_url}content/sample-banner-4-400x150.jpg" alt="2 Block Banner" title="2 Block Banner" /></a></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns"><a href="#"><img src="{$wa_theme_url}content/sample-banner-5-400x150.jpg" alt="2 Block Banner 1" title="2 Block Banner 1" /></a></div>
+    </div>
+</div>
+
+{if class_exists(shopProductbrandsPlugin)}
+    {$brands = shopProductbrandsPlugin::getBrands()}
+    {if $brands}
+        <div id="carousel0" class="owl-carousel nxt">
+            {foreach $brands as $brand}
+                <div class="item text-center">
+                    <a href="{$brand.url}">
+                        <img alt="{$brand.name}" src="{$wa_url}wa-data/public/shop/brands/{$brand.id}/{$brand.id}{$brand.image}" class="img-responsive">
+                    </a>
+                </div>
+            {/foreach}
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#carousel0').owlCarousel({
+                    items: 6,
+                    autoPlay: 3000,
+                    navigation: true,
+                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                    pagination: true
+                });
+            });
+        </script>
+    {/if}
+{/if}

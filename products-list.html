@@ -1,0 +1,55 @@
+{if $products}
+    {if !empty($list_title)}
+        <h3>{$list_title}</h3>
+    {/if}
+    <div{if !empty($class)} class="{$class}"{/if}>
+        {foreach $products as $p}
+            <div class="product-thumb clearfix">
+                <input type="hidden" class="ajax_product_info" 
+                       data-price="{shop_currency_html($p.price)|escape}"
+                       data-name="{$p.name|escape}" 
+                       data-url="{$p.frontend_url}" 
+                       data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}"
+                       />
+                <div class="image">
+                    <a href="{$p.frontend_url}">
+                        {$wa->shop->productImgHtml($p, '147', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                    </a>
+                </div>
+                <div class="caption">
+                    <h4>
+                        <a href="{$p.frontend_url}">{$p.name}</a>
+                    </h4>
+                    <p class="price">
+                        <span class="price-new">{shop_currency_html($p.price)}</span> 
+                        {if $p.compare_price > 0}
+                            {$percent = floor(($p.compare_price - $p.price) / $p.compare_price * 100)}
+                            <span class="price-old">{shop_currency_html($p.compare_price)}</span>
+                            <span class="saving">-{$percent}%</span>        
+                        {/if}
+                    </p>
+                    <div class="rating">
+                        {for $i=1 to 5}
+                            <span class="fa fa-stack">
+                                {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
+                            </span>
+                        {/for}
+                    </div>
+                </div>
+                <div class="button-group">
+                    <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                        <input type="hidden" name="product_id" value="{$p.id}">
+                        <button class="btn-primary"><span>[`Add to cart`]</span></button>
+                    </form>
+                    <div class="add-to-links">
+                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onclick="wishlist.add('46');"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" title="Compare this Product" onclick="compare.add('46');"><i class="fa fa-exchange"></i></button>
+                    </div>
+                </div>
+            </div>
+            {if !empty($max_product_count) && $p@iteration == $max_product_count}
+                {break}
+            {/if}
+        {/foreach}
+    </div>
+{/if}

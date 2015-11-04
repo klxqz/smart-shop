@@ -1,0 +1,41 @@
+<!-- plugin hook: 'frontend_header' -->
+{* @event frontend_header.%plugin_id% *}
+{foreach $frontend_header as $_}{$_}{/foreach}            
+
+
+<!-- current page core content -->
+{$content}
+
+<!-- plugin hook: 'frontend_footer' -->
+{* @event frontend_footer.%plugin_id% *}
+{foreach $frontend_footer as $_}{$_}{/foreach}
+
+<div id="dialog" class="dialog">
+    <div class="dialog-background"></div>
+    <div class="dialog-window">
+        <div class="content">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{$wa_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
+{literal}
+    <script id="cart_item_tmpl" type="text/x-jquery-tmpl">
+        <tr data-id="${id}">
+            <td class="text-center image">            
+                <a href="${url}">
+                    <img src="${img}" alt="${name}" title="${name}" /> 
+                </a>
+            </td>
+            <td class="text-left">
+                <a href="${url}">${name}</a>
+            </td>
+            <td class="text-right nowrap">x<span class="quantity">${quantity}</span></td>
+            <td class="text-right nowrap">{{html price}}</td>
+            <td class="text-center">
+                <a class="btn btn-danger btn-xs remove" title="Remove"><i class="fa fa-times"></i></a>
+            </td>
+        </tr>
+    </script>
+{/literal}

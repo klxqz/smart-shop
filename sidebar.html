@@ -1,0 +1,119 @@
+{if !empty($filters)}
+    <div id="adv_ajaxfilter_box">
+        <h3>Фильтр</h3>
+        <form id="adv_ajaxfilter">
+            <div class="option_box" >
+                <div class="option_name">Filter by price:</div>
+                <div class="price_slider collapsible">
+                    <label>$</label>        <input id="min_price" type="text" value="0" name="min_price" readonly="readonly" class="price_limit">
+                    <label> - </label>
+                    <input id="max_price" type="text" value="100" name="max_price" readonly="readonly" class="price_limit">
+                    <div id="slider-range"></div>
+                </div>
+            </div>
+
+            <div class="option_box">
+                <div class="option_name ">Categories:</div>
+                <div class="collapsible" >
+                    <ul id="filter_categories">
+                        <li>
+                            <label>
+                                <input id="cat_61" class="filtered"
+                                       type="checkbox" name="categories[]"
+                                       value="61">
+                                <span for="cat_61">Men (6)</span> </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input id="cat_60" class="filtered"
+                                       type="checkbox" name="categories[]"
+                                       value="60">
+                                <span for="cat_60">Women (4)</span> </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input id="cat_62" class="filtered"
+                                       type="checkbox" name="categories[]"
+                                       value="62">
+                                <span for="cat_62">Girls (4)</span> </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input id="cat_63" class="filtered"
+                                       type="checkbox" name="categories[]"
+                                       value="63">
+                                <span for="cat_63">Boys (6)</span> </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="option_box">
+                <div class="option_name ">Color</div>
+                <div class="collapsible" >
+                    <input style="display: none;" class="filtered option_value" id="option_value_54"
+                           type="checkbox" name="option_value[13][]"
+                           value="54">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/red-50x50.jpg" title="Red" alt="Red"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_53"
+                           type="checkbox" name="option_value[13][]"
+                           value="53">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/gray-50x50.jpg" title="Gray" alt="Gray"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_51"
+                           type="checkbox" name="option_value[13][]"
+                           value="51">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/green-50x50.jpg" title="Green" alt="Green"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_55"
+                           type="checkbox" name="option_value[13][]"
+                           value="55">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/blue-50x50.jpg" title="Blue" alt="Blue"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_52"
+                           type="checkbox" name="option_value[13][]"
+                           value="52">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/maroon-50x50.jpg" title="Maroon" alt="Maroon"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_50"
+                           type="checkbox" name="option_value[13][]"
+                           value="50">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/orange-50x50.jpg" title="Orange" alt="Orange"/>
+                    <input style="display: none;" class="filtered option_value" id="option_value_49"
+                           type="checkbox" name="option_value[13][]"
+                           value="49">
+                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/purple-50x50.jpg" title="Purple" alt="Purple"/>
+                </div>
+            </div>
+        </form>
+    </div>
+{/if}
+
+{if !empty($category.id)}
+    {$selected = $category.id}
+{else}
+    {$selected = null}
+{/if}
+{include file="{$wa_parent_theme_path}/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='Категории' selected=$selected}
+
+{include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('set/bestsellers') list_title='Хиты продаж' max_product_count=5 class='owl-carousel'}
+{include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('category/7') list_title='Спец. предложения' max_product_count=5 class='owl-carousel'}
+<div class="list-group">
+    <h2>Custom Content</h2>
+    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here. </p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+</div>
+<div id="banner0" class="owl-carousel">
+    <div class="item">
+        <a href="http://themeforest.net/item/marketshop-multipurpose-premium-opencart-theme/6913803?ref=harnishdesign"><img src="{$wa_theme_url}content/small-banner1-265x350.jpg" alt="small banner" class="img-responsive" /></a>
+    </div>
+    <div class="item">
+        <a href="http://themeforest.net/item/marketshop-multipurpose-premium-opencart-theme/6913803?ref=harnishdesign"><img src="{$wa_theme_url}content/small-banner-265x350.jpg" alt="small banner1" class="img-responsive" /></a>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#banner0').owlCarousel({
+            items: 6,
+            autoPlay: 3000,
+            singleItem: true,
+            navigation: false,
+            pagination: false,
+            transitionStyle: 'fade'
+        });
+    });
+</script>
