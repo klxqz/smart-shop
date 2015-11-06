@@ -42,8 +42,8 @@
                         <button class="btn-primary"><span>[`Add to cart`]</span></button>
                     </form>
                     <div class="add-to-links">
-                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onclick="wishlist.add('46');"><i class="fa fa-heart"></i></button>
-                        <button type="button" data-toggle="tooltip" title="Compare this Product" onclick="compare.add('46');"><i class="fa fa-exchange"></i></button>
+                        <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                        <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
                     </div>
                 </div>
             </div>

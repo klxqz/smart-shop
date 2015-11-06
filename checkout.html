@@ -203,6 +203,7 @@ display: none;
             }).always(function () {
                 f.find('span.loading').remove();
                 f.find('input:submit:last').removeAttr('disabled');
+                initFormControl($('#content'));
             });
             return false;
         });

@@ -3,17 +3,6 @@
 
 <h1>{sprintf('[`%s reviews`]', $product.name|escape)}</h1>
 
-<!-- product page navigation -->
-<ul class="menu-h">
-    <li><a href="{$wa->shop->productUrl($product)}">[`Overview`]</a></li>
-    <li class="selected">
-        <a href="{$wa->shop->productUrl($product, 'reviews')}">[`Reviews`]</a>
-        <span class="hint reviews-count" itemprop="reviewCount">{$reviews_count}</span>
-    </li>
-    {foreach $product.pages as $page}
-    <li><a href="{$wa->shop->productUrl($product, 'page', ['page_url' => $page.url])}">{$page.name|escape}</a></li>
-    {/foreach}
-</ul>
 
 <br clear="left">
 
@@ -54,10 +43,9 @@
     {/section}
 {/function}
 
-<div class="content right300px">
+<div class="content">
 
     <div class="reviews">
-
         <a name="reviewheader"></a>
         <h3 class="reviews-count-text" {if $reviews_count == 0}style="display: none;"{/if}>
             {_w('%d review for ','%d reviews for ', $reviews_count)|cat:$product.name|escape}

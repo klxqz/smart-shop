@@ -1,11 +1,40 @@
-<h1>{$category.name}</h1>
-<div class="row">
-    <div class="col-sm-12">
-        {if $category.description}
-            {$category.description}
+{function name=sortOption}
+    {if $active_sort === null}
+        {$active_sort = waRequest::get('sort')}
+    {/if}
+    {$inverted = in_array($sort, array('rating', 'create_datetime', 'total_sales', 'count', 'stock'))}
+    {$data = waRequest::get()}
+    {$data_active = waRequest::get()}
+    {$data['sort'] = $sort}
+    {$data_active['sort'] = $sort}
+    {if $sort == $active_sort}
+        {if waRequest::get('order') == 'asc'}
+            {$data['order'] = 'desc'}
+            {$data_active['order'] = 'asc'}
+        {else}
+            {$data['order'] = 'asc'}
+            {$data_active['order'] = 'desc'}
         {/if}
+    {else}
+        {if $inverted}
+            {$data['order'] = 'desc'}
+        {else}
+            {$data['order'] = 'asc'}
+        {/if}
+    {/if}
+    {if $active_sort == $sort}
+        <option style="display: none;" value="?{http_build_query($data_active)}" {if $active_sort == $sort}selected="selected"{/if}>{$name} {if $active_sort == $sort}{if $data_active['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
+    {/if}
+    <option value="?{http_build_query($data)}">{$name} {if $active_sort == $sort}{if $data['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
+{/function}
+<h1>{$category.name}</h1>
+{if $category.description}
+    <div class="row">
+        <div class="col-sm-12">
+            {$category.description}
+        </div>
     </div>
-</div>
+{/if}
 {if $category.subcategories}
     <div class="category-list-thumb row">
         {foreach $category.subcategories as $sc}
@@ -53,44 +82,72 @@
                 <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
                 <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
             </div>
-            <a href="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/compare" id="compare-total">Product Compare (0)</a> </div>
+            {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
+            <a href="{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}" class="compare-total">[`Compare products`] (<span class="count">{count($compare)}</span>)</a> 
+        </div>
+
+        {$sorting=!empty($category.params.enable_sorting)}
         <div class="col-sm-2 text-right">
-            <label class="control-label" for="input-sort">Sort By:</label>
+            {if !empty($sorting)}
+                <label class="control-label" for="input-sort">[`Sort by`]:</label>
+            {/if}
         </div>
         <div class="col-md-3 col-sm-2 text-right">
-            <select id="input-sort" class="form-control col-sm-3" onchange="location = this.value;">
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=rating&amp;order=ASC">Rating (Lowest)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;sort=p.model&amp;order=DESC">Model (Z - A)</option>
-            </select>
+            {if !empty($sorting)}
+                {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
+                {if !isset($active_sort)}
+                    {$active_sort = $wa->get('sort', 'create_datetime')}
+                {/if}
+                <select id="input-sort" class="form-control col-sm-3">
+                    {if !empty($category) && !$category.sort_products}
+                        <option value="{$wa->currentUrl(0, 1)}" {if !$active_sort} selected="selected"{/if} >[`New & Popular`]</option>
+                    {/if}
+                    {foreach $sort_fields as $sort => $name}
+                        {$params = ['sort' => $sort, 'name' => $name, 'active_sort' => $active_sort]}
+                        {sortOption $params}
+                        {if $wa->get('sort') == $sort}
+                            {$wa->title( $wa->title()|cat:' — '|cat:$name)}
+                        {/if}
+                    {/foreach}
+                </select>
+            {/if}
         </div>
+
+        {$products_pers = explode(',','5,10,20,30,50,100')}
         <div class="col-sm-1 text-right">
-            <label class="control-label" for="input-limit">Show:</label>
+            <label class="control-label" for="input-limit">[`Показывать`]:</label>
         </div>
         <div class="col-sm-2 text-right">
-            <select id="input-limit" class="form-control" onchange="location = this.value;">
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=20" selected="selected">20</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=25">25</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=50">50</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=75">75</option>
-                <option value="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/category&amp;path=59&amp;limit=100">100</option>
+            {if !empty($smarty.cookies.products_per_page)}
+                {$products_per_page = $smarty.cookies.products_per_page}
+            {else}
+                {$products_per_page = 50}
+            {/if}
+            <select id="input-limit" class="form-control">
+                {foreach $products_pers as $products_per}
+                    <option value="{$products_per}" {if $products_per_page  == $products_per}selected="selected"{/if} >{$products_per}</option>
+                {/foreach}
             </select>
         </div>
     </div>
 </div>
 <br />
 <div class="row products-category">
-    {include file='list-thumbs.html'}
+    {if !$products}
+        {if !empty($filters)}
+            [`No products were found.`]
+        {else}
+            [`This category does not contain any products.`]
+        {/if}
+    {else}
+        {include file='list-thumbs.html'}
+    {/if}
 </div>
 <div class="row">
     <div class="col-sm-6 text-left"></div>
-    <div class="col-sm-6 text-right">Showing 1 to 5 of 5 (1 Pages)</div>
+    <div class="col-sm-6 text-right">
+        {wa_pagination total=$pages_count attrs=['class' => "pagination"] next = '<i class="fa fa-chevron-right"></i>' prev = '<i class="fa fa-chevron-left"></i> '}
+    </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

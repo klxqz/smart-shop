@@ -6,8 +6,10 @@
 <script type="text/javascript" src="{$wa_app_static_url}js/lazy.load.js?v{$wa->version()}"></script>
 <script type="text/javascript" src="{$wa_active_theme_url}custom.shop.js?v{$wa_theme_version}"></script>
 {if $wa->shop->config('enable_2x')}
-<script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.retina.min.js?v{$wa->version(true)}"></script>
-<script type="text/javascript">$(window).load(function(){ $('.promo img,.product-list img,.product-page img,.cart img').retina()});</script>
+    <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.retina.min.js?v{$wa->version(true)}"></script>
+    <script type="text/javascript">$(window).load(function () {
+            $('.promo img,.product-list img,.product-page img,.cart img').retina()
+        });</script>
 {/if}
 
 {if !empty($nofollow)}
@@ -19,4 +21,10 @@
 {* @event frontend_head.%plugin_id% *}
 {foreach $frontend_head as $_}{$_}{/foreach}
 
+<script type="text/javascript" src="{$wa_url}wa-content/js/jquery-plugins/jquery.cookie.js"></script>
 
+{$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
+<script type="text/javascript">
+    var wishlist_url = '{$wa->getUrl('shop/frontend/search')}?list=wishlist';
+    var compare_url = '{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}';
+</script>

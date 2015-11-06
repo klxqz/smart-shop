@@ -191,9 +191,9 @@
                 <button {if !$product_available}disabled="disabled"{/if} class="btn btn-primary btn-lg" id="button-cart">[`Add to cart`]</button>
             </div>
             <div>
-                <button onclick="wishlist.add('45');" class="wishlist" type="button"><i class="fa fa-heart"></i> Add to Wish List</button>
+                <button data-id="{$product.id}" class="wishlist-add wishlist" type="button"><i class="fa fa-heart"></i> Add to Wish List</button>
                 <br>
-                <button onclick="compare.add('45');" class="wishlist" type="button"><i class="fa fa-exchange"></i> Compare this Product</button>
+                <button data-id="{$product.id}"  class="compare-add wishlist" type="button"><i class="fa fa-exchange"></i> Compare this Product</button>
             </div>
         </div>
     </div>

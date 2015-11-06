@@ -1,85 +1,80 @@
 {if !empty($filters)}
     <div id="adv_ajaxfilter_box">
         <h3>Фильтр</h3>
-        <form id="adv_ajaxfilter">
-            <div class="option_box" >
-                <div class="option_name">Filter by price:</div>
-                <div class="price_slider collapsible">
-                    <label>$</label>        <input id="min_price" type="text" value="0" name="min_price" readonly="readonly" class="price_limit">
-                    <label> - </label>
-                    <input id="max_price" type="text" value="100" name="max_price" readonly="readonly" class="price_limit">
-                    <div id="slider-range"></div>
-                </div>
-            </div>
-
-            <div class="option_box">
-                <div class="option_name ">Categories:</div>
-                <div class="collapsible" >
-                    <ul id="filter_categories">
-                        <li>
-                            <label>
-                                <input id="cat_61" class="filtered"
-                                       type="checkbox" name="categories[]"
-                                       value="61">
-                                <span for="cat_61">Men (6)</span> </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input id="cat_60" class="filtered"
-                                       type="checkbox" name="categories[]"
-                                       value="60">
-                                <span for="cat_60">Women (4)</span> </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input id="cat_62" class="filtered"
-                                       type="checkbox" name="categories[]"
-                                       value="62">
-                                <span for="cat_62">Girls (4)</span> </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input id="cat_63" class="filtered"
-                                       type="checkbox" name="categories[]"
-                                       value="63">
-                                <span for="cat_63">Boys (6)</span> </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="option_box">
-                <div class="option_name ">Color</div>
-                <div class="collapsible" >
-                    <input style="display: none;" class="filtered option_value" id="option_value_54"
-                           type="checkbox" name="option_value[13][]"
-                           value="54">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/red-50x50.jpg" title="Red" alt="Red"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_53"
-                           type="checkbox" name="option_value[13][]"
-                           value="53">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/gray-50x50.jpg" title="Gray" alt="Gray"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_51"
-                           type="checkbox" name="option_value[13][]"
-                           value="51">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/green-50x50.jpg" title="Green" alt="Green"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_55"
-                           type="checkbox" name="option_value[13][]"
-                           value="55">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/blue-50x50.jpg" title="Blue" alt="Blue"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_52"
-                           type="checkbox" name="option_value[13][]"
-                           value="52">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/maroon-50x50.jpg" title="Maroon" alt="Maroon"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_50"
-                           type="checkbox" name="option_value[13][]"
-                           value="50">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/orange-50x50.jpg" title="Orange" alt="Orange"/>
-                    <input style="display: none;" class="filtered option_value" id="option_value_49"
-                           type="checkbox" name="option_value[13][]"
-                           value="49">
-                    <img data-toggle="tooltip" src="http://demo.harnishdesign.net/opencart/marketshop/v1/image/cache/catalog/demo/color/purple-50x50.jpg" title="Purple" alt="Purple"/>
-                </div>
-            </div>
+        <form id="adv_ajaxfilter" class="filters  ajax">
+            {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
+            {foreach $filters as $fid => $filter}
+                {if $fid == 'price'}
+                    {$c = $wa->shop->currency(true)}
+                    <div class="option_box">
+                        <div class="option_name{if in_array($fid,$filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
+                        <div data-min="{floor($filter.min)}" 
+                             data-max="{ceil($filter.max)}" 
+                             data-name-min="price_min" 
+                             data-name-max="price_max" 
+                             class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                            <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
+                            <label> - </label>
+                            <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
+                        </div>
+                    </div>
+                {else}
+                    <div class="option_box">
+                        {$_v = $wa->get($filter.code)}
+                        {if !empty($filter.unit)}
+                            {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
+                        {/if}
+                        <div class="option_name{if in_array($fid,$filter_collapsible)} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
+                        {if $filter.type == 'boolean'}
+                            <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                                <ul>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1">
+                                            <span>[`Yes`]</span> 
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0">
+                                            <span>[`No`]</span> 
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value=""> 
+                                            <span>[`Any`]</span> 
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        {elseif isset($filter.min)}
+                            <div data-min="{$filter.min}" 
+                                 data-max="{$filter.max}" 
+                                 data-name-min="{$filter.code}[min]" 
+                                 data-name-max="{$filter.code}[max]" 
+                                 class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                                <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
+                                <label> - </label>
+                                <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
+                            </div>
+                        {else}
+                            <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                                <ul>
+                                    {foreach $filter.values as $v_id => $v}
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
+                                                <span>{$v}</span> 
+                                            </label>
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+                        {/if}
+                    </div>
+                {/if}
+            {/foreach}
         </form>
     </div>
 {/if}
@@ -89,7 +84,7 @@
 {else}
     {$selected = null}
 {/if}
-{include file="{$wa_parent_theme_path}/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='Категории' selected=$selected}
+{include file="{$wa_parent_theme_path}/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='Каталог' selected=$selected}
 
 {include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('set/bestsellers') list_title='Хиты продаж' max_product_count=5 class='owl-carousel'}
 {include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('category/7') list_title='Спец. предложения' max_product_count=5 class='owl-carousel'}
