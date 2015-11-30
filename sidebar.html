@@ -1,103 +1,36 @@
-{if !empty($filters)}
-    <div id="adv_ajaxfilter_box">
-        <h3>Фильтр</h3>
-        <form id="adv_ajaxfilter" class="filters  ajax">
-            {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
-            {foreach $filters as $fid => $filter}
-                {if $fid == 'price'}
-                    {$c = $wa->shop->currency(true)}
-                    <div class="option_box">
-                        <div class="option_name{if in_array($fid,$filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
-                        <div data-min="{floor($filter.min)}" 
-                             data-max="{ceil($filter.max)}" 
-                             data-name-min="price_min" 
-                             data-name-max="price_max" 
-                             class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
-                            <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
-                            <label> - </label>
-                            <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
-                        </div>
-                    </div>
-                {else}
-                    <div class="option_box">
-                        {$_v = $wa->get($filter.code)}
-                        {if !empty($filter.unit)}
-                            {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
-                        {/if}
-                        <div class="option_name{if in_array($fid,$filter_collapsible)} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
-                        {if $filter.type == 'boolean'}
-                            <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
-                                <ul>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1">
-                                            <span>[`Yes`]</span> 
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0">
-                                            <span>[`No`]</span> 
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value=""> 
-                                            <span>[`Any`]</span> 
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        {elseif isset($filter.min)}
-                            <div data-min="{$filter.min}" 
-                                 data-max="{$filter.max}" 
-                                 data-name-min="{$filter.code}[min]" 
-                                 data-name-max="{$filter.code}[max]" 
-                                 class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
-                                <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
-                                <label> - </label>
-                                <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
-                            </div>
-                        {else}
-                            <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
-                                <ul>
-                                    {foreach $filter.values as $v_id => $v}
-                                        <li>
-                                            <label>
-                                                <input type="checkbox" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
-                                                <span>{$v}</span> 
-                                            </label>
-                                        </li>
-                                    {/foreach}
-                                </ul>
-                            </div>
-                        {/if}
-                    </div>
-                {/if}
-            {/foreach}
-        </form>
-    </div>
-{/if}
+{include file="`$wa_active_theme_path`/sidebar-filter.html"}
 
 {if !empty($category.id)}
     {$selected = $category.id}
+{elseif !empty($product)}
+    {$selected = $product.category_id}
 {else}
     {$selected = null}
 {/if}
-{include file="{$wa_parent_theme_path}/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='Каталог' selected=$selected}
 
-{include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('set/bestsellers') list_title='Хиты продаж' max_product_count=5 class='owl-carousel'}
-{include file="{$wa_active_theme_path}/sidebar-products.html" products=$wa->shop->products('category/7') list_title='Спец. предложения' max_product_count=5 class='owl-carousel'}
-<div class="list-group">
-    <h2>Custom Content</h2>
-    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here. </p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-</div>
+{include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='Каталог' selected=$selected}
+{if !empty($page)}
+    {$selected = $page.id}
+{else}
+    {$selected = null}
+{/if}
+{include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->pages() menu_title='Информация' selected=$selected}
+
+{include file="`$wa_active_theme_path`/sidebar-products.html" products=$wa->shop->products('set/bestsellers') list_title='Хиты продаж' max_product_count=5 class='owl-carousel'}
+{include file="`$wa_active_theme_path`/sidebar-products.html" products=$wa->shop->products('category/7') list_title='Спец. предложения' max_product_count=5 class='owl-carousel'}
+
+{if $theme_settings.sidebar_shop_custom_content}
+    <div class="list-group">
+        {$theme_settings.sidebar_shop_custom_content}
+    </div>
+{/if}
+
 <div id="banner0" class="owl-carousel">
     <div class="item">
-        <a href="http://themeforest.net/item/marketshop-multipurpose-premium-opencart-theme/6913803?ref=harnishdesign"><img src="{$wa_theme_url}content/small-banner1-265x350.jpg" alt="small banner" class="img-responsive" /></a>
+        <a href="#"><img src="{$wa_parent_theme_url}img/small-banner1-265x350.jpg" alt="small banner" class="img-responsive" /></a>
     </div>
     <div class="item">
-        <a href="http://themeforest.net/item/marketshop-multipurpose-premium-opencart-theme/6913803?ref=harnishdesign"><img src="{$wa_theme_url}content/small-banner-265x350.jpg" alt="small banner1" class="img-responsive" /></a>
+        <a href="#"><img src="{$wa_parent_theme_url}img/small-banner-265x350.jpg" alt="small banner1" class="img-responsive" /></a>
     </div>
 </div>
 <script type="text/javascript">
