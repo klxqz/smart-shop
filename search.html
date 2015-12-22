@@ -25,12 +25,19 @@
 
 {$wa->title($title)}
 <h1>{$title}</h1>
+
+<!-- plugin hook: 'frontend_search' -->
+{* @event frontend_search.%plugin_id% *}
+{foreach $frontend_search as $_}
+    {$_}
+{/foreach}
+
 <div class="product-filter">
     <div class="row">
         <div class="col-md-4 col-sm-5">
             <div class="btn-group">
-                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
-                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
+                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="[`List`]"><i class="fa fa-th-list"></i></button>
+                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="[`Grid`]"><i class="fa fa-th"></i></button>
             </div>
             {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
             <a href="{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}" class="compare-total">[`Compare products`] (<span class="count">{count($compare)}</span>)</a> 

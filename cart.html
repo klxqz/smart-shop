@@ -1,15 +1,12 @@
 <script type="text/javascript" src="{$wa_theme_url}cart.js"></script>
 
 {if !$cart.count}
-
     <h1>[`Shopping cart`]</h1>
     <p>[`Your shopping cart is empty.`]</p>
     <div class="buttons">
         <div class="pull-left"><a href="{$wa_app_url}" class="btn btn-default">&larr; [`Back to the store`]</a></div>
     </div>
 {else}
-
-
     <h1>[`Shopping cart`]</h1>
 
     <form method="post">
@@ -135,15 +132,27 @@
         {foreach $frontend_cart as $_}
             {$_}<br/>
         {/foreach} 
-        
+
         <div class="buttons">
             <div class="pull-left"><a href="{$wa_app_url}" class="btn btn-default">&larr; [`Back to the store`]</a></div>
             <div class="pull-right"><input name="checkout" type="submit" value="[`Proceed to checkout`]" class="btn btn-primary"></div>
         </div>
-
-
-
     </form>
 
 
+    {$crossselling = $wa->shop->crossSelling($cart.items, 'product_id')}
+    {if $crossselling}
+        {include file="products-list.html" products=$crossselling list_title="[`Better together`]" class='owl-carousel cart_carousel'}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#content .owl-carousel.cart_carousel").owlCarousel({
+                    itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+                    lazyLoad: true,
+                    navigation: true,
+                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                    scrollPerPage: true
+                });
+            });
+        </script>
+    {/if}
 {/if}

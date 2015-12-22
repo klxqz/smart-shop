@@ -23,7 +23,24 @@
     </script>
 {/if}
 
-{if $theme_settings.productlist1}
+<div itemscope itemtype="http://schema.org/Store">
+    <h1 itemprop="name">{sprintf('[`%s online store`]', $wa->shop->settings('name'))}</h1>
+    <meta itemprop="description" content="{$wa->meta('description')|escape}">
+    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <meta itemprop="streetAddress" content="">
+        <meta itemprop="addressLocality" content="">
+        <meta itemprop="addressRegion" content="">
+        <meta itemprop="postalCode" content="">
+    </div>
+    <p>[`Edit this information in the <strong>home.html</strong> template file using built-in design editor in the store backend.`]</p>
+    <p>[`Contact us`]: <strong itemprop="telephone">{$wa->shop->settings('phone')}</strong></p>
+</div>
+
+<!-- plugin hook: 'frontend_homepage' -->
+{* @event frontend_homepage.%plugin_id% *}
+{foreach $frontend_homepage as $_}{$_}{/foreach}
+
+{if $theme_settings.productlist1_list}
     {include file="products-list.html" products=$wa->shop->products("`$theme_settings.productlist1_list`") list_title="`$theme_settings.productlist1_name`" class='owl-carousel productlist1_carousel'}
     <script type="text/javascript">
         $(document).ready(function () {

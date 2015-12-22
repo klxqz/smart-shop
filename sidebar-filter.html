@@ -1,7 +1,7 @@
 {if !empty($filters)}
     <div id="adv_ajaxfilter_box">
-        <h3>Фильтр</h3>
-        <form id="adv_ajaxfilter" class="filters  ajax">
+        <h3>[`Filter`]</h3>
+        <form id="adv_ajaxfilter" class="filters ajax">
             {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
             {foreach $filters as $fid => $filter}
                 {if $fid == 'price'}

@@ -226,11 +226,6 @@
             <name locale="ru_RU">Главная страница. Списки товаров</name>
         </setting>
         
-        <setting var="productlist1" control_type="checkbox">
-            <value>1</value>
-            <name locale="en_US">Products list 1</name>
-            <name locale="ru_RU">Список товаров 1</name>
-        </setting>
         <setting var="productlist1_name" control_type="text">
             <value>Новые поступления</value>
             <name locale="en_US">The name of the products list 1</name>
@@ -395,6 +390,230 @@
             <name locale="ru_RU">Пользовательский контент</name>
         </setting>
         
+        <setting var="divider_sidebar_shop_tags" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar application «Shop». Tags</name>
+            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Теги</name>
+        </setting>
+        <setting var="show_tags" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show tags</name>
+            <name locale="ru_RU">Показывать теги</name>
+        </setting>
+        
+        
+        <setting var="divider_sidebar_shop_banners" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar application «Shop». Banners</name>
+            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Баннеры</name>
+        </setting>
+        
+        <setting var="sidebar_shop_banner1" control_type="image">
+            <value>img/banners/sidebar-banner-1.jpg</value>
+            <filename>img/banners/sidebar-banner-1.*</filename>
+            <name locale="en_US">banner 1</name>
+            <name locale="ru_RU">баннер 1</name>
+        </setting>
+        <setting var="sidebar_shop_banner1_url" control_type="text">
+            <value>#</value>
+            <name locale="en_US">banner 1 url</name>
+            <name locale="ru_RU">баннер 1 ссылка</name>
+        </setting>
+        
+        <setting var="sidebar_shop_banner2" control_type="image">
+            <value>img/banners/sidebar-banner-2.jpg</value>
+            <filename>img/banners/sidebar-banner-2.*</filename>
+            <name locale="en_US">banner 2</name>
+            <name locale="ru_RU">баннер 2</name>
+        </setting>
+        <setting var="sidebar_shop_banner2_url" control_type="text">
+            <value>#</value>
+            <name locale="en_US">banner 2 url</name>
+            <name locale="ru_RU">баннер 2 ссылка</name>
+        </setting>
+        
+        <setting var="sidebar_shop_banner3" control_type="image">
+            <value></value>
+            <filename>img/banners/sidebar-banner-3.*</filename>
+            <name locale="en_US">banner 3</name>
+            <name locale="ru_RU">баннер 3</name>
+        </setting>
+        <setting var="sidebar_shop_banner3_url" control_type="text">
+            <value>#</value>
+            <name locale="en_US">banner 3 url</name>
+            <name locale="ru_RU">баннер 3 ссылка</name>
+        </setting>
+        
+        <setting var="divider_sidebar_shop_lists" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar application «Shop». Products list</name>
+            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Списки товаров</name>
+        </setting>
+        
+        <setting var="sidebar_productlist1_name" control_type="text">
+            <value>Новые поступления</value>
+            <name locale="en_US">The name of the products list 1</name>
+            <name locale="ru_RU">Название списка 1</name>
+        </setting>
+        <setting var="sidebar_productlist1_list" control_type="text">
+            <value>set/bestsellers</value>
+            <name locale="en_US">Products list 1</name>
+            <name locale="ru_RU">Список товаров 1</name>
+        </setting>
+        
+        <setting var="sidebar_productlist2_name" control_type="text">
+            <value>Спец. предложения</value>
+            <name locale="en_US">The name of the products list 2</name>
+            <name locale="ru_RU">Название списка 2</name>
+        </setting>
+        <setting var="sidebar_productlist2_list" control_type="text">
+            <value>set/bestsellers</value>
+            <name locale="en_US">Products list 2</name>
+            <name locale="ru_RU">Список товаров 2</name>
+        </setting>
+        
+        <setting var="sidebar_productlist3_name" control_type="text">
+            <value>Хиты</value>
+            <name locale="en_US">The name of the products list 3</name>
+            <name locale="ru_RU">Название списка 3</name>
+        </setting>
+        <setting var="sidebar_productlist3_list" control_type="text">
+            <value></value>
+            <name locale="en_US">Products list 3</name>
+            <name locale="ru_RU">Список товаров 3</name>
+        </setting>
+        
+        <setting var="divider_sidebar_shop_brands" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar application «Shop». Brands</name>
+            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Бренды</name>
+        </setting>
+        
+        <setting var="sidebar_brands_plugin" control_type="radio">
+            <value>productbrands</value>
+            <name locale="en_US">Brands plugin</name>
+            <name locale="ru_RU">Плагин брендов</name>
+            <options>
+                <option value="brands">
+                    <name locale="en_US">Use plugin <![CDATA[<a href="https://www.webasyst.com/store/plugin/shop/brands/">Brands</a><br/>]]></name>
+                    <name locale="ru_RU">Использовать плагин <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/brands/">Бренды</a><br/>]]></name>
+                </option>
+                <option value="productbrands">
+                    <name locale="en_US">Use plugin <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Brands with images and descriptions</a><br/>]]></name>
+                    <name locale="ru_RU">Использовать плагин <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Бренды с картинками и описаниями</a><br/>]]></name>
+                </option>
+                <option value="">
+                    <name locale="en_US">Hide<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">Не показывать<![CDATA[<br/>]]></name>
+                </option>
+            </options>
+        </setting>
+        <setting var="divider_products_category" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Application «Shop». Products category</name>
+            <name locale="ru_RU">Приложение «Магазин». Категория товаров</name>
+        </setting>
+        <setting var="lazyloading" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Lazy loading of products</name>
+            <name locale="ru_RU">Ленивая подгрузка товаров</name>
+        </setting>
+        
+        <setting var="divider_product_page" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Application «Shop». Страница товара</name>
+            <name locale="ru_RU">Приложение «Магазин». Страница товара</name>
+        </setting>
+        
+        <setting var="selectable_features_control" control_type="radio">
+            <value>inline</value>
+            <name locale="ru_RU">Выбор характеристик товара</name>
+            <name locale="en_US">Selectable product features</name>
+            <options>
+                <option value="inline">
+                    <name locale="ru_RU">Показывать все значения крупно в ряд</name>
+                    <name locale="en_US">Display all options inline</name>
+                    <description locale="ru_RU">Для товаров в режиме продажи «Выбор характеристик» значения характеристик будут показаны одной строкой друг за другом. Рекомендуется, если названия значений относительно короткие и по ним однозначно можно определить, о какой характеристике товара идет речь, например, XL, 16 GB, 13”.</description>
+                    <description locale="en_US">For products which are sold in selectable features mode, all feature values will be displayed inline. Great if feature value names are self-explanatory and explicit in context of a product, e.g. XL, 16 GB, 13”.</description>
+                </option>
+                <option value="select">
+                    <name locale="ru_RU"><![CDATA[Выбор из списка &lt;select&gt;]]></name>
+                    <name locale="en_US"><![CDATA[&lt;select&gt; HTML control]]></name>
+                    <description locale="ru_RU"><![CDATA[Для товаров в режиме продажи «Выбор характеристик» значения характеристик будут предложены на выбор с помощью стандартного выбора &lt;select&gt;. Рекомендуется, если названия значений характеристик содержат более одного-двух слов или по значениям нельзя однозначно понять, о какой характеристике товара идет речь, например, «до 10 часов», «не предусмотрено».]]></description>
+                    <description locale="en_US"><![CDATA[For products which are sold in selectable features mode, feature values will be displayed using a &lt;select&gt; HTML control. Recommended if value names are either too long or ambiguous in context of a product, e.g. “up to 10 hours”, “yes”.]]></description>
+                </option>
+            </options>
+        </setting>
+        
+        <setting var="share_buttons" control_type="text">
+            <value><![CDATA[<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+<div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus,twitter,blogger,viber,whatsapp"></div>]]></value>
+            <name locale="en_US">Share buttons</name>
+            <name locale="ru_RU">Кнопки поделиться</name>
+            <description locale="en_US">Share buttons</description>
+            <description locale="ru_RU">Код кнопок поделиться. <![CDATA[<a target="_blank" href="https://tech.yandex.ru/share/">Яндекс кнопки</a> <a target="_blank" href="http://share.pluso.ru/">Кнопки Pluso</a>]]></description>
+        </setting>
+
         
     </settings>
+    <locales>
+        <locale>
+            <msgid>Show</msgid>
+            <msgstr locale="ru_RU">Показывать</msgstr>
+        </locale>
+        <locale>
+            <msgid>Add to Wish List</msgid>
+            <msgstr locale="ru_RU">Добавить в избранное</msgstr>
+        </locale>
+        <locale>
+            <msgid>Compare this Product</msgid>
+            <msgstr locale="ru_RU">Добавить в сравнение</msgstr>
+        </locale>
+        <locale>
+            <msgid>Please select the options you want</msgid>
+            <msgstr locale="ru_RU">Пожалуйста, выберите нужные параметры</msgstr>
+        </locale>
+        <locale>
+            <msgid>Choose</msgid>
+            <msgstr locale="ru_RU">Выберите</msgstr>
+        </locale>
+        <locale>
+            <msgid>Click image for Gallery</msgid>
+            <msgstr locale="ru_RU">Нажмите на изображение для просмотра</msgstr>
+        </locale>
+        <locale>
+            <msgid>Filter</msgid>
+            <msgstr locale="ru_RU">Фильтр</msgstr>
+        </locale>
+        <locale>
+            <msgid>Search by query</msgid>
+            <msgstr locale="ru_RU">Поиск по запросу</msgstr>
+        </locale>
+        <locale>
+            <msgid>Favorites</msgid>
+            <msgstr locale="ru_RU">Избранное</msgstr>
+        </locale>
+        <locale>
+            <msgid>Viewed products</msgid>
+            <msgstr locale="ru_RU">Просмотренные товары</msgstr>
+        </locale>
+        <locale>
+            <msgid>List</msgid>
+            <msgstr locale="ru_RU">Список</msgstr>
+        </locale>
+        <locale>
+            <msgid>Grid</msgid>
+            <msgstr locale="ru_RU">Таблица</msgstr>
+        </locale>
+    </locales>
+    <thumbs>
+        <thumb>47</thumb>
+        <thumb>50</thumb>
+        <thumb>66</thumb>
+        <thumb>147</thumb>
+        <thumb>160</thumb>
+        <thumb>350</thumb>
+        <thumb>900</thumb>
+    </thumbs>  
 </theme>

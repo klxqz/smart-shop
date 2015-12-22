@@ -28,6 +28,11 @@
     <option value="?{http_build_query($data)}">{$name} {if $active_sort == $sort}{if $data['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
 {/function}
 <h1>{$category.name}</h1>
+
+<!-- plugin hook: 'frontend_category' -->
+{* @event frontend_category.%plugin_id% *}
+{foreach $frontend_category as $_}{$_}{/foreach}
+
 {if $category.description}
     <div class="row">
         <div class="col-sm-12">
@@ -79,8 +84,8 @@
     <div class="row">
         <div class="col-md-4 col-sm-5">
             <div class="btn-group">
-                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
-                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
+                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="[`List`]"><i class="fa fa-th-list"></i></button>
+                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="[`Grid`]"><i class="fa fa-th"></i></button>
             </div>
             {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
             <a href="{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}" class="compare-total">[`Compare products`] (<span class="count">{count($compare)}</span>)</a> 
@@ -115,7 +120,7 @@
 
         {$products_pers = explode(',','5,10,20,30,50,100')}
         <div class="col-sm-1 text-right">
-            <label class="control-label" for="input-limit">[`Показывать`]:</label>
+            <label class="control-label" for="input-limit">[`Show`]:</label>
         </div>
         <div class="col-sm-2 text-right">
             {if !empty($smarty.cookies.products_per_page)}
@@ -145,7 +150,7 @@
 </div>
 <div class="row">
     <div class="col-sm-6 text-left"></div>
-    <div class="col-sm-6 text-right">
+    <div class="col-sm-6 text-right{if $theme_settings.lazyloading} lazyloading-paging{/if}" data-loading-str="[`Loading...`]">
         {wa_pagination total=$pages_count attrs=['class' => "pagination"] next = '<i class="fa fa-chevron-right"></i>' prev = '<i class="fa fa-chevron-left"></i> '}
     </div>
 </div>

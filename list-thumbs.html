@@ -1,23 +1,26 @@
-
 {foreach $products as $p}
     <div class="product-layout product-list col-xs-12">
-        <div class="product-thumb">
+        <div class="product-thumb" itemscope itemtype ="http://schema.org/Product">
             <input type="hidden" class="ajax_product_info" 
                    data-price="{shop_currency_html($p.price)|escape}"
                    data-name="{$p.name|escape}" 
                    data-url="{$p.frontend_url}" 
-                   data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}"
+                   {if $p.image_id}
+                       data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext], '47', false)}"
+                   {else}
+                       data-img="{$wa_theme_url}img/dummy47.png"  
+                   {/if}
                    />
             <div class="image"><a href="{$p.frontend_url}">
-                    {$wa->shop->productImgHtml($p, '160', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                    {$wa->shop->productImgHtml($p, '160', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy160.png"])}
                 </a>
             </div>
             <div>
                 <div class="caption">
                     <h4>
-                        <a href="{$p.frontend_url}">{$p.name}</a>
+                        <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
                     </h4>
-                    <p class="description">{$p.summary|truncate:255}</p>
+                    <p class="description" itemprop="description">{$p.summary|truncate:255}</p>
                     <p class="price">
                         <span class="price-new">{shop_currency_html($p.price)}</span> 
                         {if $p.compare_price > 0}
@@ -34,17 +37,26 @@
                         {/for}
                     </div>
                 </div>
+                <div class="button-group" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
+                    <meta itemprop="price" content="{$p.price}">
+                    <meta itemprop="priceCurrency" content="{$wa->shop->primaryCurrency()}">
 
-                <div class="button-group">
-                    <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
-                        <input type="hidden" name="product_id" value="{$p.id}">
-                        <button class="btn-primary"><span>[`Add to cart`]</span></button>
-                    </form>
+                    {if $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+                        <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                            <input type="hidden" name="product_id" value="{$p.id}">
+                            <button class="btn-primary"><span>[`Add to cart`]</span></button>
+                        </form>
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                    {else}
+                        <strong class="stock-none">{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}</strong>
+                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                    {/if}
 
                     <div class="add-to-links">
-                        <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                        <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i> <span>Compare this Product</span></button>
+                        <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]"><i class="fa fa-heart"></i> <span>[`Add to Wish List`]</span></button>
+                        <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]"><i class="fa fa-exchange"></i> <span>[`Compare this Product`]</span></button>
                     </div>
+
                 </div>
             </div>
         </div>

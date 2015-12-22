@@ -8,55 +8,57 @@
     <div class="row product-info">
         <div class="col-sm-6">
             <div class="image">
-                <img class="img-responsive" itemprop="image" id="zoom_01" 
-                     src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
-                     title="{$product.name|escape}" alt="{$product.name|escape}" 
-                     data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
+                {if $product.image_id}
+                    <img class="img-responsive" itemprop="image" id="zoom_01" 
+                         src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
+                         title="{$product.name|escape}" alt="{$product.name|escape}" 
+                         data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
+                {else}
+                    <div class="center-block text-center ">
+                        <img itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
+                    </div>
+                {/if}
             </div>
-            <div class="center-block text-center ">
-                <span class="zoom-gallery"><i class="fa fa-search"></i> Click image for Gallery</span>
-            </div>
-            <div class="image-additional" id="gallery_01">
-                {foreach $product.images as $image}
-                    <a class="thumbnail" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
-                        <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
-                    </a>
-                {/foreach}
-            </div>
-            <script type="text/javascript">
-                $("#zoom_01").elevateZoom({
-                    gallery: 'gallery_01',
-                    cursor: 'pointer',
-                    galleryActiveClass: 'active',
-                    imageCrossfade: true,
-                    zoomWindowFadeIn: 500,
-                    zoomWindowFadeOut: 500,
-                    lensFadeIn: 500,
-                    lensFadeOut: 500,
-                    loadingIcon: '{$wa_parent_theme_url}image/progress.gif'
-                }).load(function () {
-                    $(this).removeAttr('style');
-                    $('.zoomWrapper').css({
-                        'width': $(this).width(),
-                        'height': $(this).height()
+            {if $product.image_id}
+                <div class="center-block text-center ">
+                    <span class="zoom-gallery"><i class="fa fa-search"></i> [`Click image for Gallery`]</span>
+                </div>
+                <div class="image-additional" id="gallery_01">
+                    {foreach $product.images as $image}
+                        <a class="thumbnail" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
+                            <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
+                        </a>
+                    {/foreach}
+                </div>
+                <script type="text/javascript">
+                    $("#zoom_01").elevateZoom({
+                        gallery: 'gallery_01',
+                        cursor: 'pointer',
+                        galleryActiveClass: 'active',
+                        imageCrossfade: true,
+                        zoomWindowFadeIn: 500,
+                        zoomWindowFadeOut: 500,
+                        lensFadeIn: 500,
+                        lensFadeOut: 500,
+                        loadingIcon: '{$wa_parent_theme_url}image/progress.gif'
+                    }).load(function () {
+                        $(this).removeAttr('style');
+                        $('.zoomWrapper').css({
+                            'width': $(this).width(),
+                            'height': $(this).height()
+                        });
                     });
-                });
-                //////pass the images to swipebox
-                $("#zoom_01").bind("click", function (e) {
-                    var ez = $('#zoom_01').data('elevateZoom');
-                    $.swipebox(ez.getGalleryList());
-                    return false;
-                });</script>
+                    $("#zoom_01").bind("click", function (e) {
+                        var ez = $('#zoom_01').data('elevateZoom');
+                        $.swipebox(ez.getGalleryList());
+                        return false;
+                    });
+                </script>
+            {/if}
         </div>
         <div class="col-sm-6">
 
             {include file="product.cart.html" inline}
-
-            <!-- plugin hook: 'frontend_product.block_aux' -->
-            {* @event frontend_product.%plugin_id%.block_aux *}
-            {foreach $frontend_product as $_}
-                {$_.cart}
-            {/foreach}
 
             <div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <meta itemprop="ratingValue" content="0" />
@@ -70,7 +72,7 @@
                         </span>
                     {/for}
 
-                    <a class="write-review-button" href="#">[`Отзывов`]: <span itemprop="reviewCount">{$reviews_total_count}</span></a> / 
+                    <a class="write-review-button" href="#">[`Reviews`]: <span itemprop="reviewCount">{$reviews_total_count}</span></a> / 
                     <a class="write-review-button" href="#">[`Write a review`]</a>
                     <script type="text/javascript">
                         $(document).ready(function () {
@@ -87,12 +89,42 @@
                 </p>
             </div>
             <hr>
-            <!-- AddThis Button BEGIN -->
-            {*
-            <div class="addthis_toolbox addthis_default_style"> <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_google_plusone" g:plusone:size="medium"></a> <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal" pi:pinit:url="http://www.addthis.com/features/pinterest" pi:pinit:media="http://www.addthis.com/cms-content/images/features/pinterest-lg.png"></a> <a class="addthis_counter addthis_pill_style"></a> </div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-514863386b357649"></script>
-            *}
-            <!-- AddThis Button END -->
+            {if $theme_settings.share_buttons}
+                <!-- AddThis Button BEGIN -->
+                {$theme_settings.share_buttons}
+                <!-- AddThis Button END -->
+                <hr>
+            {/if}
+
+            <!-- categories -->
+            {if $product.categories}
+                <p id="product-categories">
+                    [`Categories`]:
+                    {foreach $product.categories as $c}
+                        {if $c.status}
+                            <a href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url])}">{$c.name|escape}</a>{if !$c@last},{/if}
+                        {/if}
+                    {/foreach}
+                </p>
+            {/if}
+
+            <!-- tags -->
+            {if $product.tags}
+                <p class="tags" id="product-tags">
+                    [`Tags`]:
+                    <span class="product-info">
+                        {foreach $product.tags as $t}
+                            <a href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}">{$t}</a>{if !$t@last},{/if}
+                        {/foreach}
+                    </span>
+                </p>
+            {/if}
+            <!-- plugin hook: 'frontend_product.block_aux' -->
+            {* @event frontend_product.%plugin_id%.block_aux *}
+            {foreach $frontend_product as $_}
+                {$_.block_aux}
+            {/foreach}   
+
         </div>
     </div>
     <ul class="nav nav-tabs">
@@ -110,11 +142,22 @@
                 <a href="#page-{$page.url}" data-toggle="tab">{$page.name}</a>
             </li>
         {/foreach}
+        <!-- plugin hook: 'frontend_product.menu' -->
+        {* @event frontend_product.%plugin_id%.menu *}
+        {foreach $frontend_product as $_}
+            {$_.menu}
+        {/foreach}
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab-description" itemprop="description">
             <div class="cpt_product_description ">
                 {$product.description}
+
+                <!-- plugin hook: 'frontend_product.block' -->
+                {* @event frontend_product.%plugin_id%.block *}
+                {foreach $frontend_product as $_}
+                    {$_.block}
+                {/foreach}
             </div>
         </div>
         <div class="tab-pane" id="tab-features">
@@ -125,7 +168,7 @@
                             <td class="name">
                                 <strong>{$features[$f_code].name|escape}</strong>
                             </td>
-                            <td class="value" itemprop="{$f_code|escape}">
+                            <td class="value">
                                 {if is_array($f_value)}
                                     {if $features[$f_code].type == 'color'}
                                         {implode('<br /> ', $f_value)}
@@ -188,7 +231,7 @@
     {$upselling = $product->upSelling()}
     {$crossselling = $product->crossSelling()}
     {if $upselling}
-        {include file="products-list.html" products=$upselling list_title='Рекомендуемые товары' class='owl-carousel upselling_pro'}
+        {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".owl-carousel.upselling_pro").owlCarousel({
@@ -202,7 +245,8 @@
         </script>
     {/if}
     {if $crossselling}
-        {include file="products-list.html" products=$crossselling list_title='Также покупают' class='owl-carousel crossselling_pro'}
+        {$title = sprintf('[`Customers who bought %s also bought`]', $product.name|escape)}
+        {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".owl-carousel.crossselling_pro").owlCarousel({
