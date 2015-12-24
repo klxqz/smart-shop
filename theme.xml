@@ -381,6 +381,18 @@
             <name locale="ru_RU">Сайдбар. Приложение «Магазин»</name>
         </setting>
         
+        <setting var="shop_sidebar_show_catalog" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show catalog</name>
+            <name locale="ru_RU">Показывать каталог</name>
+        </setting>
+        
+        <setting var="shop_sidebar_show_information" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show Information</name>
+            <name locale="ru_RU">Показывать «Информацию»</name>
+        </setting>
+        
         <setting var="sidebar_shop_custom_content" control_type="text">
             <value><![CDATA[<h2>Пользовательский контент</h2>
 <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here. </p>
@@ -495,12 +507,12 @@
             <name locale="ru_RU">Плагин брендов</name>
             <options>
                 <option value="brands">
-                    <name locale="en_US">Use plugin <![CDATA[<a href="https://www.webasyst.com/store/plugin/shop/brands/">Brands</a><br/>]]></name>
-                    <name locale="ru_RU">Использовать плагин <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/brands/">Бренды</a><br/>]]></name>
+                    <name locale="en_US">Use plugin <![CDATA[<a target="_blank" href="https://www.webasyst.com/store/plugin/shop/brands/">Brands</a><br/>]]></name>
+                    <name locale="ru_RU">Использовать плагин <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/brands/">Бренды</a><br/>]]></name>
                 </option>
                 <option value="productbrands">
-                    <name locale="en_US">Use plugin <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Brands with images and descriptions</a><br/>]]></name>
-                    <name locale="ru_RU">Использовать плагин <![CDATA[<a href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Бренды с картинками и описаниями</a><br/>]]></name>
+                    <name locale="en_US">Use plugin <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Brands with images and descriptions</a><br/>]]></name>
+                    <name locale="ru_RU">Использовать плагин <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Бренды с картинками и описаниями</a><br/>]]></name>
                 </option>
                 <option value="">
                     <name locale="en_US">Hide<![CDATA[<br/>]]></name>

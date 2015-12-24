@@ -1,21 +1,25 @@
 {include file="`$wa_active_theme_path`/sidebar-filter.html"}
 
-{if !empty($category.id)}
-    {$selected = $category.id}
-{elseif !empty($product)}
-    {$selected = $product.category_id}
-{else}
-    {$selected = null}
+{if $theme_settings.shop_sidebar_show_catalog}
+    {if !empty($category.id)}
+        {$selected = $category.id}
+    {elseif !empty($product)}
+        {$selected = $product.category_id}
+    {else}
+        {$selected = null}
+    {/if}
+
+    {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='[`Catalog`]' selected=$selected}
 {/if}
 
-{include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='[`Catalog`]' selected=$selected}
-{if !empty($page)}
-    {$selected = $page.id}
-{else}
-    {$selected = null}
+{if $theme_settings.shop_sidebar_show_information}
+    {if !empty($page)}
+        {$selected = $page.id}
+    {else}
+        {$selected = null}
+    {/if}
+    {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->pages() menu_title='[`Information`]' selected=$selected}
 {/if}
-{include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->pages() menu_title='[`Information`]' selected=$selected}
-
 
 {for $i = 1 to 3}
     {if $theme_settings["sidebar_productlist`$i`_list"]}
@@ -30,7 +34,7 @@
 {/if}
 
 {if $wa->shop->tags() && $theme_settings.show_tags}
-    <h3>Теги</h3>
+    <h3>[`Tags`]</h3>
     <div class="list-group tags-block">
         <ul>
             {foreach $wa->shop->tags() as $tag}

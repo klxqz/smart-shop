@@ -16,6 +16,7 @@
                             <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
                             <label> - </label>
                             <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
+                            {$jquery_ui_include = true}
                         </div>
                     </div>
                 {else}
@@ -58,6 +59,7 @@
                                 <label> - </label>
                                 <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
                             </div>
+                            {$jquery_ui_include = true}
                         {else}
                             <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
                                 <ul>
@@ -77,4 +79,8 @@
             {/foreach}
         </form>
     </div>
+    {if $jquery_ui_include}
+        <link href="{$wa_active_theme_url}javascript/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen" />
+        <script src="{$wa_active_theme_url}javascript/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+    {/if}
 {/if}
