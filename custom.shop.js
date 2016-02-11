@@ -100,7 +100,7 @@ $(document).ready(function () {
     });
 
     $('.filters.ajax input').change(function () {
-        var f = $(this);
+        var f = $('.filters.ajax');
         var url = '?' + f.serialize();
         $('.products-category .product-thumb').append('<div class="loadmask"></div>');
 

@@ -1,5 +1,8 @@
+{*filter-begin*}
 {include file="`$wa_active_theme_path`/sidebar-filter.html"}
+{*filter-end*}
 
+{*catalog-begin*}
 {if $theme_settings.shop_sidebar_show_catalog}
     {if !empty($category.id)}
         {$selected = $category.id}
@@ -11,7 +14,9 @@
 
     {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='[`Catalog`]' selected=$selected}
 {/if}
+{*catalog-end*}
 
+{*information-begin*}
 {if $theme_settings.shop_sidebar_show_information}
     {if !empty($page)}
         {$selected = $page.id}
@@ -20,37 +25,17 @@
     {/if}
     {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->pages() menu_title='[`Information`]' selected=$selected}
 {/if}
+{*information-end*}
 
+{*productlist-begin*}
 {for $i = 1 to 3}
     {if $theme_settings["sidebar_productlist`$i`_list"]}
         {include file="`$wa_active_theme_path`/sidebar-products.html" products=$wa->shop->products($theme_settings["sidebar_productlist`$i`_list"]) list_title=$theme_settings["sidebar_productlist`$i`_name"] max_product_count=5 class='owl-carousel'}
     {/if}
 {/for}
+{*productlist-end*}
 
-{if $theme_settings.sidebar_shop_custom_content}
-    <div class="list-group">
-        {$theme_settings.sidebar_shop_custom_content}
-    </div>
-{/if}
-
-{if $wa->shop->tags() && $theme_settings.show_tags}
-    <h3>[`Tags`]</h3>
-    <div class="list-group tags-block">
-        <ul>
-            {foreach $wa->shop->tags() as $tag}
-                {if trim($tag.name)}
-                    <li>
-                        <a href="{$wa->getUrl('shop/frontend/tag',['tag' => $tag.uri_name])}" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name|escape}</a>
-                    </li>
-                    {if $tag@iteration >= 10}
-                        {break}
-                    {/if}
-                {/if}
-            {/foreach}
-        </ul>
-    </div>
-{/if}
-
+{*brands-begin*}
 {$brands_list = null}
 {if $theme_settings.sidebar_brands_plugin == 'brands'}
     {$match = null}
@@ -63,7 +48,6 @@
         {$brands_list = $match[1]}
     {/if}
 {/if}
-
 {if $brands_list}
     <h3>[`Brands`]</h3>
     <div class="list-group brands-block">
@@ -72,8 +56,53 @@
         </ul>
     </div>
 {/if}
+{*brands-end*}
 
 
+{*custom-content-begin*}
+{if $theme_settings.sidebar_shop_custom_content}
+    <div class="list-group">
+        {$theme_settings.sidebar_shop_custom_content}
+    </div>
+{/if}
+{*custom-content-end*}
+
+{*news-begin*}
+{if $theme_settings.sidebar_show_news && $wa->blog}
+    <h3>
+        [`News`] - <a href="{$wa->blog->url()}" class="viewall">[`view all`]</a>
+    </h3>
+    <div id="news0" class="owl-carousel">
+        {foreach $wa->blog->posts() as $post}
+            <div class="item">
+                <h4>
+                    <a href="{$post.link}">{$post.title}</a>
+                </h4>
+                {$img = ''}
+                {if $theme_settings.sidebar_news_img && preg_match('/<img.*src=\"(.*?)\"[^>]*>/', $post.text, $img)}
+                    <a href="{$post.link}">
+                        <img class="img-responsive" alt="" src="{$img[1]}" >
+                    </a>
+                {/if}
+                {$post.text|strip_tags|truncate:255}
+            </div>
+        {/foreach}
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#news0").owlCarousel({
+                singleItem: true,
+                lazyLoad: true,
+                navigation: true,
+                navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                scrollPerPage: true
+            });
+        });
+    </script>
+{/if}
+{*news-end*}
+
+{*banners-begin*}
 {$count_banners = 0}
 {for $i = 1 to 3}
     {if $theme_settings["sidebar_shop_banner`$i`"]}
@@ -110,7 +139,27 @@
         });
     </script>
 {/if}
+{*banners-end*}
 
+{*tags-begin*}
+{if $wa->shop->tags() && $theme_settings.show_tags}
+    <h3>[`Tags`]</h3>
+    <div class="list-group tags-block">
+        <ul>
+            {foreach $wa->shop->tags() as $tag}
+                {if trim($tag.name)}
+                    <li>
+                        <a href="{$wa->getUrl('shop/frontend/tag',['tag' => $tag.uri_name])}" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name|escape}</a>
+                    </li>
+                    {if $tag@iteration >= 10}
+                        {break}
+                    {/if}
+                {/if}
+            {/foreach}
+        </ul>
+    </div>
+{/if}
+{*tags-end*}
 
 <!-- plugin hook: 'frontend_nav' -->
 {* @event frontend_nav.%plugin_id% *}

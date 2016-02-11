@@ -24,7 +24,7 @@
 {/if}
 
 <div itemscope itemtype="http://schema.org/Store">
-    <h1 itemprop="name">{sprintf('[`%s online store`]', $wa->shop->settings('name'))}</h1>
+    <h1 itemprop="name">{$theme_settings.homepage_shop_title|escape}</h1>
     <meta itemprop="description" content="{$wa->meta('description')|escape}">
     <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
         <meta itemprop="streetAddress" content="">
@@ -32,8 +32,58 @@
         <meta itemprop="addressRegion" content="">
         <meta itemprop="postalCode" content="">
     </div>
-    <p>[`Edit this information in the <strong>home.html</strong> template file using built-in design editor in the store backend.`]</p>
-    <p>[`Contact us`]: <strong itemprop="telephone">{$wa->shop->settings('phone')}</strong></p>
+    {$theme_settings.homepage_shop_description}
+</div>
+
+<div class="panel-group" id="homepage-accordion">
+    {if $theme_settings.homepage_tab1}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="#collapse-homepage-tab1" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#homepage-accordion">
+                        {$theme_settings.homepage_tab1_title} <i class="fa fa-caret-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-homepage-tab1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {$theme_settings.homepage_tab1_content}
+                </div>
+            </div>
+        </div>
+    {/if}
+    {if $theme_settings.homepage_tab2}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="#collapse-homepage-tab2" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#homepage-accordion">
+                        {$theme_settings.homepage_tab2_title} <i class="fa fa-caret-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-homepage-tab2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {$theme_settings.homepage_tab2_content}
+                </div>
+            </div>
+        </div>
+    {/if}
+    {if $theme_settings.homepage_tab3}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="#collapse-homepage-tab3" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#homepage-accordion">
+                        {$theme_settings.homepage_tab3_title} <i class="fa fa-caret-down"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-homepage-tab3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {$theme_settings.homepage_tab3_content}
+                </div>
+            </div>
+        </div>
+    {/if}
 </div>
 
 <!-- plugin hook: 'frontend_homepage' -->
@@ -91,7 +141,7 @@
 {if $count_tabs}
     <div class="category-module" id="latest_category0">
         <h3>
-            {$theme_settings.productlist_tabs_name}{if $theme_settings.productlist_tabs_url} - <a class="viewall" href="{$theme_settings.productlist_tabs_url}">view all</a>{/if}
+            {$theme_settings.productlist_tabs_name}{if $theme_settings.productlist_tabs_url} - <a class="viewall" href="{$theme_settings.productlist_tabs_url}">[`view all`]</a>{/if}
         </h3>
         <div class="category-module-content">
             <ul id="sub-cat0" class="tabs">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="marketshop" system="0" vendor="webasyst" author="Webasyst" app="shop" parent_theme_id="site:marketshop" version="1.0.0">
-    <name locale="en_US">marketshop</name>
-    <name locale="ru_RU">marketshop</name>
+<theme id="smart" system="0" vendor="webasyst" author="Webasyst" app="shop" parent_theme_id="site:smart" version="1.0.0">
+    <name locale="en_US">Smart</name>
+    <name locale="ru_RU">Smart</name>
     <files>
         <file path="index.html" parent="1">
         </file>
@@ -153,6 +153,81 @@
             <value/>
             <name locale="en_US">Store</name>
             <name locale="ru_RU">Магазин</name>
+        </setting>
+        <setting var="homepage_info" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. Information</name>
+            <name locale="ru_RU">Главная страница. Информация о магазине</name>
+        </setting>
+        <setting var="homepage_shop_title" control_type="text">
+            <value>Интернет-магазин «Мой маркет»</value>
+            <name locale="en_US">Store title</name>
+            <name locale="ru_RU">Заголовок на главной странице магазина</name>
+        </setting>
+        <setting var="homepage_shop_description" control_type="text">
+            <value><![CDATA[<p>Этот текстовый блок можно отредактировать в админ. панели управления сайта в настройках темы дизайна.</p>
+<p><strong>Webasyst: приложение «Магазин» - Витрины - Оформление.</strong></p>
+<p>Обратная связь: <strong itemprop="telephone">+7 111-111-11-11</strong></p>]]></value>
+            <name locale="en_US">Store description</name>
+            <name locale="ru_RU">Описание магазина на главной странице</name>
+        </setting>
+        
+        <setting var="homepage_tabs_title" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. Tabs</name>
+            <name locale="ru_RU">Главная страница. Вкладки</name>
+        </setting>
+        <setting var="homepage_tab1" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Tab 1</name>
+            <name locale="ru_RU">Вкладка №1</name>
+        </setting>
+        <setting var="homepage_tab1_title" control_type="text">
+            <value>Вкладка №1</value>
+            <name locale="en_US">Tab title</name>
+            <name locale="ru_RU">Заголовок вкладки</name>
+        </setting>
+        <setting var="homepage_tab1_content" control_type="text">
+            <value><![CDATA[<p>Условия доставки</p>]]></value>
+            <name locale="en_US">Tab content</name>
+            <name locale="ru_RU">Содержимое вкладки</name>
+        </setting>
+        <setting var="homepage_tab2" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Tab 2</name>
+            <name locale="ru_RU">Вкладка №2</name>
+        </setting>
+        <setting var="homepage_tab2_title" control_type="text">
+            <value>Вкладка №2</value>
+            <name locale="en_US">Tab title</name>
+            <name locale="ru_RU">Заголовок вкладки</name>
+        </setting>
+        <setting var="homepage_tab2_content" control_type="text">
+            <value><![CDATA[<p>Условия оплаты</p>]]></value>
+            <name locale="en_US">Tab content</name>
+            <name locale="ru_RU">Содержимое вкладки</name>
+        </setting>
+        <setting var="homepage_tab3" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Tab 3</name>
+            <name locale="ru_RU">Вкладка №3</name>
+        </setting>
+        <setting var="homepage_tab3_title" control_type="text">
+            <value>Вкладка №3</value>
+            <name locale="en_US">Tab title</name>
+            <name locale="ru_RU">Заголовок вкладки</name>
+        </setting>
+        <setting var="homepage_tab3_content" control_type="text">
+            <value><![CDATA[<p>Произвольная информация</p>]]></value>
+            <name locale="en_US">Tab content</name>
+            <name locale="ru_RU">Содержимое вкладки</name>
+        </setting>
+        
+        
+        <setting var="homepage_slider_title" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. Slider</name>
+            <name locale="ru_RU">Главная страница. Слайдер</name>
         </setting>
         <setting var="homepage_slider" control_type="checkbox">
             <value>1</value>
@@ -395,9 +470,7 @@
         
         <setting var="sidebar_shop_custom_content" control_type="text">
             <value><![CDATA[<h2>Пользовательский контент</h2>
-<p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here. </p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>]]></value>
+<p>Этот текстовый блок можно отредактировать в админ. панели управления сайта в настройках темы дизайна. Вы можете разместить любой контент: текст, HTML, изображения.</p>]]></value>
             <name locale="en_US">Custom Content</name>
             <name locale="ru_RU">Пользовательский контент</name>
         </setting>
@@ -413,6 +486,21 @@
             <name locale="ru_RU">Показывать теги</name>
         </setting>
         
+        <setting var="divider_sidebar_shop_new" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar application «Shop». News</name>
+            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Новости</name>
+        </setting>
+        <setting var="sidebar_show_news" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show news</name>
+            <name locale="ru_RU">Показывать новости</name>
+        </setting> 
+        <setting var="sidebar_news_img" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show images from news</name>
+            <name locale="ru_RU">Показывать изображения из новостей</name>
+        </setting>        
         
         <setting var="divider_sidebar_shop_banners" control_type="group_divider">
             <value/>
@@ -619,6 +707,24 @@
             <msgstr locale="ru_RU">Таблица</msgstr>
         </locale>
     </locales>
+    <about locale="en_US">
+<![CDATA[
+<p><b>MarketShop</b> - is the universal family of design themes for all base application framework WebAsyst: Site, Blog, Photo, Shop-Script.</p>
+<p>Theme MarketShop design optimized for all modern browsers and mobile devices based on iOS and Android.</p>
+
+<p>Theme design uses icons font  <a href="http://fontawesome.io/" target="_blank">Font Awesome</a> 4.1.0. 
+<a href="http://fontawesome.io/icons/" target="_blank">Here is a complete</a> list of supported icons that can be used in the subject design</p>
+]]>
+    </about>
+    <about locale="ru_RU">
+<![CDATA[
+<p><b>MarketShop</b> - это универсальное семейство тем дизайна для всех базовых приложений фреймворка Вебасист: Сайт, Блог, Фото, Shop-Script.</p>
+<p>Тема дизайна MarketShop оптимизированы для всех современных браузеров и мобильных устройств на основе iOS и Android.</p>
+
+<p>Тема дизайна использует иконочный шрифт <a href="http://fontawesome.io/" target="_blank">Font Awesome</a> версии 4.1.0. 
+<a href="http://fontawesome.io/icons/" target="_blank">Тут представлен</a> полный список поддерживаемых иконок, которые можно использовать в теме дизайна</p>
+]]>
+    </about>
     <thumbs>
         <thumb>47</thumb>
         <thumb>50</thumb>
