@@ -1,5 +1,5 @@
 {*filter-begin*}
-{include file="`$wa_active_theme_path`/sidebar-filter.html"}
+{include file="`$wa_active_theme_path`/sidebar.filter.html"}
 {*filter-end*}
 
 {*catalog-begin*}
@@ -12,7 +12,7 @@
         {$selected = null}
     {/if}
 
-    {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->categories(0, null, true) menu_title='[`Catalog`]' selected=$selected}
+    {include file="`$wa_parent_theme_path`/sidebar.menu.html" items=$wa->shop->categories(0, null, true) menu_title='[`Catalog`]' selected=$selected}
 {/if}
 {*catalog-end*}
 
@@ -23,14 +23,14 @@
     {else}
         {$selected = null}
     {/if}
-    {include file="`$wa_parent_theme_path`/sidebar-menu.html" items=$wa->shop->pages() menu_title='[`Information`]' selected=$selected}
+    {include file="`$wa_parent_theme_path`/sidebar.menu.html" items=$wa->shop->pages() menu_title='[`Information`]' selected=$selected}
 {/if}
 {*information-end*}
 
 {*productlist-begin*}
 {for $i = 1 to 3}
     {if $theme_settings["sidebar_productlist`$i`_list"]}
-        {include file="`$wa_active_theme_path`/sidebar-products.html" products=$wa->shop->products($theme_settings["sidebar_productlist`$i`_list"]) list_title=$theme_settings["sidebar_productlist`$i`_name"] max_product_count=5 class='owl-carousel'}
+        {include file="`$wa_active_theme_path`/sidebar.products.html" products=$wa->shop->products($theme_settings["sidebar_productlist`$i`_list"]) list_title=$theme_settings["sidebar_productlist`$i`_name"] max_product_count=5 class='owl-carousel'}
     {/if}
 {/for}
 {*productlist-end*}

@@ -13,7 +13,6 @@ $(function () {
         } else {
             $(".affiliate").hide();
         }
-        
     }
 
     // add to cart block: services

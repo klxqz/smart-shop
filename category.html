@@ -156,7 +156,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $("#list-view").click(function () {
+            $(".products-category > .clearfix.visible-lg-block").remove(), $("#content .product-layout").attr("class", "product-layout product-list col-xs-12"), localStorage.setItem("display", "list"), $(".btn-group").find("#list-view").addClass("selected"), $(".btn-group").find("#grid-view").removeClass("selected")
+        });
         $(document).on('click', '#grid-view', function (e) {
             $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-5ths col-md-5ths col-sm-3 col-xs-12');
 
