@@ -1,4 +1,10 @@
 <form id="cart-form{if $wa->get('cart')}-dialog{/if}" method="post" action="{$wa->getUrl('/frontendCart/add')}">
+    {if $wa->get('cart')}
+        <div class="center-block text-center ">
+            {$wa->shop->productImgHtml($product, '200', ['itemprop' => 'image', 'alt' => $product.name, 'title' => $product.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+        </div>
+    {/if}
+
     <input type="hidden" class="ajax_product_info" 
            data-price="{shop_currency_html($product.price)|escape}"
            data-name="{$product.name|escape}" 

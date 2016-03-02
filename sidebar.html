@@ -165,12 +165,16 @@
 {* @event frontend_nav.%plugin_id% *}
 {foreach $frontend_nav as $plugin_id => $_}
     {if $plugin_id != 'brands-plugin' && $plugin_id != 'productbrands-plugin'}
-        {$_}
+        <div class="list-group">
+            {$_}
+        </div>
     {/if}
 {/foreach}
 
 <!-- plugin hook: 'frontend_nav_aux' -->
 {* @event frontend_nav_aux.%plugin_id% *}
 {foreach $frontend_nav_aux as $plugin_id => $_}
-    {$_}
+    <div class="list-group">
+        {$_}
+    </div>
 {/foreach}

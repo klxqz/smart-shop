@@ -112,7 +112,7 @@
                             <td class="text-right"><strong>[`Discount`]:</strong></td>
                             <td class="text-right cart-discount nowrap">&minus; {shop_currency_html($discount, true)}</td>
                         </tr>
-                        {if $use_affiliate}
+                        {if !empty($use_affiliate)}
                             <!-- affiliate bonus -->
                             <tr>
                                 <td class="text-right"><strong>[`Bonuses`]:</strong></td>

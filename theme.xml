@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="smart" system="0" vendor="webasyst" author="Webasyst" app="shop" parent_theme_id="site:smart" version="1.0.0">
+<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.0.0">
     <name locale="en_US">Smart</name>
     <name locale="ru_RU">Smart</name>
     <files>
@@ -213,9 +213,25 @@
     <settings>
         <setting var="divider_store" control_type="group_divider">
             <value/>
-            <name locale="en_US">Store</name>
-            <name locale="ru_RU">Магазин</name>
+            <name locale="en_US">Store<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]></name>
+            <name locale="ru_RU">Магазин<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]></name>
         </setting>
+        <setting var="divider_products" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Products</name>
+            <name locale="ru_RU">Товары</name>
+        </setting>
+        <setting var="product_images" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show all product images</name>
+            <name locale="ru_RU">Показывать все изображения товара</name>
+        </setting>
+        <setting var="quick_view" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show quick view</name>
+            <name locale="ru_RU">Показывать быстрый просмотр</name>
+        </setting>
+        
         <setting var="homepage_info" control_type="group_divider">
             <value/>
             <name locale="en_US">Homepage. Information</name>
@@ -245,7 +261,7 @@
             <name locale="ru_RU">Вкладка №1</name>
         </setting>
         <setting var="homepage_tab1_title" control_type="text">
-            <value>Вкладка №1</value>
+            <value>Доставка</value>
             <name locale="en_US">Tab title</name>
             <name locale="ru_RU">Заголовок вкладки</name>
         </setting>
@@ -260,7 +276,7 @@
             <name locale="ru_RU">Вкладка №2</name>
         </setting>
         <setting var="homepage_tab2_title" control_type="text">
-            <value>Вкладка №2</value>
+            <value>Оплата</value>
             <name locale="en_US">Tab title</name>
             <name locale="ru_RU">Заголовок вкладки</name>
         </setting>
@@ -275,12 +291,12 @@
             <name locale="ru_RU">Вкладка №3</name>
         </setting>
         <setting var="homepage_tab3_title" control_type="text">
-            <value>Вкладка №3</value>
+            <value>О магазине</value>
             <name locale="en_US">Tab title</name>
             <name locale="ru_RU">Заголовок вкладки</name>
         </setting>
         <setting var="homepage_tab3_content" control_type="text">
-            <value><![CDATA[<p>Произвольная информация</p>]]></value>
+            <value><![CDATA[<p>В этих вкладках может быть любая произвольная информация. Текст задается в админ. панели</p>]]></value>
             <name locale="en_US">Tab content</name>
             <name locale="ru_RU">Содержимое вкладки</name>
         </setting>
@@ -334,7 +350,7 @@
         </setting>
         
         <setting var="slide4" control_type="image">
-            <value></value>
+            <value>img/slider/slide-4.jpg</value>
             <filename>img/slider/slide-4.*</filename>
             <name locale="en_US">slide 1</name>
             <name locale="ru_RU">слайд 1</name>
@@ -346,7 +362,7 @@
         </setting>
         
         <setting var="slide5" control_type="image">
-            <value></value>
+            <value>img/slider/slide-5.jpg</value>
             <filename>img/slider/slide-5.*</filename>
             <name locale="en_US">slide 5</name>
             <name locale="ru_RU">слайд 5</name>
@@ -716,7 +732,7 @@
             <description locale="en_US">Share buttons</description>
             <description locale="ru_RU">Код кнопок поделиться. <![CDATA[<a target="_blank" href="https://tech.yandex.ru/share/">Яндекс кнопки</a> <a target="_blank" href="http://share.pluso.ru/">Кнопки Pluso</a>]]></description>
         </setting>
-
+        
         
     </settings>
     <locales>

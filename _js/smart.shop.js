@@ -59,6 +59,41 @@ function initWishlist() {
 }
 
 $(document).ready(function () {
+    $(document).on('click', '.quick-view', function () {
+        var d = $('#dialog');
+        var c = $('<div class="product-info"></div>');
+        c.html('<i class="icon32 loading"><i>');
+        d.find('.content').html(c);
+        c.load($(this).attr('href') + '?cart=1&quick_view=1', function () {
+            c.prepend('<a href="#" class="dialog-close">&times;</a>');
+        });
+        d.show();
+        return false;
+    });
+    $(document).on('click', '.product-image-next', function () {
+        var img = $(this).closest('.image').find('img');
+        var images = $(this).closest('.product-image-buttons').data('images');
+        var index = images.indexOf(img.attr('src'));
+        if (index < images.length - 1) {
+            index++;
+        } else {
+            index = 0;
+        }
+        img.attr('src', images[index]);
+        return false;
+    });
+    $(document).on('click', '.product-image-prev', function () {
+        var img = $(this).closest('.image').find('img');
+        var images = $(this).closest('.product-image-buttons').data('images');
+        var index = images.indexOf(img.attr('src'));
+        if (index > 0) {
+            index--;
+        } else {
+            index = images.length - 1;
+        }
+        img.attr('src', images[index]);
+        return false;
+    });
     $('#clear-wishlist').click(function () {
         $.cookie('shop_wishlist', '', {expires: 0, path: '/'});
         location.reload();

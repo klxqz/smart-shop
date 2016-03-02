@@ -15,6 +15,25 @@
                     <a href="{$p.frontend_url}">
                         {$wa->shop->productImgHtml($p, '147', ['itemprop' => 'image', 'class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
                     </a>
+                    {if $theme_settings.product_images}
+                        {$images_a = $wa->shop->images($p.id, ['147'])}
+                        {if !empty($images_a[$p.id]) && count($images_a[$p.id]) > 1}
+                            {$images_a = $images_a[$p.id]}
+                            {$images = []}
+                            {foreach $images_a as $image}
+                                {$images[] = $image['url_0']}
+                            {/foreach}
+                            <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
+                                <div class="product-image-prev"><i class="fa fa-angle-left"></i></div>
+                                <div class="product-image-next"><i class="fa fa-angle-right"></i></div>
+                            </div>
+                        {/if}
+                    {/if}
+                    {if $theme_settings.quick_view}
+                        <a href="{$p.frontend_url}" class="quick-view">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    {/if}
                 </div>
                 <div class="caption">
                     <h4>
