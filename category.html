@@ -46,7 +46,7 @@
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                 <a href="{$sc.url}">
                     {if class_exists(shopLogocategoryPlugin) && shopLogocategoryPlugin::getImgUrl($sc.id)}
-                        <img src="{shopLogocategoryPlugin::getImgUrl($category.id)}" alt="{$sc.name|escape}" />
+                        <img src="{shopLogocategoryPlugin::getImgUrl($sc.id)}" alt="{$sc.name|escape}" />
                     {else}
                         <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}" />
                     {/if}

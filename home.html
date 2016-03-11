@@ -12,7 +12,7 @@
             {/for}
         </div>
     </div>
-    <script src="{$wa_active_theme_url}_js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+    <script src="{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#slideshow0').nivoSlider({
@@ -212,30 +212,64 @@
     </div>
 {/if}
 
-{if class_exists(shopProductbrandsPlugin)}
+{if class_exists(shopProductbrandsPlugin) && shopProductbrandsPlugin::getBrands()}
     {$brands = shopProductbrandsPlugin::getBrands()}
-    {if $brands}
-        <div id="carousel0" class="owl-carousel nxt">
-            {foreach $brands as $brand}
-                {if $brand.image}
-                    <div class="item text-center">
-                        <a href="{$brand.url}">
-                            <img alt="{$brand.name}" src="{$wa_url}wa-data/public/shop/brands/{$brand.id}/{$brand.id}{$brand.image}" class="img-responsive">
+    <div id="carousel0" class="owl-carousel nxt">
+        {foreach $brands as $brand}
+            {if $brand.image}
+                <div class="item text-center">
+                    <a href="{$brand.url}">
+                        <img alt="{$brand.name}" src="{$wa_url}wa-data/public/shop/brands/{$brand.id}/{$brand.id}{$brand.image}" class="img-responsive">
+                    </a>
+                </div>
+            {/if}
+        {/foreach}
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#carousel0').owlCarousel({
+                items: 6,
+                autoPlay: 3000,
+                navigation: true,
+                navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                pagination: true
+            });
+        });
+    </script>
+{/if}
+
+
+<div class="blog-photo-block">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns">
+            <h3>Фото  - <a href="{$wa->getUrl('photos/frontend')}" class="viewall">[`view all`]</a></h3>
+            <ul>
+                {foreach $wa->photos->photos(null,'120x120',null,9) as $photo}
+                    <li>
+                        <a href="{$photo.frontend_link|default:'#'}">
+                            <div class="image" style="background-image: url({$photo['thumb_120x120'].url});"></div>
                         </a>
-                    </div>
-                {/if}
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns">
+            <h3>Новости  - <a href="{$wa->blog->url()}" class="viewall">[`view all`]</a></h3>
+            {foreach $wa->blog->posts(null,3) as $post}
+                <div class="post">
+                    <h4>
+                        <a href="{$post.link}">{$post.title}</a>
+                    </h4>
+                    {$img = ''}
+                    {if $theme_settings.sidebar_news_img && preg_match('/<img.*src=\"(.*?)\"[^>]*>/', $post.text, $img)}
+                        <a href="{$post.link}">
+                            <img class="post-img" alt="" src="{$img[1]}" >
+                        </a>
+                    {/if}
+                    {$post.text|strip_tags|truncate:255}
+                    <div class="clear-both"></div>
+                </div>
             {/foreach}
         </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#carousel0').owlCarousel({
-                    items: 6,
-                    autoPlay: 3000,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    pagination: true
-                });
-            });
-        </script>
-    {/if}
-{/if}
+    </div>
+</div>

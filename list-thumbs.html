@@ -40,7 +40,7 @@
                     <h4>
                         <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
                     </h4>
-                    <p class="description" itemprop="description">{$p.summary|truncate:255}</p>
+                    <p class="description" itemprop="description">{$p.summary|truncate:230}</p>
                     <p class="price">
                         <span class="price-new">{shop_currency_html($p.price)}</span> 
                         {if $p.compare_price > 0}
