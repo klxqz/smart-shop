@@ -68,6 +68,7 @@ $(document).ready(function () {
             c.prepend('<a href="#" class="dialog-close">&times;</a>');
         });
         d.show();
+        $('html').addClass('dialog-open');
         return false;
     });
     $(document).on('click', '.product-image-next', function () {
@@ -79,7 +80,13 @@ $(document).ready(function () {
         } else {
             index = 0;
         }
+        img.hide();
+        img.after('<i class="icon16 loading"><i>');
         img.attr('src', images[index]);
+        img.one('load', function () {
+            $(this).next('.loading').remove();
+            $(this).show();
+        });
         return false;
     });
     $(document).on('click', '.product-image-prev', function () {
@@ -201,11 +208,7 @@ $(document).ready(function () {
         location.reload();
     });
 
-    $('.dialog').on('click', 'a.dialog-close', function () {
-        $(this).closest('.dialog').hide().find('.content').empty();
-        return false;
-    });
-
+    
     $(document).keyup(function (e) {
         if (e.keyCode == 27) {
             $(".dialog:visible").hide().find('.content').empty();
@@ -226,6 +229,7 @@ $(document).ready(function () {
                 c.prepend('<a href="#" class="dialog-close">&times;</a>');
             });
             d.show();
+            $('html').addClass('dialog-open');
             return false;
         }
 
@@ -318,7 +322,7 @@ $(document).ready(function () {
         var next = current.next();
         if (next.length) {
             win.lazyLoad({
-                container: '#container',
+                container: '#content',
                 load: function () {
                     win.lazyLoad('sleep');
 

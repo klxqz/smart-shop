@@ -44,13 +44,15 @@
     <div class="category-list-thumb row">
         {foreach $category.subcategories as $sc}
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                <a href="{$sc.url}">
-                    {if class_exists(shopLogocategoryPlugin) && shopLogocategoryPlugin::getImgUrl($sc.id)}
-                        <img src="{shopLogocategoryPlugin::getImgUrl($sc.id)}" alt="{$sc.name|escape}" />
-                    {else}
-                        <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}" />
-                    {/if}
-                </a>
+                {if $theme_settings.category_image_plugin}
+                    <a href="{$sc.url}">
+                        {if $theme_settings.category_image_plugin == 'logocategory' && class_exists(shopLogocategoryPlugin) && shopLogocategoryPlugin::getImgUrl($sc.id)}
+                            <img src="{shopLogocategoryPlugin::getImgUrl($sc.id)}" alt="{$sc.name|escape}" />
+                        {else}
+                            <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}" />
+                        {/if}
+                    </a>
+                {/if}
                 <a href="{$sc.url}">{$sc.name}</a> 
             </div>
         {/foreach}
@@ -118,7 +120,7 @@
             {/if}
         </div>
 
-        {$products_pers = explode(',','5,10,20,30,50,100')}
+        {$products_pers = explode(',', $theme_settings.products_pers)}
         <div class="col-sm-1 text-right">
             <label class="control-label" for="input-limit">[`Show`]:</label>
         </div>

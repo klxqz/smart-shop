@@ -1,4 +1,4 @@
-<script src="{$wa_active_theme_url}!js/jquery.elevateZoom-3.0.8.min.js"></script>
+<script src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
 <script src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
 <script src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
 <link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
@@ -32,6 +32,8 @@
                 </div>
                 <script type="text/javascript">
                     $("#zoom_01").elevateZoom({
+                        zoomWindowWidth: 300,
+                        zoomWindowHeight: 300,
                         gallery: 'gallery_01',
                         cursor: 'pointer',
                         galleryActiveClass: 'active',
@@ -48,9 +50,33 @@
                             'height': $(this).height()
                         });
                     });
-                    $("#zoom_01").bind("click", function (e) {
+
+                    function zoomResize() {
                         var ez = $('#zoom_01').data('elevateZoom');
-                        $.swipebox(ez.getGalleryList());
+                        if ($(document).width() > 767) {
+                            ez.changeState('enable');
+                            $('.zoomContainer').show();
+                        } else {
+                            ez.changeState('disable');
+                            $('.zoomContainer').hide();
+                        }
+                    }
+                    $(window).resize(zoomResize);
+                    zoomResize();
+
+                    var zoomimages = [];
+                    var images = [];
+                    $('.thumbnail').each(function () {
+                        zoomimages.push({
+                            'href': $(this).data('zoom-image')
+                        });
+                        images.push($(this).data('image'));
+                    });
+                    $("#zoom_01").on("click", function (e) {
+                        var index = images.indexOf($(this).attr('src'));
+                        $.swipebox(zoomimages, {
+                            initialIndexOnArray: index
+                        });
                         return false;
                     });
                 </script>

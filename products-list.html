@@ -48,13 +48,15 @@
                             <span class="saving">-{$percent}%</span>        
                         {/if}
                     </p>
-                    <div class="rating">
-                        {for $i=1 to 5}
-                            <span class="fa fa-stack">
-                                {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                        {/for}
-                    </div>
+                    {if $theme_settings.products_rating}
+                        <div class="rating">
+                            {for $i=1 to 5}
+                                <span class="fa fa-stack">
+                                    {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            {/for}
+                        </div>
+                    {/if}
                 </div>
                 <div class="button-group" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
                     <meta itemprop="price" content="{$p.price}">
@@ -70,8 +72,16 @@
                         <link itemprop="availability" href="http://schema.org/OutOfStock" />
                     {/if}
                     <div class="add-to-links">
-                        <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]"><i class="fa fa-heart"></i></button>
-                        <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]"><i class="fa fa-exchange"></i></button>
+                        {if $theme_settings.products_add_favorites_button}
+                            <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        {/if}
+                        {if $theme_settings.products_add_compare_button}
+                            <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]">
+                                <i class="fa fa-exchange"></i>
+                            </button>
+                        {/if}
                     </div>
 
                 </div>

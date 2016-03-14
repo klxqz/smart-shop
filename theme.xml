@@ -248,6 +248,21 @@
             <name locale="en_US">Show quick view</name>
             <name locale="ru_RU">Показывать быстрый просмотр</name>
         </setting>
+        <setting var="products_add_favorites_button" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">"Add to favorites" button</name>
+            <name locale="ru_RU">Кнопка «Добавить в избранное»</name>
+        </setting>
+        <setting var="products_add_compare_button" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">"Add to Compare" button</name>
+            <name locale="ru_RU">Кнопка «Добавить в сравнение»</name>
+        </setting>
+        <setting var="products_rating" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">rating</name>
+            <name locale="ru_RU">Рейтинг</name>
+        </setting>
         
         <setting var="homepage_info" control_type="group_divider">
             <value/>
@@ -707,6 +722,26 @@
             <value/>
             <name locale="en_US">Application «Shop». Products category</name>
             <name locale="ru_RU">Приложение «Магазин». Категория товаров</name>
+        </setting>
+        <setting var="category_image_plugin" control_type="radio">
+            <value>logocategory</value>
+            <name locale="en_US">Plugin to display images category</name>
+            <name locale="ru_RU">Плагин для вывода изображений категории</name>
+            <options>
+                <option value="logocategory">
+                    <name locale="en_US">Use plugin <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/logocategory/">Логотип категории</a><br/>]]></name>
+                    <name locale="ru_RU">Использовать плагин <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/logocategory/">Логотип категории</a><br/>]]></name>
+                </option>
+                <option value="">
+                    <name locale="en_US">Do not use</name>
+                    <name locale="ru_RU">Не использовать</name>
+                </option>
+            </options>
+        </setting>
+        <setting var="products_pers" control_type="text">
+            <value>10,20,30,50,100</value>
+            <name locale="en_US">The possible number of products per page</name>
+            <name locale="ru_RU">Возможное количество товаров на странице</name>
         </setting>
         <setting var="lazyloading" control_type="checkbox">
             <value>1</value>

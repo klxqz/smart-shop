@@ -40,7 +40,7 @@
                     <h4>
                         <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
                     </h4>
-                    <p class="description" itemprop="description">{$p.summary|truncate:230}</p>
+                    <p class="description" itemprop="description">{$p.summary|truncate:180}</p>
                     <p class="price">
                         <span class="price-new">{shop_currency_html($p.price)}</span> 
                         {if $p.compare_price > 0}
@@ -49,13 +49,15 @@
                             <span class="saving">-{$percent}%</span>        
                         {/if}
                     </p>
-                    <div class="rating">
-                        {for $i=1 to 5}
-                            <span class="fa fa-stack">
-                                {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                        {/for}
-                    </div>
+                    {if $theme_settings.products_rating}
+                        <div class="rating">
+                            {for $i=1 to 5}
+                                <span class="fa fa-stack">
+                                    {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            {/for}
+                        </div>
+                    {/if}
                 </div>
                 <div class="button-group" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
                     <meta itemprop="price" content="{$p.price}">
@@ -73,8 +75,16 @@
                     {/if}
 
                     <div class="add-to-links">
-                        <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]"><i class="fa fa-heart"></i> <span>[`Add to Wish List`]</span></button>
-                        <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]"><i class="fa fa-exchange"></i> <span>[`Compare this Product`]</span></button>
+                        {if $theme_settings.products_add_favorites_button}
+                            <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]">
+                                <i class="fa fa-heart"></i> <span>[`Add to Wish List`]</span>
+                            </button>
+                        {/if}
+                        {if $theme_settings.products_add_compare_button}
+                            <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]">
+                                <i class="fa fa-exchange"></i> <span>[`Compare this Product`]</span>
+                            </button>
+                        {/if}
                     </div>
 
                 </div>

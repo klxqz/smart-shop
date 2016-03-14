@@ -2,7 +2,11 @@
     <div id="adv_ajaxfilter_box">
         <h3>[`Filter`]</h3>
         <form id="adv_ajaxfilter" class="filters ajax">
-            {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
+            {if waRequest::cookie('shop_filter_collapsible')}
+                {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
+            {else}
+                {$filter_collapsible = []}
+            {/if}
             {foreach $filters as $fid => $filter}
                 {if $fid == 'price'}
                     {$c = $wa->shop->currency(true)}
@@ -25,9 +29,14 @@
                         {if !empty($filter.unit)}
                             {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
                         {/if}
-                        <div class="option_name{if in_array($fid, $filter_collapsible)} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
-                        {if $filter.type == 'boolean'}
-                            <div class="collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                        {$hide = 0}
+                        {if empty($filter_collapsible) || in_array($fid, $filter_collapsible)}
+                            {$hide = 1}
+                        {/if}
+                        <div class="option_name{if $hide} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
+                        <div class="collapsible"{if $hide} style="display: none;"{/if}>
+                            {if $filter.type == 'boolean'}
+
                                 <ul>
                                     <li>
                                         <label>
@@ -48,20 +57,18 @@
                                         </label>
                                     </li>
                                 </ul>
-                            </div>
-                        {elseif isset($filter.min)}
-                            <div data-min="{$filter.min}" 
-                                 data-max="{$filter.max}" 
-                                 data-name-min="{$filter.code}[min]" 
-                                 data-name-max="{$filter.code}[max]" 
-                                 class="price_slider collapsible"{if in_array($fid, $filter_collapsible)} style="display: none;"{/if}>
-                                <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
-                                <label> - </label>
-                                <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
-                            </div>
-                            {$jquery_ui_include = true}
-                        {else}
-                            <div class="collapsible"{if in_array($fid, $filter_collapsible)} style="display: none;"{/if}>
+                            {elseif isset($filter.min)}
+                                <div data-min="{$filter.min}" 
+                                     data-max="{$filter.max}" 
+                                     data-name-min="{$filter.code}[min]" 
+                                     data-name-max="{$filter.code}[max]" 
+                                     class="price_slider">
+                                    <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
+                                    <label> - </label>
+                                    <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
+                                </div>
+                                {$jquery_ui_include = true}
+                            {else}
                                 <ul>
                                     {foreach $filter.values as $v_id => $v}
                                         <li>
@@ -72,8 +79,8 @@
                                         </li>
                                     {/foreach}
                                 </ul>
-                            </div>
-                        {/if}
+                            {/if}
+                        </div>
                     </div>
                 {/if}
             {/foreach}
