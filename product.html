@@ -1,7 +1,9 @@
 <script src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
-<script src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
-<script src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
-<link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
+{if $theme_settings.zoom_images != 'zoom'}
+    <script src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
+    <script src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
+    <link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
+{/if}
 
 <div itemscope itemtype="http://schema.org/Product">
     <h1 itemprop="name">{$product.name}</h1>
@@ -20,9 +22,11 @@
                 {/if}
             </div>
             {if $product.image_id}
-                <div class="center-block text-center ">
-                    <span class="zoom-gallery"><i class="fa fa-search"></i> [`Click image for Gallery`]</span>
-                </div>
+                {if $theme_settings.zoom_images != 'zoom'}
+                    <div class="center-block text-center ">
+                        <span class="zoom-gallery"><i class="fa fa-search"></i> [`Click image for Gallery`]</span>
+                    </div>
+                {/if}
                 <div class="image-additional" id="gallery_01">
                     {foreach $product.images as $image}
                         <a class="thumbnail" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
@@ -31,53 +35,65 @@
                     {/foreach}
                 </div>
                 <script type="text/javascript">
-                    $("#zoom_01").elevateZoom({
-                        zoomWindowWidth: 300,
-                        zoomWindowHeight: 300,
-                        gallery: 'gallery_01',
-                        cursor: 'pointer',
-                        galleryActiveClass: 'active',
-                        imageCrossfade: true,
-                        zoomWindowFadeIn: 500,
-                        zoomWindowFadeOut: 500,
-                        lensFadeIn: 500,
-                        lensFadeOut: 500,
-                        loadingIcon: '{$wa_parent_theme_url}img/icons/progress.gif'
-                    }).load(function () {
-                        $(this).removeAttr('style');
-                        $('.zoomWrapper').css({
-                            'width': $(this).width(),
-                            'height': $(this).height()
+                    var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}';
+                    var swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}';
+                    $(function () {
+                        $("#zoom_01").elevateZoom({
+                            zoomWindowWidth: 300,
+                            zoomWindowHeight: 300,
+                            gallery: 'gallery_01',
+                            cursor: 'pointer',
+                            galleryActiveClass: 'active',
+                            imageCrossfade: true,
+                            zoomWindowFadeIn: 500,
+                            zoomWindowFadeOut: 500,
+                            lensFadeIn: 500,
+                            lensFadeOut: 500,
+                            loadingIcon: '{$wa_parent_theme_url}img/icons/progress.gif'
+                        }).load(function () {
+                            $(this).removeAttr('style');
+                            $('.zoomWrapper').css({
+                                'width': $(this).width(),
+                                'height': $(this).height()
+                            });
                         });
-                    });
 
-                    function zoomResize() {
-                        var ez = $('#zoom_01').data('elevateZoom');
-                        if ($(document).width() > 767) {
-                            ez.changeState('enable');
-                            $('.zoomContainer').show();
-                        } else {
+                        if (zoomDisable) {
+                            var ez = $('#zoom_01').data('elevateZoom');
                             ez.changeState('disable');
                             $('.zoomContainer').hide();
+                        } else {
+                            function zoomResize() {
+                                var ez = $('#zoom_01').data('elevateZoom');
+                                if ($(document).width() > 767) {
+                                    ez.changeState('enable');
+                                    $('.zoomContainer').show();
+                                } else {
+                                    ez.changeState('disable');
+                                    $('.zoomContainer').hide();
+                                }
+                            }
+                            $(window).resize(zoomResize);
+                            zoomResize();
                         }
-                    }
-                    $(window).resize(zoomResize);
-                    zoomResize();
 
-                    var zoomimages = [];
-                    var images = [];
-                    $('.thumbnail').each(function () {
-                        zoomimages.push({
-                            'href': $(this).data('zoom-image')
-                        });
-                        images.push($(this).data('image'));
-                    });
-                    $("#zoom_01").on("click", function (e) {
-                        var index = images.indexOf($(this).attr('src'));
-                        $.swipebox(zoomimages, {
-                            initialIndexOnArray: index
-                        });
-                        return false;
+                        if (!swipeboxDisable) {
+                            var zoomimages = [];
+                            var images = [];
+                            $('.thumbnail').each(function () {
+                                zoomimages.push({
+                                    'href': $(this).data('zoom-image')
+                                });
+                                images.push($(this).data('image'));
+                            });
+                            $("#zoom_01").on("click", function (e) {
+                                var index = images.indexOf($(this).attr('src'));
+                                $.swipebox(zoomimages, {
+                                    initialIndexOnArray: index
+                                });
+                                return false;
+                            });
+                        }
                     });
                 </script>
             {/if}

@@ -218,3 +218,20 @@ a.quick-view{
 @media screen and (max-width: 513px) {
     .review-form .review-submit { padding:0;}
 }
+@media screen and (max-width: 513px) {
+    .review-form .review-submit { padding:0;}
+}
+#content .adv_ajaxfilter_box{
+        display: none;
+    }
+@media screen and (max-width: 767px) {
+    #content .adv_ajaxfilter_box{
+        display: block;
+    }
+}
+#content .adv_ajaxfilter_box .adv_ajaxfilter{
+    display: none;
+}
+.compare-block{
+    overflow-x: auto;
+}

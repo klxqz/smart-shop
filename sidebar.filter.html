@@ -1,7 +1,10 @@
 {if !empty($filters)}
-    <div id="adv_ajaxfilter_box">
-        <h3>[`Filter`]</h3>
-        <form id="adv_ajaxfilter" class="filters ajax">
+    <div class="adv_ajaxfilter_box">
+        <h3>
+            [`Filter`]
+            <a href="#" class="toggle-menu"><i class="fa fa-bars"></i></a>
+        </h3>
+        <form class="adv_ajaxfilter filters ajax">
             {if waRequest::cookie('shop_filter_collapsible')}
                 {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
             {else}
@@ -84,6 +87,8 @@
                     </div>
                 {/if}
             {/foreach}
+            <input class="btn btn-primary" type="submit" value="[`Filter products`]" />
+            <a class="btn btn-default float-right" href="{$wa->currentUrl(0,1)}" />[`Reset`]</a>
         </form>
     </div>
     {if $jquery_ui_include}

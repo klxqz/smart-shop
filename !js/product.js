@@ -1,7 +1,7 @@
 function Product(form, options) {
     this.form = $(form);
     this.add2cart = this.form.find(".add2cart");
-    this.button = this.add2cart.find("input[type=submit]");
+    this.button = this.add2cart.find("#button-cart");
     for (var k in options) {
         this[k] = options[k];
     }
@@ -69,14 +69,14 @@ function Product(form, options) {
                 self.form.find(".sku-no-stock").show();
                 self.button.attr('disabled', 'disabled');
             }
-            self.add2cart.find(".price").data('price', sku.price);
+            self.add2cart.find("price-new").data('price', sku.price);
             self.updatePrice(sku.price, sku.compare_price);
         } else {
             self.form.find("div.stocks div").hide();
             self.form.find(".sku-no-stock").show();
             self.button.attr('disabled', 'disabled');
-            self.add2cart.find(".compare-at-price").hide();
-            self.add2cart.find(".price").empty();
+            self.add2cart.find(".price-old").hide();
+            self.add2cart.find(".price-new").empty();
         }
     });
     this.form.find(".sku-feature:first").change();
@@ -247,16 +247,16 @@ Product.prototype.updatePrice = function (price, compare_price) {
             var price = parseFloat(input_checked.data('price'));
             var compare_price = parseFloat(input_checked.data('compare-price'));
         } else {
-            var price = parseFloat(this.add2cart.find(".price").data('price'));
+            var price = parseFloat(this.add2cart.find(".price-new").data('price'));
         }
     }
     if (compare_price) {
-        if (!this.add2cart.find(".compare-at-price").length) {
-            this.add2cart.prepend('<span class="compare-at-price nowrap"></span>');
+        if (!this.add2cart.find(".price-old").length) {
+            this.add2cart.find(".price-new").before('<span class="price-old"></span>');
         }
-        this.add2cart.find(".compare-at-price").html(this.currencyFormat(compare_price)).show();
+        this.add2cart.find(".price-old").html(this.currencyFormat(compare_price)).show();
     } else {
-        this.add2cart.find(".compare-at-price").hide();
+        this.add2cart.find(".price-old").hide();
     }
     var self = this;
     this.form.find(".services input:checked").each(function () {

@@ -562,8 +562,8 @@
         
         <setting var="divider_sidebar_shop" control_type="group_divider">
             <value/>
-            <name locale="en_US">Sidebar application «Shop»</name>
-            <name locale="ru_RU">Сайдбар. Приложение «Магазин»</name>
+            <name locale="en_US">Sidebar</name>
+            <name locale="ru_RU">Сайдбар</name>
         </setting>
         
         <setting var="shop_sidebar_show_catalog" control_type="checkbox">
@@ -579,16 +579,60 @@
         </setting>
         
         <setting var="sidebar_shop_custom_content" control_type="text">
-            <value><![CDATA[<h2>Пользовательский контент</h2>
+            <value><![CDATA[<h3>Пользовательский контент</h3>
 <p>Этот текстовый блок можно отредактировать в админ. панели управления сайта в настройках темы дизайна. Вы можете разместить любой контент: текст, HTML, изображения.</p>]]></value>
             <name locale="en_US">Custom Content</name>
             <name locale="ru_RU">Пользовательский контент</name>
         </setting>
-        
+        <setting var="divider_sidebar_shop_widgets" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Sidebar. Widgets</name>
+            <name locale="ru_RU">Сайдбар. Виджеты</name>
+        </setting>
+        <setting var="sidebar_shop_vk_widget" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show VK widget</name>
+            <name locale="ru_RU">Показывать Виджет ВКонтакте</name>
+        </setting>
+        <setting var="sidebar_shop_vk_widget_code" control_type="text">
+            <value><![CDATA[<h3>Мы ВКонтакте</h3>
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?121"></script>
+<!-- VK Widget -->
+<div id="vk_groups" style="margin: 0 auto;"></div>
+<script type="text/javascript">
+VK.Widgets.Group("vk_groups", {mode: 0, width: "220", height: "400", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 20003922);
+</script>]]></value>
+            <name locale="en_US">VK widget</name>
+            <name locale="ru_RU">Виджет ВКонтакте</name>
+            <description locale="en_US">Place the widget code in this field. The code can be found here <![CDATA[<a target="_blank" href="https://vk.com/dev/Community">VK widget</a>]]></description>
+            <description locale="ru_RU">Поместите код виджета в это поле. Код пожно получить по ссылке <![CDATA[<a target="_blank" href="https://vk.com/dev/Community">Виджет ВКонтакте</a>]]></description>
+        </setting>
+        <setting var="sidebar_shop_facebook_widget" control_type="checkbox">
+            <value>0</value>
+            <name locale="en_US">Show FaceBook widget</name>
+            <name locale="ru_RU">Показывать Виджет FaceBook</name>
+        </setting>
+        <setting var="sidebar_shop_facebook_widget_code" control_type="text">
+            <value><![CDATA[<h3>Мы на FaceBook</h3>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=167596066655267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-page" data-href="https://www.facebook.com/Webasyst.RU" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/Webasyst.RU"><a href="https://www.facebook.com/Webasyst.RU">Webasyst RU</a></blockquote></div></div>]]></value>
+            <name locale="en_US">FaceBook widget</name>
+            <name locale="ru_RU">Виджет FaceBook</name>
+            <description locale="en_US">Place the widget code in this field. The code can be found here <![CDATA[<a target="_blank" href="https://developers.facebook.com/docs/plugins/page-plugin">FaceBook widget</a>]]></description>
+            <description locale="ru_RU">Поместите код виджета в это поле. Код пожно получить по ссылке <![CDATA[<a target="_blank" href="https://developers.facebook.com/docs/plugins/page-plugin">Виджет FaceBook</a>]]></description>
+        </setting>
         <setting var="divider_sidebar_shop_tags" control_type="group_divider">
             <value/>
-            <name locale="en_US">Sidebar application «Shop». Tags</name>
-            <name locale="ru_RU">Сайдбар. Приложение «Магазин». Теги</name>
+            <name locale="en_US">Sidebar. Tags</name>
+            <name locale="ru_RU">Сайдбар. Теги</name>
         </setting>
         <setting var="show_tags" control_type="checkbox">
             <value>1</value>
@@ -677,7 +721,7 @@
             <name locale="ru_RU">Название списка 2</name>
         </setting>
         <setting var="sidebar_productlist2_list" control_type="text">
-            <value>set/bestsellers</value>
+            <value></value>
             <name locale="en_US">Products list 2</name>
             <name locale="ru_RU">Список товаров 2</name>
         </setting>
@@ -753,6 +797,26 @@
             <value/>
             <name locale="en_US">Application «Shop». Страница товара</name>
             <name locale="ru_RU">Приложение «Магазин». Страница товара</name>
+        </setting>
+        
+        <setting var="zoom_images" control_type="radio">
+            <value>zoom_swipebox</value>
+            <name locale="ru_RU">Увеличение изображений</name>
+            <name locale="en_US">Zoom images</name>
+            <options>
+                <option value="zoom">
+                    <name locale="ru_RU">Лупа<![CDATA[<br/><br/>]]></name>
+                    <name locale="en_US">Zoom<![CDATA[<br/><br/>]]></name>
+                </option>
+                <option value="swipebox">
+                    <name locale="ru_RU">Всплывающее окно<![CDATA[<br/><br/>]]></name>
+                    <name locale="en_US">popup<![CDATA[<br/><br/>]]></name>
+                </option>
+                <option value="zoom_swipebox">
+                    <name locale="ru_RU">Лупа + всплывающее окно<![CDATA[<br/><br/>]]></name>
+                    <name locale="en_US">Zoom + popup<![CDATA[<br/><br/>]]></name>
+                </option>
+            </options>
         </setting>
         
         <setting var="selectable_features_control" control_type="radio">
@@ -842,6 +906,10 @@
         <locale>
             <msgid>Grid</msgid>
             <msgstr locale="ru_RU">Таблица</msgstr>
+        </locale>
+        <locale>
+            <msgid>Clear list</msgid>
+            <msgstr locale="ru_RU">Очистить список</msgstr>
         </locale>
     </locales>
 </theme>

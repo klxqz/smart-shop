@@ -149,6 +149,7 @@ $(document).ready(function () {
         $.get(url + '&_=_', function (html) {
             var tmp = $('<div></div>').html(html);
             $('.products-category').html(tmp.find('.products-category').html());
+            $('.pagination-block').html(tmp.find('.pagination-block').html());
             if (localStorage.getItem('display') == 'list') {
                 $('#list-view').trigger('click');
             } else {
