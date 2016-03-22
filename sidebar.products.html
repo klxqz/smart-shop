@@ -1,6 +1,6 @@
 {if $products}
-    <h3>{$list_title}</h3>
-    <div{if !empty($class)} class="{$class}"{/if}>
+    <h3 class="hidden-xs">{$list_title}</h3>
+    <div class="{if !empty($class)}{$class} {/if}hidden-xs">
         {foreach $products as $p}
             <div class="product-thumb clearfix">
                 <div class="image">

@@ -6,6 +6,32 @@ function Product(form, options) {
         this[k] = options[k];
     }
     var self = this;
+
+
+    var feature_values = {};
+    var feature_id, value_id, p;
+    for (var key in this.features) {
+        var a = key.split(';');
+        for (var i in a) {
+            if (a[i]) {
+                p = a[i].split(':');
+                feature_id = p[0];
+                value_id = p[1];
+                if (typeof feature_values[feature_id] == "undefined") {
+                    feature_values[feature_id] = [];
+                }
+                feature_values[feature_id].push(value_id);
+            }
+        }
+    }
+
+    for (var i in feature_values) {
+
+    }
+
+    console.log(feature_values);
+
+
     // add to cart block: services
     this.form.find(".services input[type=checkbox]").click(function () {
         var obj = $('select[name="service_variant[' + $(this).val() + ']"]');

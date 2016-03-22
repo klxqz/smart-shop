@@ -49,8 +49,8 @@
     {/if}
 {/if}
 {if $brands_list}
-    <h3>[`Brands`]</h3>
-    <div class="list-group brands-block">
+    <h3 class="hidden-xs">[`Brands`]</h3>
+    <div class="list-group brands-block  hidden-xs">
         <ul class="list-item">
             {$brands_list}
         </ul>
@@ -61,29 +61,31 @@
 
 {*custom-content-begin*}
 {if $theme_settings.sidebar_shop_custom_content}
-    <div class="list-group">
+    <div class="list-group hidden-xs">
         {$theme_settings.sidebar_shop_custom_content}
     </div>
 {/if}
 {*custom-content-end*}
 
-{if $theme_settings.sidebar_shop_vk_widget}
-    <div class="list-group">
-        {$theme_settings.sidebar_shop_vk_widget_code}
-    </div>
-{/if}
-{if $theme_settings.sidebar_shop_facebook_widget}
-    <div class="list-group">
-        {$theme_settings.sidebar_shop_facebook_widget_code}
-    </div>
+{if !strpos($wa->server('HTTP_USER_AGENT'), 'Google Page Speed')}
+    {if $theme_settings.sidebar_shop_vk_widget}
+        <div class="list-group hidden-xs">
+            {$theme_settings.sidebar_shop_vk_widget_code}
+        </div>
+    {/if}
+    {if $theme_settings.sidebar_shop_facebook_widget}
+        <div class="list-group hidden-xs">
+            {$theme_settings.sidebar_shop_facebook_widget_code}
+        </div>
+    {/if}
 {/if}
 
 {*news-begin*}
 {if $theme_settings.sidebar_show_news && $wa->blog}
-    <h3>
+    <h3 class="hidden-xs">
         [`News`] - <a href="{$wa->blog->url()}" class="viewall">[`view all`]</a>
     </h3>
-    <div id="news0" class="owl-carousel">
+    <div id="news0" class="owl-carousel hidden-xs">
         {foreach $wa->blog->posts() as $post}
             <div class="item">
                 <h4>
@@ -122,7 +124,7 @@
 {/for}
 
 {if $count_banners}
-    <div id="banner0" class="owl-carousel">
+    <div id="banner0" class="owl-carousel hidden-xs">
         {for $i = 1 to 3}
             {if $theme_settings["sidebar_shop_banner`$i`"] && $theme_settings["sidebar_shop_banner`$i`_url"]}
                 <div class="item">
@@ -154,8 +156,8 @@
 
 {*tags-begin*}
 {if $wa->shop->tags() && $theme_settings.show_tags}
-    <h3>[`Tags`]</h3>
-    <div class="list-group tags-block">
+    <h3 class="hidden-xs">[`Tags`]</h3>
+    <div class="list-group tags-block hidden-xs">
         <ul>
             {foreach $wa->shop->tags() as $tag}
                 {if trim($tag.name)}
@@ -176,7 +178,7 @@
 {* @event frontend_nav.%plugin_id% *}
 {foreach $frontend_nav as $plugin_id => $_}
     {if $plugin_id != 'brands-plugin' && $plugin_id != 'productbrands-plugin'}
-        <div class="list-group">
+        <div class="list-group hidden-xs">
             {$_}
         </div>
     {/if}
@@ -185,7 +187,7 @@
 <!-- plugin hook: 'frontend_nav_aux' -->
 {* @event frontend_nav_aux.%plugin_id% *}
 {foreach $frontend_nav_aux as $plugin_id => $_}
-    <div class="list-group">
+    <div class="list-group hidden-xs">
         {$_}
     </div>
 {/foreach}

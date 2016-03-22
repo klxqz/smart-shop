@@ -29,7 +29,7 @@
                 {/if}
                 <div class="image-additional" id="gallery_01">
                     {foreach $product.images as $image}
-                        <a class="thumbnail" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
+                        <a class="thumbnail{if $image@first} active{/if}" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
                             <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
                         </a>
                     {/foreach}
