@@ -1,304 +1,352 @@
-<script src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
-{if $theme_settings.zoom_images != 'zoom'}
-    <script src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
-    <script src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
-    <link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
-{/if}
+{strip}
+    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+        <script type="text/javascript">
+            window.delayJs.push("{$wa_active_theme_url}!js/jquery.elevatezoom.min.js");
+        </script>
+    {else}
+        <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
+    {/if}
+    {if $theme_settings.zoom_images != 'zoom'}
+        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            <script type="text/javascript">
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js");
+            </script>
+        {else}
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
+        {/if}
+        <link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
+    {/if}
 
-<div itemscope itemtype="http://schema.org/Product">
-    <h1 itemprop="name">{$product.name}</h1>
-    <div class="row product-info">
-        <div class="col-sm-6">
-            <div class="image">
+    <div itemscope itemtype="http://schema.org/Product">
+        <h1 itemprop="name">{$product.name}</h1>
+        <div class="row product-info">
+            <div class="col-sm-6">
+                <div class="image">
+                    {if $product.image_id}
+                        <img class="img-responsive" itemprop="image" id="zoom_01" 
+                             src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
+                             title="{$product.name|escape}" alt="{$product.name|escape}" 
+                             data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
+                    {else}
+                        <div class="center-block text-center ">
+                            <img itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
+                        </div>
+                    {/if}
+                </div>
                 {if $product.image_id}
-                    <img class="img-responsive" itemprop="image" id="zoom_01" 
-                         src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
-                         title="{$product.name|escape}" alt="{$product.name|escape}" 
-                         data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
-                {else}
-                    <div class="center-block text-center ">
-                        <img itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
+                    {if $theme_settings.zoom_images != 'zoom'}
+                        <div class="center-block text-center ">
+                            <span class="zoom-gallery"><i class="fa fa-search"></i> [`Click image for Gallery`]</span>
+                        </div>
+                    {/if}
+                    <div class="image-additional" id="gallery_01">
+                        {foreach $product.images as $image}
+                            <a class="thumbnail{if $image@first} active{/if}" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
+                                <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
+                            </a>
+                        {/foreach}
                     </div>
+                    <script type="text/javascript">
+                        var delayed_function = function () {
+                            var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}';
+                            var swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}';
+                            $("#zoom_01").elevateZoom({
+                                zoomWindowWidth: 300,
+                                zoomWindowHeight: 300,
+                                gallery: 'gallery_01',
+                                cursor: 'pointer',
+                                galleryActiveClass: 'active',
+                                imageCrossfade: true,
+                                zoomWindowFadeIn: 500,
+                                zoomWindowFadeOut: 500,
+                                lensFadeIn: 500,
+                                lensFadeOut: 500,
+                                loadingIcon: '{$wa_parent_theme_url}img/icons/progress.gif'
+                            }).load(function () {
+                                $(this).removeAttr('style');
+                                $('.zoomWrapper').css({
+                                    'width': $(this).width(),
+                                    'height': $(this).height()
+                                });
+                            });
+
+                            if (zoomDisable) {
+                                var ez = $('#zoom_01').data('elevateZoom');
+                                ez.changeState('disable');
+                                $('.zoomContainer').hide();
+                            } else {
+                                function zoomResize() {
+                                    var ez = $('#zoom_01').data('elevateZoom');
+                                    if ($(document).width() > 767) {
+                                        ez.changeState('enable');
+                                        $('.zoomContainer').show();
+                                    } else {
+                                        ez.changeState('disable');
+                                        $('.zoomContainer').hide();
+                                    }
+                                }
+                                $(window).resize(zoomResize);
+                                zoomResize();
+                            }
+
+                            if (!swipeboxDisable) {
+                                var zoomimages = [];
+                                var images = [];
+                                $('.thumbnail').each(function () {
+                                    zoomimages.push({
+                                        'href': $(this).data('zoom-image')
+                                    });
+                                    images.push($(this).data('image'));
+                                });
+                                $("#zoom_01").on("click", function (e) {
+                                    var index = images.indexOf($(this).attr('src'));
+                                    $.swipebox(zoomimages, {
+                                        initialIndexOnArray: index
+                                    });
+                                    return false;
+                                });
+                            }
+                        };
+                        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                        window.delayJsFunctions.push(delayed_function);
+                        {else}
+                        $(delayed_function());
+                        {/if}
+                    </script>
                 {/if}
             </div>
-            {if $product.image_id}
-                {if $theme_settings.zoom_images != 'zoom'}
-                    <div class="center-block text-center ">
-                        <span class="zoom-gallery"><i class="fa fa-search"></i> [`Click image for Gallery`]</span>
-                    </div>
+            <div class="col-sm-6">
+
+                {include file="product.cart.html" inline}
+
+                <div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                    <meta itemprop="ratingValue" content="0" />
+                    <p>
+                        {for $i = 1 to 5}
+                            <span class="fa fa-stack">
+                                {if $i <= $product.rating}
+                                    <i class="fa fa-star fa-stack-1x"></i>
+                                {/if}
+                                <i class="fa fa-star-o fa-stack-1x"></i>
+                            </span>
+                        {/for}
+                        &nbsp;
+                        <a class="review-button" href="#">[`Reviews`]:&nbsp;<span itemprop="reviewCount">{$reviews_total_count}</span></a> / 
+                        <a class="write-review-button" href="#">[`Write a review`]</a>
+                        <script type="text/javascript">
+                            var delayed_function = function () {
+                                $('.review-button').click(function () {
+                                    $('a[href=\"#tab-review\"]').trigger('click');
+                                    $("html, body").animate({
+                                        scrollTop: $('.nav.nav-tabs').offset().top
+                                    }, "slow");
+                                    return false;
+                                });
+                                $('.write-review-button').click(function () {
+                                    $('a[href=\"#tab-review\"]').trigger('click');
+                                    $('.write-review a').trigger('click');
+                                    $("html, body").animate({
+                                        scrollTop: $('.nav.nav-tabs').offset().top
+                                    }, "slow");
+                                    return false;
+                                });
+                            };
+                            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                            window.delayJsFunctions.push(delayed_function);
+                            {else}
+                            $(delayed_function());
+                            {/if}
+                        </script>
+                    </p>
+                </div>
+                <hr>
+                {if $theme_settings.share_buttons}
+                    <!-- AddThis Button BEGIN -->
+                    {$theme_settings.share_buttons}
+                    <!-- AddThis Button END -->
+                    <hr>
                 {/if}
-                <div class="image-additional" id="gallery_01">
-                    {foreach $product.images as $image}
-                        <a class="thumbnail{if $image@first} active{/if}" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
-                            <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
-                        </a>
+
+                <!-- categories -->
+                {if $product.categories}
+                    <p id="product-categories">
+                        [`Categories`]:
+                        {foreach $product.categories as $c}
+                            {if $c.status}
+                                <a href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url])}">{$c.name|escape}</a>{if !$c@last},&nbsp;{/if}
+                            {/if}
+                        {/foreach}
+                    </p>
+                {/if}
+
+                <!-- tags -->
+                {if $product.tags}
+                    <p class="tags" id="product-tags">
+                        [`Tags`]:
+                        <span class="product-info">
+                            {foreach $product.tags as $t}
+                                <a href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}">{$t}</a>{if !$t@last},&nbsp;{/if}
+                            {/foreach}
+                        </span>
+                    </p>
+                {/if}
+                <!-- plugin hook: 'frontend_product.block_aux' -->
+                {* @event frontend_product.%plugin_id%.block_aux *}
+                {foreach $frontend_product as $_}
+                    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.block_aux}
+                {/foreach}   
+
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab-description" data-toggle="tab">[`Description`]</a>
+            </li>
+            <li>
+                <a href="#tab-features" data-toggle="tab">[`Features`]</a>
+            </li>
+            <li>
+                <a href="#tab-review" data-toggle="tab">[`Reviews`]</a>
+            </li>
+            {foreach $product.pages as $page}
+                <li>
+                    <a href="#page-{$page.url}" data-toggle="tab">{$page.name}</a>
+                </li>
+            {/foreach}
+            <!-- plugin hook: 'frontend_product.menu' -->
+            {* @event frontend_product.%plugin_id%.menu *}
+            {foreach $frontend_product as $_}
+                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.menu}
+            {/foreach}
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-description" itemprop="description">
+                <div class="cpt_product_description ">
+                    {$product.description}
+
+                    <!-- plugin hook: 'frontend_product.block' -->
+                    {* @event frontend_product.%plugin_id%.block *}
+                    {foreach $frontend_product as $_}
+                        {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.block}
                     {/foreach}
                 </div>
-                <script type="text/javascript">
-                    var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}';
-                    var swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}';
-                    $(function () {
-                        $("#zoom_01").elevateZoom({
-                            zoomWindowWidth: 300,
-                            zoomWindowHeight: 300,
-                            gallery: 'gallery_01',
-                            cursor: 'pointer',
-                            galleryActiveClass: 'active',
-                            imageCrossfade: true,
-                            zoomWindowFadeIn: 500,
-                            zoomWindowFadeOut: 500,
-                            lensFadeIn: 500,
-                            lensFadeOut: 500,
-                            loadingIcon: '{$wa_parent_theme_url}img/icons/progress.gif'
-                        }).load(function () {
-                            $(this).removeAttr('style');
-                            $('.zoomWrapper').css({
-                                'width': $(this).width(),
-                                'height': $(this).height()
-                            });
-                        });
-
-                        if (zoomDisable) {
-                            var ez = $('#zoom_01').data('elevateZoom');
-                            ez.changeState('disable');
-                            $('.zoomContainer').hide();
-                        } else {
-                            function zoomResize() {
-                                var ez = $('#zoom_01').data('elevateZoom');
-                                if ($(document).width() > 767) {
-                                    ez.changeState('enable');
-                                    $('.zoomContainer').show();
-                                } else {
-                                    ez.changeState('disable');
-                                    $('.zoomContainer').hide();
-                                }
-                            }
-                            $(window).resize(zoomResize);
-                            zoomResize();
-                        }
-
-                        if (!swipeboxDisable) {
-                            var zoomimages = [];
-                            var images = [];
-                            $('.thumbnail').each(function () {
-                                zoomimages.push({
-                                    'href': $(this).data('zoom-image')
-                                });
-                                images.push($(this).data('image'));
-                            });
-                            $("#zoom_01").on("click", function (e) {
-                                var index = images.indexOf($(this).attr('src'));
-                                $.swipebox(zoomimages, {
-                                    initialIndexOnArray: index
-                                });
-                                return false;
-                            });
-                        }
-                    });
-                </script>
-            {/if}
-        </div>
-        <div class="col-sm-6">
-
-            {include file="product.cart.html" inline}
-
-            <div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                <meta itemprop="ratingValue" content="0" />
-                <p>
-                    {for $i = 1 to 5}
-                        <span class="fa fa-stack">
-                            {if $i <= $product.rating}
-                                <i class="fa fa-star fa-stack-1x"></i>
-                            {/if}
-                            <i class="fa fa-star-o fa-stack-1x"></i>
-                        </span>
-                    {/for}
-
-                    <a class="write-review-button" href="#">[`Reviews`]: <span itemprop="reviewCount">{$reviews_total_count}</span></a> / 
-                    <a class="write-review-button" href="#">[`Write a review`]</a>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $('.write-review-button').click(function () {
-                                $('a[href=\"#tab-review\"]').trigger('click');
-                                $("html, body").animate({
-                                    scrollTop: $('.nav.nav-tabs').offset().top
-                                }, "slow");
-                                return false;
-                            });
-                        });
-                    </script>
-
-                </p>
             </div>
-            <hr>
-            {if $theme_settings.share_buttons}
-                <!-- AddThis Button BEGIN -->
-                {$theme_settings.share_buttons}
-                <!-- AddThis Button END -->
-                <hr>
-            {/if}
-
-            <!-- categories -->
-            {if $product.categories}
-                <p id="product-categories">
-                    [`Categories`]:
-                    {foreach $product.categories as $c}
-                        {if $c.status}
-                            <a href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url])}">{$c.name|escape}</a>{if !$c@last},{/if}
-                        {/if}
-                    {/foreach}
-                </p>
-            {/if}
-
-            <!-- tags -->
-            {if $product.tags}
-                <p class="tags" id="product-tags">
-                    [`Tags`]:
-                    <span class="product-info">
-                        {foreach $product.tags as $t}
-                            <a href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}">{$t}</a>{if !$t@last},{/if}
-                        {/foreach}
-                    </span>
-                </p>
-            {/if}
-            <!-- plugin hook: 'frontend_product.block_aux' -->
-            {* @event frontend_product.%plugin_id%.block_aux *}
-            {foreach $frontend_product as $_}
-                {$_.block_aux}
-            {/foreach}   
-
-        </div>
-    </div>
-    <ul class="nav nav-tabs">
-        <li class="active">
-            <a href="#tab-description" data-toggle="tab">[`Description`]</a>
-        </li>
-        <li>
-            <a href="#tab-features" data-toggle="tab">[`Features`]</a>
-        </li>
-        <li>
-            <a href="#tab-review" data-toggle="tab">[`Reviews`]</a>
-        </li>
-        {foreach $product.pages as $page}
-            <li>
-                <a href="#page-{$page.url}" data-toggle="tab">{$page.name}</a>
-            </li>
-        {/foreach}
-        <!-- plugin hook: 'frontend_product.menu' -->
-        {* @event frontend_product.%plugin_id%.menu *}
-        {foreach $frontend_product as $_}
-            {$_.menu}
-        {/foreach}
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab-description" itemprop="description">
-            <div class="cpt_product_description ">
-                {$product.description}
-
-                <!-- plugin hook: 'frontend_product.block' -->
-                {* @event frontend_product.%plugin_id%.block *}
-                {foreach $frontend_product as $_}
-                    {$_.block}
-                {/foreach}
-            </div>
-        </div>
-        <div class="tab-pane" id="tab-features">
-            <table class="table table-striped">
-                <tbody>
-                    {foreach $product.features as $f_code => $f_value}    
-                        <tr{if $features[$f_code].type == 'divider'} class="divider"{/if}>
-                            <td class="name">
-                                <strong>{$features[$f_code].name|escape}</strong>
-                            </td>
-                            <td class="value">
-                                {if is_array($f_value)}
-                                    {if $features[$f_code].type == 'color'}
-                                        {implode('<br /> ', $f_value)}
+            <div class="tab-pane" id="tab-features">
+                <table class="table table-striped">
+                    <tbody>
+                        {foreach $product.features as $f_code => $f_value}    
+                            <tr{if $features[$f_code].type == 'divider'} class="divider"{/if}>
+                                <td class="name">
+                                    <strong>{$features[$f_code].name|escape}</strong>
+                                </td>
+                                <td class="value">
+                                    {if is_array($f_value)}
+                                        {if $features[$f_code].type == 'color'}
+                                            {implode('<br /> ', $f_value)}
+                                        {else}
+                                            {implode(', ', $f_value)}
+                                        {/if}
                                     {else}
-                                        {implode(', ', $f_value)}
+                                        {$f_value}
                                     {/if}
-                                {else}
-                                    {$f_value}
-                                {/if}
-                            </td>
-                        </tr>
-                    {/foreach}
-                </tbody>
-            </table>
-        </div>
-        <div id="tab-review" class="tab-pane">
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tab-review" class="tab-pane">
 
-            <div id="review">
-                <div>
-                    {$theme_settings.product_reviews_display_mode = 'product_page'}
-                    {if $theme_settings.product_reviews_display_mode == 'separate_page'}
-                        {if !empty($reviews)}
-                            {foreach $reviews as $review}
-                                {include file="review.html" reply_allowed=false inline}
-                            {/foreach}
-                        {/if}
+                <div id="review">
+                    <div>
+                        {$theme_settings.product_reviews_display_mode = 'product_page'}
+                        {if $theme_settings.product_reviews_display_mode == 'separate_page'}
+                            {if !empty($reviews)}
+                                {foreach $reviews as $review}
+                                    {include file="review.html" reply_allowed=false inline}
+                                {/foreach}
+                            {/if}
 
-                        {if empty($reviews)}
-                            <p>{sprintf('[`Be the first to <a href="%s">write a review</a> of this product!`]', 'reviews/')}</p>
-                        {else}
-                            {sprintf(_w(
+                            {if empty($reviews)}
+                                <p>{sprintf('[`Be the first to <a href="%s">write a review</a> of this product!`]', 'reviews/')}</p>
+                            {else}
+                                {sprintf(_w(
                             'Read <a href="%s">all %d review</a> on %s', 
                             'Read <a href="%s">all %d reviews</a> on %s', 
                             $reviews_total_count, false
                         ), 'reviews/', $reviews_total_count, $product.name|escape)
-                            }
-                        {/if}            
+                                }
+                            {/if}            
+                        {/if}
+                    </div>
+                    <div class="text-right"></div>
+                </div>
+                {if $theme_settings.product_reviews_display_mode == 'product_page'}
+                    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                        <script type="text/javascript">
+                            window.delayJs.push("{$wa_app_static_url}js/rate.widget.js");
+                        </script>
+                    {else}
+                        <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
                     {/if}
-                </div>
-                <div class="text-right"></div>
+                    <script type="text/javascript">
+                        var product_reviews_display_mode = 'product_page';
+                        var product_url = '{$wa->shop->productUrl($product)}';
+                    </script>
+                {/if}
             </div>
-            {if $theme_settings.product_reviews_display_mode == 'product_page'}
-                <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
-                <script type="text/javascript">
-                    var product_reviews_display_mode = 'product_page';
-                    var product_url = '{$wa->shop->productUrl($product)}';
-                </script>
-            {/if}
+            {foreach $product.pages as $page}
+                <div class="tab-pane" id="page-{$page.url}">
+                    <div class="cpt_product_description ">
+                        {$page.content}
+                    </div>
+                </div>
+            {/foreach}
         </div>
-        {foreach $product.pages as $page}
-            <div class="tab-pane" id="page-{$page.url}">
-                <div class="cpt_product_description ">
-                    {$page.content}
-                </div>
-            </div>
-        {/foreach}
+
+
+        {$upselling = $product->upSelling()}
+        {$crossselling = $product->crossSelling()}
+        {if $upselling}
+            {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
+            <script type="text/javascript">
+                var delayed_function = function () {
+                    $(".owl-carousel.upselling_pro").owlCarousel({
+                        itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+                        lazyLoad: true,
+                        navigation: true,
+                        navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                        scrollPerPage: true
+                    });
+                };
+                {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                window.delayJsFunctions.push(delayed_function);
+                {else}
+                $(delayed_function());
+                {/if}
+            </script>
+        {/if}
+        {if $crossselling}
+            {$title = sprintf('[`Customers who bought %s also bought`]', $product.name|escape)}
+            {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
+            <script type="text/javascript">
+                var delayed_function = function () {
+                    $(".owl-carousel.crossselling_pro").owlCarousel({
+                        itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+                        lazyLoad: true,
+                        navigation: true,
+                        navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                        scrollPerPage: true
+                    });
+                };
+                {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                window.delayJsFunctions.push(delayed_function);
+                {else}
+                $(delayed_function());
+                {/if}
+            </script>
+        {/if}
     </div>
-
-
-    {$upselling = $product->upSelling()}
-    {$crossselling = $product->crossSelling()}
-    {if $upselling}
-        {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".owl-carousel.upselling_pro").owlCarousel({
-                    itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                    lazyLoad: true,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    scrollPerPage: true
-                });
-            });
-        </script>
-    {/if}
-    {if $crossselling}
-        {$title = sprintf('[`Customers who bought %s also bought`]', $product.name|escape)}
-        {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".owl-carousel.crossselling_pro").owlCarousel({
-                    itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                    lazyLoad: true,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    scrollPerPage: true
-                });
-            });
-        </script>
-    {/if}
-</div>
+{/strip}

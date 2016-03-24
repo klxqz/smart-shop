@@ -1,85 +1,318 @@
-<link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
-<link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
-<script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
-<script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
-<script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/init.js'></script>
+{strip}
+    {if $theme_settings.homepage_slider_type == 'images'}
+        <div class="slider-wrapper">
+            <div id="slideshow0" class="nivoSlider">
+                {for $i = 1 to 5}
+                    {if $theme_settings["slide`$i`"] && $theme_settings["slide`$i`_url"]}
+                        <a href="{$theme_settings["slide`$i`_url"]}">
+                            <img src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
+                        </a>
+                    {elseif $theme_settings["slide`$i`"]}
+                        <img src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
+                    {/if}
+                {/for}
+            </div>
+        </div>
 
 
+        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            <script type="text/javascript">
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js");
+                window.delayJsFunctions.push(function () {
+                    $('#slideshow0').nivoSlider({
+                        prevText: '<i class="fa fa-chevron-left"></i>',
+                        nextText: '<i class="fa fa-chevron-right"></i>',
+                    });
+                });
+            </script>
+        {else}
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $('#slideshow0').nivoSlider({
+                        prevText: '<i class="fa fa-chevron-left"></i>',
+                        nextText: '<i class="fa fa-chevron-right"></i>',
+                    });
+                });
+            </script>
+        {/if}
+    {elseif $theme_settings.homepage_slider_type == 'product'}
+        {$product_id = $theme_settings.slider_product_id}
+        {$products = $wa->shop->products([$product_id])}
+        {if !empty($products[$product_id])}
+            {$product = $products[$product_id]}
+            {$images_a = $wa->shop->images($product_id, ['600','60x60'])}
+            {if !empty($images_a[$product_id])}
+                {$images_a = $images_a[$product_id]}
+                <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
+                <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
+                <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
+                <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
 
-<div id="rev_slider_15_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="margin:0px auto;background-color:#111111;padding:0px;margin-top:0px;margin-bottom:0px;background-image:url({$wa_active_theme_url}img/revslider/webproduct_darkbg3.jpg);background-repeat:no-repeat;background-size:cover;background-position:center center;">
-    <!-- START REVOLUTION SLIDER 5.2.0 fullwidth mode -->
-    <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
-        <ul>
-            <!-- SLIDE  -->
-            <li data-index="rs-58" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone1-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number One" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone1.png"  alt="" title="phone1.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-59" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone2-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Two" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone2.png"  alt="" title="phone2.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            {*
-            <!-- SLIDE  -->
-            <li data-index="rs-60" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone3-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Three" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone3.png"  alt="" title="phone3.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-61" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone4-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Four" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone4.png"  alt="" title="phone4.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-62" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone5-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Five" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone5.png"  alt="" title="phone5.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-63" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone6-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Six" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone6.png"  alt="" title="phone6.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-64" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone7-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Seven" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone7.png"  alt="" title="phone7.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-65" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone8-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Eight" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone8.png"  alt="" title="phone8.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>
-            <!-- SLIDE  -->
-            <li data-index="rs-66" data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$wa_active_theme_url}img/revslider/phone9-60x60.png"  data-rotate="0"  data-saveperformance="off"  data-title="Number Nine" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                <!-- MAIN IMAGE -->
-                <img src="{$wa_active_theme_url}img/revslider/phone9.png"  alt="" title="phone9.png"  width="600" height="600" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                <!-- LAYERS -->
-            </li>*}
-        </ul>
+                <div id="rev_slider_15_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
+                    <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
+                        <ul>
+                            {foreach $images_a as $image}
+                                <li data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$image['url_1']}"  data-rotate="0"  data-saveperformance="off">
+                                    <a href="{$product.frontend_url}">
+                                        <img src="{$image['url_0']}"  alt="" title="{$product.name|escape}">
+                                    </a>
+                                    <a class="tp-caption tp-resizeme" 
+                                       href="{$product.frontend_url}"
+                                       data-x="['center','center','center','center']" data-hoffset="['20','20','20','20']" 
+                                       data-y="['bottom','bottom','bottom','bottom']" data-voffset="['20','20','20','20']" 
+                                       style="z-index: 5; white-space: nowrap; font-size: 13px; font-weight: 500;text-transform:left;background-color:rgba(0, 0, 0, 0.50);padding:5px 10px 5px 10px;cursor:pointer;color:#fff;">{$product.name}</a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+                <style>
+                    #rev_slider_15_1_wrapper{
+                        margin:0px auto;
+                        background-color:{$theme_settings.slider_bg_color};
+                        padding:0px;
+                        {if $theme_settings.slider_bg_image}
+                            background-image:url({$wa_active_theme_url}{$theme_settings.slider_bg_image});
+                            background-repeat:no-repeat;
+                            background-size:cover;
+                            background-position:center center;
+                        {/if}
+                    }
+                </style>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#rev_slider_15_1").show().revolution({
+                            sliderType: "carousel",
+                            dottedOverlay: "none",
+                            delay: 9000,
+                            navigation: {
+                                keyboardNavigation: "on",
+                                keyboard_direction: "horizontal",
+                                mouseScrollNavigation: "off",
+                                mouseScrollReverse: "default",
+                                onHoverStop: "off",
+                                arrows: {
+                                    style: "erinyen",
+                                    enable: true,
+                                    hide_onmobile: false,
+                                    hide_onleave: false,
+                                    tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
+                                    left: {
+                                        h_align: "left",
+                                        v_align: "center",
+                                        h_offset: 30,
+                                        v_offset: 0
+                                    },
+                                    right: {
+                                        h_align: "right",
+                                        v_align: "center",
+                                        h_offset: 30,
+                                        v_offset: 0
+                                    }
+                                }
+                                ,
+                                thumbnails: {
+                                    style: "gyges",
+                                    enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
+                                                        width: 60,
+                                                        height: 60,
+                                                        min_width: 60,
+                                                        wrapper_padding: 20,
+                                                        wrapper_color: "#000000",
+                                                        wrapper_opacity: "0.15",
+                                                        tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
+                                                        visibleAmount: 9,
+                                                        hide_onmobile: false,
+                                                        hide_onleave: false,
+                                                        direction: "horizontal",
+                                                        span: true,
+                                                        position: "outer-bottom",
+                                                        space: 10,
+                                                        h_align: "center",
+                                                        v_align: "bottom",
+                                                        h_offset: 0,
+                                                        v_offset: 0
+                                                    }
+                                                },
+                                                carousel: {
+                                                    maxRotation: 65,
+                                                    vary_rotation: "on",
+                                                    minScale: 55,
+                                                    vary_scale: "off",
+                                                    horizontal_align: "center",
+                                                    vertical_align: "center",
+                                                    fadeout: "on",
+                                                    vary_fade: "on",
+                                                    maxVisibleItems: 5,
+                                                    infinity: "off",
+                                                    space: -150,
+                                                    stretch: "off"
+                                                },
+                                                visibilityLevels: [1240, 1024, 778, 480],
+                                                gridwidth: 600,
+                                                gridheight: 600,
+                                                lazyType: "none",
+                                                shadow: 0,
+                                                spinner: "off",
+                                                stopLoop: "on",
+                                                stopAfterLoops: 0,
+                                                stopAtSlide: 1,
+                                                shuffle: "off",
+                                                autoHeight: "off",
+                                                disableProgressBar: "on",
+                                                hideThumbsOnMobile: "off",
+                                                hideSliderAtLimit: 0,
+                                                hideCaptionAtLimit: 0,
+                                                hideAllCaptionAtLilmit: 0,
+                                                debugMode: false,
+                                                fallbacks: {
+                                                    simplifyAll: "off",
+                                                    nextSlideOnWindowFocus: "off",
+                                                    disableFocusListener: false,
+                                                }
+                                            });
+                                        });
+                </script>
+            {/if}
+        {/if}
+    {elseif $theme_settings.homepage_slider_type == 'products'}
+
+        {$products = $wa->shop->products($theme_settings.slider_products_id)}
+        {if !empty($products)}
 
 
-    </div>
+            <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
+            <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
+            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
+            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
 
+            <div id="rev_slider_15_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
+                <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
+                    <ul>
+                        {foreach $products as $product}
+                            <li  data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '60x60', false)}"  data-rotate="0"  data-saveperformance="off">
+                                <a href="{$product.frontend_url}">
+                                    <img src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '530', false)}"   alt="" title="{$product.name|escape}">
+                                </a>
+                                <a class="tp-caption tp-resizeme" 
+                                   href="{$product.frontend_url}"
+                                   data-x="['center','center','center','center']"
+                                   data-y="['bottom','bottom','bottom','bottom']" data-voffset="['20','20','20','20']" 
+                                   style="z-index: 5; white-space: nowrap; font-size: 13px; font-weight: 500;text-transform:left;background-color:rgba(0, 0, 0, 0.50);padding:5px 10px 5px 10px;cursor:pointer;color:#fff;">{$product.name}</a>
+                            </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+            <style>
+                #rev_slider_15_1_wrapper{
+                    margin:0px auto;
+                    background-color:{$theme_settings.slider_bg_color};
+                    padding:0px;
+                    {if $theme_settings.slider_bg_image}
+                        background-image:url({$wa_active_theme_url}{$theme_settings.slider_bg_image});
+                        background-repeat:no-repeat;
+                        background-size:cover;
+                        background-position:center center;
+                    {/if}
+                }
+            </style>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#rev_slider_15_1").show().revolution({
+                        sliderType: "carousel",
+                        dottedOverlay: "none",
+                        delay: 9000,
+                        navigation: {
+                            keyboardNavigation: "on",
+                            keyboard_direction: "horizontal",
+                            mouseScrollNavigation: "off",
+                            mouseScrollReverse: "default",
+                            onHoverStop: "off",
+                            arrows: {
+                                style: "erinyen",
+                                enable: true,
+                                hide_onmobile: false,
+                                hide_onleave: false,
+                                tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
+                                left: {
+                                    h_align: "left",
+                                    v_align: "center",
+                                    h_offset: 30,
+                                    v_offset: 0
+                                },
+                                right: {
+                                    h_align: "right",
+                                    v_align: "center",
+                                    h_offset: 30,
+                                    v_offset: 0
+                                }
+                            }
+                            ,
+                            thumbnails: {
+                                style: "gyges",
+                                enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
+                                                    width: 60,
+                                                    height: 60,
+                                                    min_width: 60,
+                                                    wrapper_padding: 20,
+                                                    wrapper_color: "#000000",
+                                                    wrapper_opacity: "0.15",
+                                                    tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
+                                                    visibleAmount: 9,
+                                                    hide_onmobile: false,
+                                                    hide_onleave: false,
+                                                    direction: "horizontal",
+                                                    span: true,
+                                                    position: "outer-bottom",
+                                                    space: 10,
+                                                    h_align: "center",
+                                                    v_align: "bottom",
+                                                    h_offset: 0,
+                                                    v_offset: 0
+                                                }
+                                            },
+                                            carousel: {
+                                                maxRotation: 65,
+                                                vary_rotation: "on",
+                                                minScale: 55,
+                                                vary_scale: "off",
+                                                horizontal_align: "center",
+                                                vertical_align: "center",
+                                                fadeout: "on",
+                                                vary_fade: "on",
+                                                maxVisibleItems: 5,
+                                                infinity: "off",
+                                                space: -150,
+                                                stretch: "off"
+                                            },
+                                            visibilityLevels: [1240, 1024, 778, 480],
+                                            gridwidth: 600,
+                                            gridheight: 600,
+                                            lazyType: "none",
+                                            shadow: 0,
+                                            spinner: "off",
+                                            stopLoop: "on",
+                                            stopAfterLoops: 0,
+                                            stopAtSlide: 1,
+                                            shuffle: "off",
+                                            autoHeight: "off",
+                                            disableProgressBar: "on",
+                                            hideThumbsOnMobile: "off",
+                                            hideSliderAtLimit: 0,
+                                            hideCaptionAtLimit: 0,
+                                            hideAllCaptionAtLilmit: 0,
+                                            debugMode: false,
+                                            fallbacks: {
+                                                simplifyAll: "off",
+                                                nextSlideOnWindowFocus: "off",
+                                                disableFocusListener: false,
+                                            }
+                                        });
+                                    });
+            </script>
 
-</div>
-<!-- END REVOLUTION SLIDER -->
-
-
-
-
-
-
-
-
-
-
+        {/if}
+    {/if}
+{/strip}

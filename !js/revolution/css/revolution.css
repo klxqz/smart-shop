@@ -181,6 +181,7 @@ website:   	http://www.themepunch.com
 
 .rev_slider li.tp-revslider-slidesli {
     position: absolute !important;
+    text-align: center;
 }
 
 

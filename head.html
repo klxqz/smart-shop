@@ -1,3 +1,4 @@
+{strip}
 {if !empty($nofollow)}
     <!-- "nofollow" for pages not to be indexed, e.g. customer account -->
     <meta name="robots" content="noindex,nofollow" />
@@ -5,7 +6,9 @@
 
 <!-- plugin hook: 'frontend_head' -->
 {* @event frontend_head.%plugin_id% *}
-{foreach $frontend_head as $_}{$_}{/foreach}
+{foreach $frontend_head as $_}
+    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+{/foreach}
 
 
 {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
@@ -13,3 +16,4 @@
     var wishlist_url = '{$wa->getUrl('shop/frontend/search')}?list=wishlist';
     var compare_url = '{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}';
 </script>
+{/strip}

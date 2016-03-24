@@ -1,102 +1,112 @@
-{if !empty($filters)}
-    <div class="adv_ajaxfilter_box">
-        <h3>
-            [`Filter`]
-            <a href="#" class="toggle-menu"><i class="fa fa-bars"></i></a>
-        </h3>
-        <form class="adv_ajaxfilter filters ajax">
-            {if waRequest::cookie('shop_filter_collapsible')}
-                {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
-            {else}
-                {$filter_collapsible = []}
-            {/if}
-            {foreach $filters as $fid => $filter}
-                {if $fid == 'price'}
-                    {$c = $wa->shop->currency(true)}
-                    <div class="option_box">
-                        <div class="option_name{if in_array($fid, $filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
-                        <div data-min="{floor($filter.min)}" 
-                             data-max="{ceil($filter.max)}" 
-                             data-name-min="price_min" 
-                             data-name-max="price_max" 
-                             class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
-                            <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
-                            <label> - </label>
-                            <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
-                            {$jquery_ui_include = true}
-                        </div>
-                    </div>
+{strip}
+    {if !empty($filters)}
+        <div class="adv_ajaxfilter_box">
+            <h3>
+                [`Filter`]
+                <a href="#" class="toggle-menu"><i class="fa fa-bars"></i></a>
+            </h3>
+            <form class="adv_ajaxfilter filters ajax">
+                {if waRequest::cookie('shop_filter_collapsible')}
+                    {$filter_collapsible = explode(',', waRequest::cookie('shop_filter_collapsible'))}
                 {else}
-                    <div class="option_box">
-                        {$_v = $wa->get($filter.code)}
-                        {if !empty($filter.unit)}
-                            {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
-                        {/if}
-                        {$hide = 0}
-                        {if empty($filter_collapsible) || in_array($fid, $filter_collapsible)}
-                            {$hide = 1}
-                        {/if}
-                        <div class="option_name{if $hide} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
-                        <div class="collapsible"{if $hide} style="display: none;"{/if}>
-                            {if $filter.type == 'boolean'}
-
-                                <ul>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1">
-                                            <span>[`Yes`]</span> 
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0">
-                                            <span>[`No`]</span> 
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value=""> 
-                                            <span>[`Any`]</span> 
-                                        </label>
-                                    </li>
-                                </ul>
-                            {elseif isset($filter.min)}
-                                <div data-min="{$filter.min}" 
-                                     data-max="{$filter.max}" 
-                                     data-name-min="{$filter.code}[min]" 
-                                     data-name-max="{$filter.code}[max]" 
-                                     class="price_slider">
-                                    <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
-                                    <label> - </label>
-                                    <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
-                                </div>
+                    {$filter_collapsible = []}
+                {/if}
+                {foreach $filters as $fid => $filter}
+                    {if $fid == 'price'}
+                        {$c = $wa->shop->currency(true)}
+                        <div class="option_box">
+                            <div class="option_name{if in_array($fid, $filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
+                            <div data-min="{floor($filter.min)}" 
+                                 data-max="{ceil($filter.max)}" 
+                                 data-name-min="price_min" 
+                                 data-name-max="price_max" 
+                                 class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                                <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
+                                <label> - </label>
+                                <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
                                 {$jquery_ui_include = true}
-                            {else}
-                                <ul>
-                                    {foreach $filter.values as $v_id => $v}
+                            </div>
+                        </div>
+                    {else}
+                        <div class="option_box">
+                            {$_v = $wa->get($filter.code)}
+                            {if !empty($filter.unit)}
+                                {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
+                            {/if}
+                            {$hide = 0}
+                            {if empty($filter_collapsible) || in_array($fid, $filter_collapsible)}
+                                {$hide = 1}
+                            {/if}
+                            <div class="option_name{if $hide} hided{/if}" data-filter="{$fid}">{$filter.name}{if !empty($filter.unit)} ({$filter.unit.title}){/if}</div>
+                            <div class="collapsible"{if $hide} style="display: none;"{/if}>
+                                {if $filter.type == 'boolean'}
+
+                                    <ul>
                                         <li>
                                             <label>
-                                                <input type="checkbox" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
-                                                <span>{$v}</span> 
+                                                <input type="radio" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1">
+                                                <span>[`Yes`]</span> 
                                             </label>
                                         </li>
-                                    {/foreach}
-                                </ul>
-                            {/if}
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0">
+                                                <span>[`No`]</span> 
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value=""> 
+                                                <span>[`Any`]</span> 
+                                            </label>
+                                        </li>
+                                    </ul>
+                                {elseif isset($filter.min)}
+                                    <div data-min="{$filter.min}" 
+                                         data-max="{$filter.max}" 
+                                         data-name-min="{$filter.code}[min]" 
+                                         data-name-max="{$filter.code}[max]" 
+                                         class="price_slider">
+                                        <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
+                                        <label> - </label>
+                                        <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
+                                    </div>
+                                    {$jquery_ui_include = true}
+                                {else}
+                                    <ul>
+                                        {foreach $filter.values as $v_id => $v}
+                                            <li>
+                                                <label>
+                                                    <input type="checkbox" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
+                                                    <span>{$v}</span> 
+                                                </label>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                {/if}
+                            </div>
                         </div>
-                    </div>
-                {/if}
-            {/foreach}
-            <input class="btn btn-primary" type="submit" value="[`Filter products`]" />
-            <a class="btn btn-default float-right" href="{$wa->currentUrl(0,1)}" />[`Reset`]</a>
-        </form>
-    </div>
-    {if $jquery_ui_include}
-        <link href="{$wa_active_theme_url}!js/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen" />
-        {*<script src="{$wa_active_theme_url}!js/jquery-ui/jquery-ui.js" type="text/javascript"></script>*}
-        <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}"></script>
-        <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}"></script>
-        <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
-        <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
+                    {/if}
+                {/foreach}
+                <input class="btn btn-primary" type="submit" value="[`Filter products`]" />
+                <a class="btn btn-default float-right" href="{$wa->currentUrl(0,1)}" />[`Reset`]</a>
+            </form>
+        </div>
+        {if $jquery_ui_include && !waRequest::isXMLHttpRequest()}
+            <link href="{$wa_active_theme_url}!js/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen" />
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                <script type="text/javascript">
+                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}");
+                </script>
+            {else}
+                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
+            {/if}
+        {/if}
     {/if}
-{/if}
+{/strip}

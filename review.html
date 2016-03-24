@@ -1,3 +1,4 @@
+{strip}
 {* one review output *}
 
 {if !empty($ajax_append)}<li data-id={$review.id} data-parent-id="{$review.parent_id}">{/if}
@@ -59,3 +60,4 @@
     </div>
 
     {if !empty($ajax_append)}<ul class="menu-v with-icons reviews-branch"></ul></li>{/if}
+{/strip}

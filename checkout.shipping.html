@@ -1,3 +1,4 @@
+{strip}
 <div class="checkout-content" data-step-id="shipping">
 <ul class="checkout-options">
     {$external_methods = []}
@@ -57,7 +58,7 @@
             {if !empty($m.form)}<div class="wa-form wa-address" {if $m.id != $shipping.id}style="display:none"{/if}>{$m.form->html()}</div>{/if}
             {if !empty($m.custom_html)}
                 <div class="clear-both"></div>
-                <div class="wa-form" {if $m.id != $shipping.id}style="display:none"{/if}>{$m.custom_html}</div>
+                <div class="wa-form" {if $m.id != $shipping.id}style="display:none"{/if}>{include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$m.custom_html}</div>
             {/if}
         </li>
     {foreachelse}
@@ -67,7 +68,7 @@
     {/foreach}
 </ul>
 <script type="text/javascript">
-    $(function () {
+    var delayed_function = function () {
 
     {if $external_methods}
         $.get("{$wa->getUrl('/frontend/shipping')}", { shipping_id: [{implode(',', $external_methods)}]}, function (response) {
@@ -194,16 +195,23 @@
             responseCallback(shipping_id, response.data);
         }, "json");
     });
-    });
-
+    };
+    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+        window.delayJsFunctions.push(delayed_function);
+    {else}
+        $(delayed_function());
+    {/if}
 </script>
 
 <!-- plugin hook: 'frontend_checkout' -->
 {* @event frontend_checkout.%plugin_id% *}
-{foreach $frontend_checkout as $_}{$_}{/foreach}
+{foreach $frontend_checkout as $_}
+    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+{/foreach}
 
 {if !empty($error)}
 <div class="checkout-result error">{$error}</div>
 {/if}
 
 </div>
+{/strip}

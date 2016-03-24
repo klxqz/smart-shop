@@ -1,3 +1,4 @@
+{strip}
 {$wa->myNav('menu-h bottom-padded')}
 
 <h1>[`Affiliate program`]</h1>
@@ -9,7 +10,7 @@
 {$_aff_plugins_active = 0}
 <!-- plugin hook: 'frontend_my_affiliate' -->
 {* @event frontend_my_affiliate.%plugin_id% *}
-{foreach $frontend_my_affiliate as $_}{$_}{$_aff_plugins_active = 1}{/foreach}
+{foreach $frontend_my_affiliate as $_}{include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}{$_aff_plugins_active = 1}{/foreach}
 
 {if $_aff_plugins_active}<br><br><h2>[`Bonus activity log`]</h2>{/if}
 
@@ -53,3 +54,4 @@
 </table>
 
 {$wa->globals('isMyAccount', true)}
+{/strip}

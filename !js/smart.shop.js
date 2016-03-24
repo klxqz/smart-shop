@@ -210,12 +210,6 @@ $(document).ready(function () {
     });
 
     
-    $(document).keyup(function (e) {
-        if (e.keyCode == 27) {
-            $(".dialog:visible").hide().find('.content').empty();
-        }
-    });
-
     $("#content").on('submit', 'form.addtocart', function () {
         var f = $(this);
         var loading = $('<div class="button-overlay"><i class="icon16 loading"></i></div>');

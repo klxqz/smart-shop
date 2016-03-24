@@ -1,3 +1,4 @@
+{strip}
 {$wa->myNav('menu-h bottom-padded')}
 
 <h1>[`My orders`]</h1>
@@ -51,4 +52,5 @@
 
 <!-- plugin hook: 'frontend_my_orders' -->
 {* @event frontend_my_orders.%plugin_id% *}
-{foreach $frontend_my_orders as $_}{$_}{/foreach}
+{foreach $frontend_my_orders as $_}{include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}{/foreach}
+{/strip}
