@@ -68,17 +68,15 @@
     {/if}
     {*custom-content-end*}
 
-    {if !strpos($wa->server('HTTP_USER_AGENT'), 'Google Page Speed')}
-        {if $theme_settings.sidebar_shop_vk_widget}
-            <div class="list-group hidden-xs">
-                {$theme_settings.sidebar_shop_vk_widget_code}
-            </div>
-        {/if}
-        {if $theme_settings.sidebar_shop_facebook_widget}
-            <div class="list-group hidden-xs">
-                {$theme_settings.sidebar_shop_facebook_widget_code}
-            </div>
-        {/if}
+    {if $theme_settings.sidebar_shop_vk_widget}
+        <div class="list-group hidden-xs">
+            {$theme_settings.sidebar_shop_vk_widget_code}
+        </div>
+    {/if}
+    {if $theme_settings.sidebar_shop_facebook_widget}
+        <div class="list-group hidden-xs">
+            {$theme_settings.sidebar_shop_facebook_widget_code}
+        </div>
     {/if}
 
     {*news-begin*}

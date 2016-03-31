@@ -13,6 +13,10 @@
                        {/if}
                        />
                 <div class="image">
+                    {$badge_html = $wa->shop->badgeHtml($p.badge)}
+                    {if $badge_html}
+                        <div class="corner">{$badge_html}</div>
+                    {/if}  
                     <a href="{$p.frontend_url}">
                         {$wa->shop->productImgHtml($p, '160', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy160.png"])}
                         {if $theme_settings.product_images}
@@ -55,7 +59,7 @@
                                 {for $i=1 to 5}
                                     <span class="fa fa-stack">
                                         {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
-                                    </span>
+                                    </span>&nbsp;
                                 {/for}
                             </div>
                         {/if}

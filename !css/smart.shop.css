@@ -235,3 +235,15 @@ a.quick-view{
 .compare-block{
     overflow-x: auto;
 }
+.corner{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+.badge.bestseller{
+    background: #A6E300;
+}
+.badge.low-price{
+    background: #CE3900;
+}

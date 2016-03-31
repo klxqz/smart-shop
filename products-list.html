@@ -1,96 +1,100 @@
 {strip}
-{if $products}
-    {if !empty($list_title)}
-        <h3>{$list_title}</h3>
-    {/if}
-    <div{if !empty($class)} class="{$class}"{/if}>
-        {foreach $products as $p}
-            <div class="product-thumb clearfix" itemscope itemtype ="http://schema.org/Product">
-                <input type="hidden" class="ajax_product_info" 
-                       data-price="{shop_currency_html($p.price)|escape}"
-                       data-name="{$p.name|escape}" 
-                       data-url="{$p.frontend_url}" 
-                       data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}"
-                       />
-                <div class="image">
-                    <a href="{$p.frontend_url}">
-                        {$wa->shop->productImgHtml($p, '147', ['itemprop' => 'image', 'class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
-                    </a>
-                    {if $theme_settings.product_images}
-                        {$images_a = $wa->shop->images($p.id, ['147'])}
-                        {if !empty($images_a[$p.id]) && count($images_a[$p.id]) > 1}
-                            {$images_a = $images_a[$p.id]}
-                            {$images = []}
-                            {foreach $images_a as $image}
-                                {$images[] = $image['url_0']}
-                            {/foreach}
-                            <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
-                                <div class="product-image-prev"><i class="fa fa-angle-left"></i></div>
-                                <div class="product-image-next"><i class="fa fa-angle-right"></i></div>
-                            </div>
-                        {/if}
-                    {/if}
-                    {if $theme_settings.quick_view}
-                        <a href="{$p.frontend_url}" class="quick-view">
-                            <i class="fa fa-eye"></i>
+    {if $products}
+        {if !empty($list_title)}
+            <h3>{$list_title}</h3>
+        {/if}
+        <div{if !empty($class)} class="{$class}"{/if}>
+            {foreach $products as $p}
+                <div class="product-thumb clearfix" itemscope itemtype ="http://schema.org/Product">
+                    <input type="hidden" class="ajax_product_info" 
+                           data-price="{shop_currency_html($p.price)|escape}"
+                           data-name="{$p.name|escape}" 
+                           data-url="{$p.frontend_url}" 
+                           data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}"
+                           />
+                    <div class="image">
+                        {$badge_html = $wa->shop->badgeHtml($p.badge)}
+                        {if $badge_html}
+                            <div class="corner">{$badge_html}</div>
+                        {/if}  
+                        <a href="{$p.frontend_url}">
+                            {$wa->shop->productImgHtml($p, '147', ['itemprop' => 'image', 'class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
                         </a>
-                    {/if}
-                </div>
-                <div class="caption">
-                    <h4>
-                        <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
-                    </h4>
-                    <p class="description" itemprop="description">{$p.summary|strip_tags}</p>
-                    <p class="price">
-                        <span class="price-new">{shop_currency_html($p.price)}</span>&nbsp;
-                        {if $p.compare_price > 0}
-                            {$percent = floor(($p.compare_price - $p.price) / $p.compare_price * 100)}
-                            <span class="price-old">{shop_currency_html($p.compare_price)}</span>
-                            <span class="saving">-{$percent}%</span>        
+                        {if $theme_settings.product_images}
+                            {$images_a = $wa->shop->images($p.id, ['147'])}
+                            {if !empty($images_a[$p.id]) && count($images_a[$p.id]) > 1}
+                                {$images_a = $images_a[$p.id]}
+                                {$images = []}
+                                {foreach $images_a as $image}
+                                    {$images[] = $image['url_0']}
+                                {/foreach}
+                                <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
+                                    <div class="product-image-prev"><i class="fa fa-angle-left"></i></div>
+                                    <div class="product-image-next"><i class="fa fa-angle-right"></i></div>
+                                </div>
+                            {/if}
                         {/if}
-                    </p>
-                    {if $theme_settings.products_rating}
-                        <div class="rating">
-                            {for $i=1 to 5}
-                                <span class="fa fa-stack">
-                                    {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                            {/for}
-                        </div>
-                    {/if}
-                </div>
-                <div class="button-group" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
-                    <meta itemprop="price" content="{$p.price}">
-                    <meta itemprop="priceCurrency" content="{$wa->shop->primaryCurrency()}">
-                    {if $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
-                        <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
-                            <input type="hidden" name="product_id" value="{$p.id}">
-                            <button class="btn-primary"><span>[`Add to cart`]</span></button>
-                        </form>
-                        <link itemprop="availability" href="http://schema.org/InStock" />
-                    {else}
-                        <strong class="stock-none">{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}</strong>
-                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
-                    {/if}
-                    <div class="add-to-links">
-                        {if $theme_settings.products_add_favorites_button}
-                            <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]">
-                                <i class="fa fa-heart"></i>
-                            </button>
-                        {/if}
-                        {if $theme_settings.products_add_compare_button}
-                            <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]">
-                                <i class="fa fa-exchange"></i>
-                            </button>
+                        {if $theme_settings.quick_view}
+                            <a href="{$p.frontend_url}" class="quick-view">
+                                <i class="fa fa-eye"></i>
+                            </a>
                         {/if}
                     </div>
+                    <div class="caption">
+                        <h4>
+                            <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
+                        </h4>
+                        <p class="description" itemprop="description">{$p.summary|strip_tags}</p>
+                        <p class="price">
+                            <span class="price-new">{shop_currency_html($p.price)}</span>&nbsp;
+                            {if $p.compare_price > 0}
+                                {$percent = floor(($p.compare_price - $p.price) / $p.compare_price * 100)}
+                                <span class="price-old">{shop_currency_html($p.compare_price)}</span>
+                                <span class="saving">-{$percent}%</span>        
+                            {/if}
+                        </p>
+                        {if $theme_settings.products_rating}
+                            <div class="rating">
+                                {for $i=1 to 5}
+                                    <span class="fa fa-stack">
+                                        {if $i <= $p.rating}<i class="fa fa-star fa-stack-2x"></i>{/if}<i class="fa fa-star-o fa-stack-2x"></i>
+                                    </span>&nbsp;
+                                {/for}
+                            </div>
+                        {/if}
+                    </div>
+                    <div class="button-group" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
+                        <meta itemprop="price" content="{$p.price}">
+                        <meta itemprop="priceCurrency" content="{$wa->shop->primaryCurrency()}">
+                        {if $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+                            <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                                <input type="hidden" name="product_id" value="{$p.id}">
+                                <button class="btn-primary"><span>[`Add to cart`]</span></button>
+                            </form>
+                            <link itemprop="availability" href="http://schema.org/InStock" />
+                        {else}
+                            <strong class="stock-none">{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}</strong>
+                            <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                        {/if}
+                        <div class="add-to-links">
+                            {if $theme_settings.products_add_favorites_button}
+                                <button data-id="{$p.id}" class="wishlist-add" data-toggle="tooltip" title="[`Add to Wish List`]">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            {/if}
+                            {if $theme_settings.products_add_compare_button}
+                                <button data-id="{$p.id}" class="compare-add" data-toggle="tooltip" title="[`Compare this Product`]">
+                                    <i class="fa fa-exchange"></i>
+                                </button>
+                            {/if}
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-            {if !empty($max_product_count) && $p@iteration == $max_product_count}
-                {break}
-            {/if}
-        {/foreach}
-    </div>
-{/if}
+                {if !empty($max_product_count) && $p@iteration == $max_product_count}
+                    {break}
+                {/if}
+            {/foreach}
+        </div>
+    {/if}
 {/strip}

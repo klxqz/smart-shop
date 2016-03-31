@@ -1,4 +1,131 @@
 {strip}
+    {function name="includeRevolutionSlider"}
+        <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
+        <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
+        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            <script type="text/javascript">
+                window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js");
+            </script>
+        {else}
+            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
+            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
+        {/if}
+        <style>
+            #rev_slider_15_1_wrapper{
+                margin:0px auto;
+                background-color:{$theme_settings.slider_bg_color};
+                padding:0px;
+                {if $theme_settings.slider_bg_image}
+                    background-image:url({$wa_active_theme_url}{$theme_settings.slider_bg_image});
+                    background-repeat:no-repeat;
+                    background-size:cover;
+                    background-position:center center;
+                {/if}
+            }
+        </style>
+    {/function}
+    {function name="initRevolutionSlider"}
+        <script type="text/javascript">
+            var delayed_function = function () {
+                $("#rev_slider_15_1").show().revolution({
+                    sliderType: "carousel",
+                    dottedOverlay: "none",
+                    delay: 9000,
+                    navigation: {
+                        keyboardNavigation: "on",
+                        keyboard_direction: "horizontal",
+                        mouseScrollNavigation: "off",
+                        mouseScrollReverse: "default",
+                        onHoverStop: "off",
+                        arrows: {
+                            style: "erinyen",
+                            enable: true,
+                            hide_onmobile: false,
+                            hide_onleave: false,
+                            tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
+                            left: {
+                                h_align: "left",
+                                v_align: "center",
+                                h_offset: 30,
+                                v_offset: 0
+                            },
+                            right: {
+                                h_align: "right",
+                                v_align: "center",
+                                h_offset: 30,
+                                v_offset: 0
+                            }
+                        }
+                        ,
+                        thumbnails: {
+                            style: "gyges",
+                            enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
+                                                width: 60,
+                                                height: 60,
+                                                min_width: 60,
+                                                wrapper_padding: 20,
+                                                wrapper_color: "#000000",
+                                                wrapper_opacity: "0.15",
+                                                tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
+                                                visibleAmount: 9,
+                                                hide_onmobile: false,
+                                                hide_onleave: false,
+                                                direction: "horizontal",
+                                                span: true,
+                                                position: "outer-bottom",
+                                                space: 10,
+                                                h_align: "center",
+                                                v_align: "bottom",
+                                                h_offset: 0,
+                                                v_offset: 0
+                                            }
+                                        },
+                                        carousel: {
+                                            maxRotation: 65,
+                                            vary_rotation: "on",
+                                            minScale: 55,
+                                            vary_scale: "off",
+                                            horizontal_align: "center",
+                                            vertical_align: "center",
+                                            fadeout: "on",
+                                            vary_fade: "on",
+                                            maxVisibleItems: 5,
+                                            infinity: "off",
+                                            space: -150,
+                                            stretch: "off"
+                                        },
+                                        visibilityLevels: [1240, 1024, 778, 480],
+                                        gridwidth: 600,
+                                        gridheight: 600,
+                                        lazyType: "none",
+                                        shadow: 0,
+                                        spinner: "off",
+                                        stopLoop: "on",
+                                        stopAfterLoops: 0,
+                                        stopAtSlide: 1,
+                                        shuffle: "off",
+                                        autoHeight: "off",
+                                        disableProgressBar: "on",
+                                        hideThumbsOnMobile: "off",
+                                        hideSliderAtLimit: 0,
+                                        hideCaptionAtLimit: 0,
+                                        hideAllCaptionAtLilmit: 0,
+                                        debugMode: false,
+                                        fallbacks: {
+                                            simplifyAll: "off",
+                                            nextSlideOnWindowFocus: "off",
+                                            disableFocusListener: false,
+                                        }
+                                    });
+                                };
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                                window.delayJsFunctions.push(delayed_function);
+            {else}
+                                $(delayed_function());
+            {/if}
+        </script>
+    {/function}
     {if $theme_settings.homepage_slider_type == 'images'}
         <div class="slider-wrapper">
             <div id="slideshow0" class="nivoSlider">
@@ -44,11 +171,7 @@
             {$images_a = $wa->shop->images($product_id, ['600','60x60'])}
             {if !empty($images_a[$product_id])}
                 {$images_a = $images_a[$product_id]}
-                <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
-                <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
-                <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
-                <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
-
+                {includeRevolutionSlider}
                 <div id="rev_slider_15_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
                     <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
                         <ul>
@@ -67,126 +190,14 @@
                         </ul>
                     </div>
                 </div>
-                <style>
-                    #rev_slider_15_1_wrapper{
-                        margin:0px auto;
-                        background-color:{$theme_settings.slider_bg_color};
-                        padding:0px;
-                        {if $theme_settings.slider_bg_image}
-                            background-image:url({$wa_active_theme_url}{$theme_settings.slider_bg_image});
-                            background-repeat:no-repeat;
-                            background-size:cover;
-                            background-position:center center;
-                        {/if}
-                    }
-                </style>
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $("#rev_slider_15_1").show().revolution({
-                            sliderType: "carousel",
-                            dottedOverlay: "none",
-                            delay: 9000,
-                            navigation: {
-                                keyboardNavigation: "on",
-                                keyboard_direction: "horizontal",
-                                mouseScrollNavigation: "off",
-                                mouseScrollReverse: "default",
-                                onHoverStop: "off",
-                                arrows: {
-                                    style: "erinyen",
-                                    enable: true,
-                                    hide_onmobile: false,
-                                    hide_onleave: false,
-                                    tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
-                                    left: {
-                                        h_align: "left",
-                                        v_align: "center",
-                                        h_offset: 30,
-                                        v_offset: 0
-                                    },
-                                    right: {
-                                        h_align: "right",
-                                        v_align: "center",
-                                        h_offset: 30,
-                                        v_offset: 0
-                                    }
-                                }
-                                ,
-                                thumbnails: {
-                                    style: "gyges",
-                                    enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
-                                                        width: 60,
-                                                        height: 60,
-                                                        min_width: 60,
-                                                        wrapper_padding: 20,
-                                                        wrapper_color: "#000000",
-                                                        wrapper_opacity: "0.15",
-                                                        tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
-                                                        visibleAmount: 9,
-                                                        hide_onmobile: false,
-                                                        hide_onleave: false,
-                                                        direction: "horizontal",
-                                                        span: true,
-                                                        position: "outer-bottom",
-                                                        space: 10,
-                                                        h_align: "center",
-                                                        v_align: "bottom",
-                                                        h_offset: 0,
-                                                        v_offset: 0
-                                                    }
-                                                },
-                                                carousel: {
-                                                    maxRotation: 65,
-                                                    vary_rotation: "on",
-                                                    minScale: 55,
-                                                    vary_scale: "off",
-                                                    horizontal_align: "center",
-                                                    vertical_align: "center",
-                                                    fadeout: "on",
-                                                    vary_fade: "on",
-                                                    maxVisibleItems: 5,
-                                                    infinity: "off",
-                                                    space: -150,
-                                                    stretch: "off"
-                                                },
-                                                visibilityLevels: [1240, 1024, 778, 480],
-                                                gridwidth: 600,
-                                                gridheight: 600,
-                                                lazyType: "none",
-                                                shadow: 0,
-                                                spinner: "off",
-                                                stopLoop: "on",
-                                                stopAfterLoops: 0,
-                                                stopAtSlide: 1,
-                                                shuffle: "off",
-                                                autoHeight: "off",
-                                                disableProgressBar: "on",
-                                                hideThumbsOnMobile: "off",
-                                                hideSliderAtLimit: 0,
-                                                hideCaptionAtLimit: 0,
-                                                hideAllCaptionAtLilmit: 0,
-                                                debugMode: false,
-                                                fallbacks: {
-                                                    simplifyAll: "off",
-                                                    nextSlideOnWindowFocus: "off",
-                                                    disableFocusListener: false,
-                                                }
-                                            });
-                                        });
-                </script>
+                {initRevolutionSlider}
             {/if}
         {/if}
     {elseif $theme_settings.homepage_slider_type == 'products'}
 
         {$products = $wa->shop->products($theme_settings.slider_products_id)}
         {if !empty($products)}
-
-
-            <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
-            <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
-            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
-            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
-
+            {includeRevolutionSlider}
             <div id="rev_slider_15_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
                 <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
                     <ul>
@@ -205,114 +216,7 @@
                     </ul>
                 </div>
             </div>
-            <style>
-                #rev_slider_15_1_wrapper{
-                    margin:0px auto;
-                    background-color:{$theme_settings.slider_bg_color};
-                    padding:0px;
-                    {if $theme_settings.slider_bg_image}
-                        background-image:url({$wa_active_theme_url}{$theme_settings.slider_bg_image});
-                        background-repeat:no-repeat;
-                        background-size:cover;
-                        background-position:center center;
-                    {/if}
-                }
-            </style>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#rev_slider_15_1").show().revolution({
-                        sliderType: "carousel",
-                        dottedOverlay: "none",
-                        delay: 9000,
-                        navigation: {
-                            keyboardNavigation: "on",
-                            keyboard_direction: "horizontal",
-                            mouseScrollNavigation: "off",
-                            mouseScrollReverse: "default",
-                            onHoverStop: "off",
-                            arrows: {
-                                style: "erinyen",
-                                enable: true,
-                                hide_onmobile: false,
-                                hide_onleave: false,
-                                tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
-                                left: {
-                                    h_align: "left",
-                                    v_align: "center",
-                                    h_offset: 30,
-                                    v_offset: 0
-                                },
-                                right: {
-                                    h_align: "right",
-                                    v_align: "center",
-                                    h_offset: 30,
-                                    v_offset: 0
-                                }
-                            }
-                            ,
-                            thumbnails: {
-                                style: "gyges",
-                                enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
-                                                    width: 60,
-                                                    height: 60,
-                                                    min_width: 60,
-                                                    wrapper_padding: 20,
-                                                    wrapper_color: "#000000",
-                                                    wrapper_opacity: "0.15",
-                                                    tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
-                                                    visibleAmount: 9,
-                                                    hide_onmobile: false,
-                                                    hide_onleave: false,
-                                                    direction: "horizontal",
-                                                    span: true,
-                                                    position: "outer-bottom",
-                                                    space: 10,
-                                                    h_align: "center",
-                                                    v_align: "bottom",
-                                                    h_offset: 0,
-                                                    v_offset: 0
-                                                }
-                                            },
-                                            carousel: {
-                                                maxRotation: 65,
-                                                vary_rotation: "on",
-                                                minScale: 55,
-                                                vary_scale: "off",
-                                                horizontal_align: "center",
-                                                vertical_align: "center",
-                                                fadeout: "on",
-                                                vary_fade: "on",
-                                                maxVisibleItems: 5,
-                                                infinity: "off",
-                                                space: -150,
-                                                stretch: "off"
-                                            },
-                                            visibilityLevels: [1240, 1024, 778, 480],
-                                            gridwidth: 600,
-                                            gridheight: 600,
-                                            lazyType: "none",
-                                            shadow: 0,
-                                            spinner: "off",
-                                            stopLoop: "on",
-                                            stopAfterLoops: 0,
-                                            stopAtSlide: 1,
-                                            shuffle: "off",
-                                            autoHeight: "off",
-                                            disableProgressBar: "on",
-                                            hideThumbsOnMobile: "off",
-                                            hideSliderAtLimit: 0,
-                                            hideCaptionAtLimit: 0,
-                                            hideAllCaptionAtLilmit: 0,
-                                            debugMode: false,
-                                            fallbacks: {
-                                                simplifyAll: "off",
-                                                nextSlideOnWindowFocus: "off",
-                                                disableFocusListener: false,
-                                            }
-                                        });
-                                    });
-            </script>
-
+            {initRevolutionSlider}
         {/if}
     {/if}
 {/strip}

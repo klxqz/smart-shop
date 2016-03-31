@@ -230,8 +230,47 @@
     <settings>
         <setting var="divider_store" control_type="group_divider">
             <value/>
-            <name locale="en_US">Store<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]></name>
-            <name locale="ru_RU">Магазин<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]></name>
+            <name locale="en_US">Store<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]>
+                <![CDATA[
+<script type="text/javascript">
+    $(function(){
+        $('input[name="settings[homepage_slider_type]"]').change(function(){
+            var slider_type = $(this).val();
+            console.log(slider_type);
+            $('.home-slider-setting').closest('.field').hide();
+            if(slider_type == 'images') {
+                $('.slider-images').closest('.field').show();
+            } else if(slider_type == 'product') {
+                $('.slider-product').closest('.field').show();
+            } else if(slider_type == 'products') {
+                $('.slider-products').closest('.field').show();
+            }
+        });
+        $('input[name="settings[homepage_slider_type]"]:checked').change();
+    });
+</script>
+]]>
+</name>
+            <name locale="ru_RU">Магазин<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]>
+                <![CDATA[
+<script type="text/javascript">
+    $(function(){
+        $('input[name="settings[homepage_slider_type]"]').change(function(){
+            var slider_type = $(this).val();
+            $('.home-slider-setting').closest('.field').hide();
+            if(slider_type == 'images') {
+                $('.slider-images').closest('.field').show();
+            } else if(slider_type == 'product') {
+                $('.slider-product').closest('.field').show();
+            } else if(slider_type == 'products') {
+                $('.slider-products').closest('.field').show();
+            }
+        });
+        $('input[name="settings[homepage_slider_type]"]:checked').change();
+    });
+</script>
+]]>
+</name>
         </setting>
         <setting var="divider_products" control_type="group_divider">
             <value/>
@@ -349,28 +388,7 @@
         <setting var="homepage_slider_type" control_type="radio">
             <value>images</value>
             <name locale="en_US">Slider type</name>
-            <name locale="ru_RU">
-                Тип слайдера
-                <![CDATA[
-<script type="text/javascript">
-    $(function(){
-        $('input[name="settings[homepage_slider_type]"]').change(function(){
-            var slider_type = $(this).val();
-            console.log(slider_type);
-            $('.home-slider-setting').closest('.field').hide();
-            if(slider_type == 'images') {
-                $('.slider-images').closest('.field').show();
-            } else if(slider_type == 'product') {
-                $('.slider-product').closest('.field').show();
-            } else if(slider_type == 'products') {
-                $('.slider-products').closest('.field').show();
-            }
-        });
-        $('input[name="settings[homepage_slider_type]"]:checked').change();
-    });
-</script>
-]]>
-            </name>
+            <name locale="ru_RU">Тип слайдера</name>
             <options>
                 <option value="images">
                     <name locale="en_US">Slider images<![CDATA[<br/>]]></name>
@@ -666,7 +684,7 @@
             <name locale="ru_RU">Сайдбар. Виджеты</name>
         </setting>
         <setting var="sidebar_shop_vk_widget" control_type="checkbox">
-            <value>1</value>
+            <value>0</value>
             <name locale="en_US">Show VK widget</name>
             <name locale="ru_RU">Показывать Виджет ВКонтакте</name>
         </setting>

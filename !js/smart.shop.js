@@ -1,9 +1,23 @@
-function showMsg(content) {
-    if ($('.alert').length) {
-        $('.alert .close').trigger('click');
+function showMsg(content, type) {
+    if (type === undefined) {
+        type = 'success';
     }
-    $('<div class="alert alert-success">' + content + '<button data-dismiss="alert" class="close" type="button">×</button></div>').prependTo('#container > .container:first-child');
-    $('html, body').animate({scrollTop: 0}, 'slow');
+    noty({
+        text: content,
+        type: type,
+        dismissQueue: true,
+        layout: 'bottomLeft',
+        closeWith: ['click'],
+        maxVisible: 5,
+        theme: 'relax',
+        timeout: 5000,
+        animation: {
+            open: 'animated bounceInLeft',
+            close: 'animated bounceOutLeft',
+            easing: 'swing',
+            speed: 500
+        }
+    });
 }
 function initCompare() {
     $('#content').on('click', '.compare-add', function () {
@@ -13,15 +27,19 @@ function initCompare() {
         } else {
             compare = [];
         }
+        var info = $(this).closest('.product-thumb').find('.ajax_product_info');
         var i = $.inArray($(this).data('id') + '', compare);
         if (i == -1) {
             compare.push($(this).data('id'));
+            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + url + '">Список сравнения</a>');
+        } else {
+            compare.splice(i, 1);
+            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + url + '">Списка сравнения</a>', 'warning');
         }
-        var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
         $('.compare-total').attr('href', url);
         $('.compare-total .count').text(compare.length);
-        var info = $(this).closest('.product-thumb').find('.ajax_product_info');
-        showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + url + '">Список сравнения</a>');
 
 
         if (compare.length > 0) {
@@ -41,13 +59,16 @@ function initWishlist() {
         } else {
             wishlist = [];
         }
+        var info = $(this).closest('.product-thumb').find('.ajax_product_info');
         var i = $.inArray($(this).data('id') + '', wishlist);
         if (i == -1) {
             wishlist.push($(this).data('id'));
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + wishlist_url + '">Избранное</a>');
+        } else {
+            wishlist.splice(i, 1);
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + wishlist_url + '">Избранного</a>', 'warning');
         }
         $('.wishlist-total .count').text(wishlist.length);
-        var info = $(this).closest('.product-thumb').find('.ajax_product_info');
-        showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + wishlist_url + '">Избранное</a>');
 
         if (wishlist.length > 0) {
             $.cookie('shop_wishlist', wishlist.join(','), {expires: 30, path: '/'});
@@ -209,7 +230,7 @@ $(document).ready(function () {
         location.reload();
     });
 
-    
+
     $("#content").on('submit', 'form.addtocart', function () {
         var f = $(this);
         var loading = $('<div class="button-overlay"><i class="icon16 loading"></i></div>');

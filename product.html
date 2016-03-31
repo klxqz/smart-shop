@@ -22,8 +22,12 @@
     <div itemscope itemtype="http://schema.org/Product">
         <h1 itemprop="name">{$product.name}</h1>
         <div class="row product-info">
-            <div class="col-sm-6">
+            <div class="col-sm-6"> 
                 <div class="image">
+                    {$badge_html = $wa->shop->badgeHtml($product.badge)}
+                    {if $badge_html}
+                        <div class="corner">{$badge_html}</div>
+                    {/if} 
                     {if $product.image_id}
                         <img class="img-responsive" itemprop="image" id="zoom_01" 
                              src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
