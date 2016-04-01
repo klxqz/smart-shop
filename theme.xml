@@ -250,7 +250,7 @@
     });
 </script>
 ]]>
-</name>
+            </name>
             <name locale="ru_RU">Магазин<![CDATA[<script>$('.hidden-site').closest('.field,.heading').hide();</script>]]>
                 <![CDATA[
 <script type="text/javascript">
@@ -270,7 +270,7 @@
     });
 </script>
 ]]>
-</name>
+            </name>
         </setting>
         <setting var="divider_products" control_type="group_divider">
             <value/>
@@ -301,6 +301,26 @@
             <value>1</value>
             <name locale="en_US">rating</name>
             <name locale="ru_RU">Рейтинг</name>
+        </setting>
+        
+        <setting var="number_products_in_row" control_type="radio">
+            <value>5</value>
+            <name locale="en_US">Number of products in row</name>
+            <name locale="ru_RU">Количество товаров в строке</name>
+            <options>
+                <option value="3">
+                    <name locale="en_US">3 product (large image)<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">3 товара (большие изображения)<![CDATA[<br/>]]></name>
+                </option>
+                <option value="4">
+                    <name locale="en_US">4 products (medium image)<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">4 товара (средние изображения)<![CDATA[<br/>]]></name>
+                </option>
+                <option value="5">
+                    <name locale="en_US">5 products (small images)<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">5 товаров (маленькие изображения)<![CDATA[<br/>]]></name>
+                </option>
+            </options>
         </setting>
         
         <setting var="homepage_info" control_type="group_divider">
@@ -377,6 +397,12 @@
             <value/>
             <name locale="en_US">Homepage. Slider</name>
             <name locale="ru_RU">Главная страница. Слайдер</name>
+        </setting>
+        
+        <setting var="homepage_slider_with_banners" control_type="checkbox">
+            <value>0</value>
+            <name locale="en_US">Merge slider and banners №4 and №5 on one line</name>
+            <name locale="ru_RU">Объединить слайдер и баннеры №4 и №5 в одну строку</name>
         </setting>
       
         <setting var="homepage_slider_fullwidth" control_type="checkbox">
@@ -653,6 +679,67 @@
             <name locale="ru_RU">баннер 5 ссылка</name>
         </setting>
         
+        <setting var="divider_homepage_photos" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. Photos</name>
+            <name locale="ru_RU">Главная страница. Фото</name>
+        </setting>
+        <setting var="shop_homepage_photos" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show Photos</name>
+            <name locale="ru_RU">Показывать Фото</name>
+        </setting>
+        <setting var="shop_homepage_album_id" control_type="text">
+            <value></value>
+            <name locale="en_US">ID</name>
+            <name locale="ru_RU">Идентификатор</name>
+            <description locale="en_US">album/1 - Photo Album №1; 0 - all photos</description>
+            <description locale="ru_RU">album/1 - фото из альбома №1; 0 - все фото</description>
+        </setting>
+        <setting var="shop_homepage_number_photos" control_type="text">
+            <value>9</value>
+            <name locale="en_US">Number of photos</name>
+            <name locale="ru_RU">Количество фото</name>
+        </setting>
+        <setting var="shop_homepage_photos_size" control_type="text">
+            <value>120x120</value>
+            <name locale="en_US">Photo size</name>
+            <name locale="ru_RU">Размер фото</name>
+        </setting>
+        
+        <setting var="divider_homepage_news" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. News</name>
+            <name locale="ru_RU">Главная страница. Новости</name>
+        </setting>
+        <setting var="shop_homepage_news" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show News</name>
+            <name locale="ru_RU">Показывать Новости</name>
+        </setting>
+        <setting var="shop_homepage_blog_id" control_type="text">
+            <value></value>
+            <name locale="en_US">ID</name>
+            <name locale="ru_RU">Идентификатор</name>
+            <description locale="en_US">1 - News from the blog №1; 0 - all the news</description>
+            <description locale="ru_RU">1 - новости из блога №1; 0 - все новости</description>
+        </setting>
+        <setting var="shop_homepage_number_news" control_type="text">
+            <value>3</value>
+            <name locale="en_US">Number of news</name>
+            <name locale="ru_RU">Количество новостей</name>
+        </setting>
+        <setting var="shop_homepage_news_img" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show image</name>
+            <name locale="ru_RU">Показывать изображения</name>
+        </setting>
+        <setting var="shop_homepage_news_chars" control_type="text">
+            <value>200</value>
+            <name locale="en_US">Number of characters in the description of the news</name>
+            <name locale="ru_RU">Количество символов в описание новости</name>
+        </setting>
+         
         
         <setting var="divider_sidebar_shop" control_type="group_divider">
             <value/>

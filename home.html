@@ -1,26 +1,68 @@
+{if $wa->post('theme_settings') && !$wa->post('reset')}
+    {foreach $wa->post('theme_settings') as $theme_setting => $value}
+        {$theme_settings[$theme_setting] = $value}
+    {/foreach}
+    {$wa->session('theme_settings', $theme_settings)}
+{/if}
+{if $wa->post('reset')}
+    {$wa->session('theme_settings', [])}
+{/if}
+{foreach $theme_settings as $key => $value}
+    {$setting_key = "settings[$key]"}
+    {if $wa->globals($setting_key) !== null}
+        {$theme_settings[$key] = $wa->globals($setting_key)}
+    {/if}
+{/foreach}
+{$storage = $wa->session('theme_settings')}
+{foreach $storage as $key => $value}
+    {$theme_settings[$key] = $value}
+{/foreach}
 {strip}
-    {if $wa->post('theme_settings') && !$wa->post('reset')}
-        {foreach $wa->post('theme_settings') as $theme_setting => $value}
-            {$theme_settings[$theme_setting] = $value}
-        {/foreach}
-        {$wa->session('theme_settings', $theme_settings)}
-    {/if}
-    {if $wa->post('reset')}
-        {$wa->session('theme_settings', [])}
-    {/if}
-    {foreach $theme_settings as $key => $value}
-        {$setting_key = "settings[$key]"}
-        {if $wa->globals($setting_key)}
-            {$theme_settings[$key] = $wa->globals($setting_key)}
+    {if $theme_settings.homepage_slider_with_banners}
+        <div class="row">
+            <div class="col-sm-8">
+                {if !$theme_settings.homepage_slider_fullwidth}
+                    {include file="slider.html"}
+                {/if}
+            </div>
+            <div class="col-sm-4 pull-right flip">
+                <div class="marketshop-banner">
+                    <div class="row">
+                        {if $theme_settings["banner4"] && $theme_settings["banner4_url"]}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
+                                <a href="{$theme_settings["banner4_url"]}">
+                                    <img src="{$wa_theme_url}{$theme_settings["banner4"]}" />
+                                </a>
+                            </div>
+                        {elseif $theme_settings["banner4"]}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
+                                <img src="{$wa_theme_url}{$theme_settings["banner4"]}" />
+                            </div>
+                        {/if}
+                        {if $theme_settings["banner5"] && $theme_settings["banner5_url"]}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
+                                <a href="{$theme_settings["banner5_url"]}">
+                                    <img src="{$wa_theme_url}{$theme_settings["banner5"]}" />
+                                </a>
+                            </div>
+                        {elseif $theme_settings["banner5"]}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
+                                <img src="{$wa_theme_url}{$theme_settings["banner5"]}" />
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {else}
+        {if !$theme_settings.homepage_slider_fullwidth}
+            {include file="slider.html"}
         {/if}
-    {/foreach}
-    {$storage = $wa->session('theme_settings')}
-    {foreach $storage as $key => $value}
-        {$theme_settings[$key] = $value}
-    {/foreach}
-    {if !$theme_settings.homepage_slider_fullwidth}
-        {include file="slider.html"}
     {/if}
+
+
+
+
 
     <div itemscope itemtype="http://schema.org/Store">
         <h1 itemprop="name">{$theme_settings.homepage_shop_title|escape}</h1>
@@ -95,13 +137,7 @@
         {include file="products-list.html" products=$wa->shop->products("`$theme_settings.productlist1_list`") list_title="`$theme_settings.productlist1_name`" class='owl-carousel productlist1_carousel'}
         <script type="text/javascript">
             var delayed_function = function () {
-                $("#content .owl-carousel.productlist1_carousel").owlCarousel({
-                    itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                    lazyLoad: true,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    scrollPerPage: true
-                });
+                $("#content .owl-carousel.productlist1_carousel").owlCarousel(owl_carousel_params);
             };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
             window.delayJsFunctions.push(delayed_function);
@@ -119,7 +155,7 @@
         {/if}
     {/for}
     {if $banners_count}
-        <div id="marketshop-banner0" class="marketshop-banner">
+        <div class="marketshop-banner">
             <div class="row">
                 {for $i = 1 to 3}
                     {if $theme_settings["banner`$i`"] && $theme_settings["banner`$i`_url"]}
@@ -170,13 +206,7 @@
         </div>
         <script type="text/javascript">
             window.delayJsFunctions.push(function () {
-                $("#content #latest_category0 .owl-carousel.latest_category_tabs").owlCarousel({
-                    itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                    lazyLoad: true,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    scrollPerPage: true,
-                });
+                $("#content #latest_category0 .owl-carousel.latest_category_tabs").owlCarousel(owl_carousel_params);
                 $("#latest_category0 .tab_content").addClass("deactive");
                 $("#latest_category0 .tab_content:first").show();
                 $("#latest_category0 ul#sub-cat0 li:first").addClass("active").show();
@@ -192,30 +222,32 @@
         </script>
     {/if}
 
-    {$banners_count = 0}
-    {for $i = 4 to 5}
-        {if $theme_settings["banner`$i`"]}
-            {$banners_count = $banners_count + 1}
-        {/if}
-    {/for}
-    {if $banners_count}
-        <div id="marketshop-banner1" class="marketshop-banner">
-            <div class="row">
-                {for $i = 4 to 5}
-                    {if $theme_settings["banner`$i`"] && $theme_settings["banner`$i`_url"]}
-                        <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
-                            <a href="{$theme_settings["banner`$i`_url"]}">
+    {if !$theme_settings.homepage_slider_with_banners}
+        {$banners_count = 0}
+        {for $i = 4 to 5}
+            {if $theme_settings["banner`$i`"]}
+                {$banners_count = $banners_count + 1}
+            {/if}
+        {/for}
+        {if $banners_count}
+            <div class="marketshop-banner">
+                <div class="row">
+                    {for $i = 4 to 5}
+                        {if $theme_settings["banner`$i`"] && $theme_settings["banner`$i`_url"]}
+                            <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
+                                <a href="{$theme_settings["banner`$i`_url"]}">
+                                    <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
+                                </a>
+                            </div>
+                        {elseif $theme_settings["banner`$i`"]}
+                            <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
                                 <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
-                            </a>
-                        </div>
-                    {elseif $theme_settings["banner`$i`"]}
-                        <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
-                            <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
-                        </div>
-                    {/if}
-                {/for}
+                            </div>
+                        {/if}
+                    {/for}
+                </div>
             </div>
-        </div>
+        {/if}
     {/if}
 
     {if class_exists(shopProductbrandsPlugin) && shopProductbrandsPlugin::getBrands()}
@@ -244,39 +276,53 @@
         </script>
     {/if}
 
-
-    <div class="blog-photo-block">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns">
-                <h3>Фото  - <a href="{$wa->getUrl('photos/frontend')}" class="viewall">[`view all`]</a></h3>
-                <ul>
-                    {foreach $wa->photos->photos(null,'120x120',null,9) as $photo}
-                        <li>
-                            <a href="{$photo.frontend_link|default:'#'}">
-                                <div class="image" style="background-image: url({$photo['thumb_120x120'].url});"></div>
-                            </a>
-                        </li>
-                    {/foreach}
-                </ul>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 moderns">
-                <h3>Новости  - <a href="{$wa->blog->url()}" class="viewall">[`view all`]</a></h3>
-                {foreach $wa->blog->posts(null,3) as $post}
-                    <div class="post">
-                        <h4>
-                            <a href="{$post.link}">{$post.title}</a>
-                        </h4>
-                        {$img = ''}
-                        {if $theme_settings.sidebar_news_img && preg_match('/<img.*src=\"(.*?)\"[^>]*>/', $post.text, $img)}
-                            <a href="{$post.link}">
-                                <img class="post-img" alt="" src="{$img[1]}" >
-                            </a>
-                        {/if}
-                        {$post.text|strip_tags|truncate:200}
-                        <div class="clear-both"></div>
+    {if ($theme_settings.shop_homepage_photos && $wa->photos) || ($theme_settings.shop_homepage_news && $wa->blog)}
+        {$count = 0}
+        {$count = $count + ($theme_settings.shop_homepage_photos && $wa->photos)}
+        {$count = $count + ($theme_settings.shop_homepage_news && $wa->blog)}
+        <div class="blog-photo-block">
+            <div class="row">
+                {if $theme_settings.shop_homepage_photos && $wa->photos}
+                    <div class="col-lg-{12/$count} col-md-{12/$count} col-sm-{12/$count} col-xs-12 moderns">
+                        <h3>Фото  - <a href="{$wa->getUrl('photos/frontend')}" class="viewall">[`view all`]</a></h3>
+                        <ul>
+                            {$size = $theme_settings.shop_homepage_photos_size}
+                            {foreach $wa->photos->photos($theme_settings.shop_homepage_album_id, $size, null, $theme_settings.shop_homepage_number_photos) as $photo}
+                                <li>
+                                    <a href="{$photo.frontend_link|default:'#'}">
+                                        <div class="image" style="background-image: url({$photo["thumb_$size"].url});"></div>
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
                     </div>
-                {/foreach}
+                {/if}
+                {if $theme_settings.shop_homepage_news && $wa->blog}
+                    <div class="col-lg-{12/$count} col-md-{12/$count} col-sm-{12/$count} col-xs-12 moderns">
+                        <h3>Новости  - <a href="{$wa->blog->url()}" class="viewall">[`view all`]</a></h3>
+                        {if empty($theme_settings.shop_homepage_blog_id)}
+                            {$blog_id = null}
+                        {else}
+                            {$blog_id = $theme_settings.shop_homepage_blog_id}
+                        {/if}
+                        {foreach $wa->blog->posts($blog_id, $theme_settings.shop_homepage_number_news) as $post}
+                            <div class="post">
+                                <h4>
+                                    <a href="{$post.link}">{$post.title}</a>
+                                </h4>
+                                {$img = ''}
+                                {if $theme_settings.shop_homepage_news_img && preg_match('/<img.*src=\"(.*?)\"[^>]*>/', $post.text, $img)}
+                                    <a href="{$post.link}">
+                                        <img class="post-img" alt="" src="{$img[1]}" >
+                                    </a>
+                                {/if}
+                                {$post.text|strip_tags|truncate:$theme_settings.shop_homepage_news_chars}
+                                <div class="clear-both"></div>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
             </div>
         </div>
-    </div>
+    {/if}
 {/strip}        

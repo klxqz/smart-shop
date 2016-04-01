@@ -1,3 +1,23 @@
+{if $wa->post('theme_settings') && !$wa->post('reset')}
+    {foreach $wa->post('theme_settings') as $theme_setting => $value}
+        {$theme_settings[$theme_setting] = $value}
+    {/foreach}
+    {$wa->session('theme_settings', $theme_settings)}
+{/if}
+{if $wa->post('reset')}
+    {$wa->session('theme_settings', [])}
+{/if}
+{foreach $theme_settings as $key => $value}
+    {$setting_key = "settings[$key]"}
+    {if $wa->globals($setting_key) !== null}
+        {$theme_settings[$key] = $wa->globals($setting_key)}
+    {/if}
+{/foreach}
+{$storage = $wa->session('theme_settings')}
+{foreach $storage as $key => $value}
+    {$theme_settings[$key] = $value}
+{/foreach}
+
 {strip}
     {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
         <script type="text/javascript">
@@ -317,13 +337,7 @@
             {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
             <script type="text/javascript">
                 var delayed_function = function () {
-                    $(".owl-carousel.upselling_pro").owlCarousel({
-                        itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                        lazyLoad: true,
-                        navigation: true,
-                        navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                        scrollPerPage: true
-                    });
+                    $(".owl-carousel.upselling_pro").owlCarousel(owl_carousel_params);
                 };
                 {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 window.delayJsFunctions.push(delayed_function);
@@ -337,13 +351,7 @@
             {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
             <script type="text/javascript">
                 var delayed_function = function () {
-                    $(".owl-carousel.crossselling_pro").owlCarousel({
-                        itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
-                        lazyLoad: true,
-                        navigation: true,
-                        navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                        scrollPerPage: true
-                    });
+                    $(".owl-carousel.crossselling_pro").owlCarousel(owl_carousel_params);
                 };
                 {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 window.delayJsFunctions.push(delayed_function);

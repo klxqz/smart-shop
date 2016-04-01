@@ -3,4 +3,32 @@
     <script type="text/javascript" src="{$wa_active_theme_url}!js/lazy.load.min.js?v{$wa->version()}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/smart.shop.min.js?v{$wa_theme_version}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/jquery.cookie.min.js"></script>
+    <script type="text/javascript">
+        {$n = $theme_settings.number_products_in_row}
+        {if $n == 5}
+        var owl_carousel_params = {
+            itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 5], [1199, 5]],
+            lazyLoad: true,
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            scrollPerPage: true
+        };
+        {elseif $n == 4}
+        var owl_carousel_params = {
+            itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 4], [1199, 4]],
+            lazyLoad: true,
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            scrollPerPage: true
+        };
+        {elseif $n == 3}
+        var owl_carousel_params = {
+            itemsCustom: [[320, 1], [600, 2], [768, 3], [992, 4], [1199, 4]],
+            lazyLoad: true,
+            navigation: true,
+            navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            scrollPerPage: true
+        };
+        {/if}
+    </script>
 {/strip}
