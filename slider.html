@@ -1,13 +1,15 @@
 {strip}
     {function name="includeRevolutionSlider"}
-        <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='rs-plugin-settings-css'  href='{$wa_active_theme_url}!js/revolution/css/revolution.style.css' type='text/css' media='all' />
         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
             <script type="text/javascript">
+                window.delayCss.push("{$wa_active_theme_url}!js/revolution/css/revolution.min.css");
+                window.delayCss.push("{$wa_active_theme_url}!js/revolution/css/revolution_custom.min.css");
                 window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js");
                 window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js");
             </script>
         {else}
+            <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution.min.css' type='text/css' media='all' />
+            <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution_custom.min.css' type='text/css' media='all' />
             <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
             <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
         {/if}

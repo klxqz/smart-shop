@@ -119,7 +119,7 @@ website:   	http://www.themepunch.com
 
 .tp-simpleresponsive img,
 .rev_slider img{
-	max-width:none !important;
+	max-width:100% !important;
 	-moz-transition: none;
 	-webkit-transition: none;
 	-o-transition: none;

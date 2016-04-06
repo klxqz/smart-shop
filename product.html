@@ -154,10 +154,10 @@
                                     <i class="fa fa-star fa-stack-1x"></i>
                                 {/if}
                                 <i class="fa fa-star-o fa-stack-1x"></i>
-                            </span>
+                            </span>&nbsp;
                         {/for}
                         &nbsp;
-                        <a class="review-button" href="#">[`Reviews`]:&nbsp;<span itemprop="reviewCount">{$reviews_total_count}</span></a> / 
+                        <a class="review-button" href="#">[`Reviews`]:&nbsp;<span itemprop="reviewCount">{$reviews_total_count}</span></a>&nbsp;/&nbsp;
                         <a class="write-review-button" href="#">[`Write a review`]</a>
                         <script type="text/javascript">
                             var delayed_function = function () {
@@ -196,7 +196,7 @@
                 <!-- categories -->
                 {if $product.categories}
                     <p id="product-categories">
-                        [`Categories`]:
+                        [`Categories`]:&nbsp;
                         {foreach $product.categories as $c}
                             {if $c.status}
                                 <a href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url])}">{$c.name|escape}</a>{if !$c@last},&nbsp;{/if}
@@ -208,7 +208,7 @@
                 <!-- tags -->
                 {if $product.tags}
                     <p class="tags" id="product-tags">
-                        [`Tags`]:
+                        [`Tags`]:&nbsp;
                         <span class="product-info">
                             {foreach $product.tags as $t}
                                 <a href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}">{$t}</a>{if !$t@last},&nbsp;{/if}

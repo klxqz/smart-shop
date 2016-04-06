@@ -56,6 +56,27 @@
                 {$brands_list}
             </ul>
         </div>
+        <script type="text/javascript">
+            var delayed_function = function () {
+                $(function () {
+                    var n = 4;
+                    if ($('.brands-block ul li:gt(' + n + ')').length) {
+                        $('.brands-block ul li:gt(' + n + ')').hide();
+                        $('<a class="show-more-button" href="#">[`More`]</a>').appendTo('.brands-block');
+                        $('.show-more-button').click(function () {
+                            $('.brands-block ul li').show();
+                            $(this).hide();
+                            return false;
+                        });
+                    }
+                });
+            };
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            window.delayJsFunctions.push(delayed_function);
+            {else}
+            $(delayed_function());
+            {/if}
+        </script>
     {/if}
     {*brands-end*}
 

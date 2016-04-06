@@ -17,8 +17,8 @@
                             <span class="price-new">{shop_currency_html($p.price)}</span> 
                             {if $p.compare_price > 0}
                                 {$percent = floor(($p.compare_price - $p.price) / $p.compare_price * 100)}
-                                <span class="price-old">{shop_currency_html($p.compare_price)}</span>
-                                <span class="saving">-{$percent}%</span>        
+                                &nbsp;<span class="price-old">{shop_currency_html($p.compare_price)}</span>
+                                &nbsp;<span class="saving">-{$percent}%</span>        
                             {/if}
                         </p>
                         <div class="rating">

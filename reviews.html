@@ -75,6 +75,7 @@
                         {if !empty($current_user_id)}
                             <p class="review-field"><label>[`Your name`]</label>
                                 <strong><img src="{$wa->user()->getPhoto(20)}" class="userpic" alt="">{$wa->user('name')}</strong>
+                                &nbsp;
                                 <a href="?logout">[`log out`]</a>
                             </p>
                         {else}
@@ -145,7 +146,7 @@
                         <span class="review-add-form-status ajax-status" style="display: none;">
                             <i class="ajax-statuloading icon16 loading"><!--icon --></i>
                         </span>
-                        
+                        &nbsp;
                         <em class="hint">Ctrl+Enter</em>
                         <input type="hidden" name="parent_id" value="0">
                         <input type="hidden" name="product_id" value="{if isset($product.id)}{$product.id}{else}0{/if}">
