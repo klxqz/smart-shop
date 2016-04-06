@@ -1,22 +1,3 @@
-{if $wa->post('theme_settings') && !$wa->post('reset')}
-    {foreach $wa->post('theme_settings') as $theme_setting => $value}
-        {$theme_settings[$theme_setting] = $value}
-    {/foreach}
-    {$wa->session('theme_settings', $theme_settings)}
-{/if}
-{if $wa->post('reset')}
-    {$wa->session('theme_settings', [])}
-{/if}
-{foreach $theme_settings as $key => $value}
-    {$setting_key = "settings[$key]"}
-    {if $wa->globals($setting_key) !== null}
-        {$theme_settings[$key] = $wa->globals($setting_key)}
-    {/if}
-{/foreach}
-{$storage = $wa->session('theme_settings')}
-{foreach $storage as $key => $value}
-    {$theme_settings[$key] = $value}
-{/foreach}
 {strip}
     {if $theme_settings.homepage_slider_with_banners}
         <div class="row">
