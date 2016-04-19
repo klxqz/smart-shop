@@ -231,7 +231,7 @@
         {/if}
     {/if}
 
-    {if class_exists(shopProductbrandsPlugin) && shopProductbrandsPlugin::getBrands()}
+    {if $theme_settings.shop_homepage_brands && class_exists(shopProductbrandsPlugin) && shopProductbrandsPlugin::getBrands()}
         {$brands = shopProductbrandsPlugin::getBrands()}
         <div id="carousel0" class="owl-carousel nxt">
             {foreach $brands as $brand}

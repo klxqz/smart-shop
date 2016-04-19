@@ -2,7 +2,7 @@
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
 <theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.0.0">
     <name locale="en_US">Smart</name>
-    <name locale="ru_RU">Умный магазин</name>
+    <name locale="ru_RU">Smart</name>
     <files>
         <file path="!css/smart.css" parent="1">
         </file>
@@ -677,6 +677,19 @@
             <value>#</value>
             <name locale="en_US">banner 5 url</name>
             <name locale="ru_RU">баннер 5 ссылка</name>
+        </setting>
+        
+        <setting var="divider_homepage_brands" control_type="group_divider">
+            <value/>
+            <name locale="en_US">Homepage. Brands</name>
+            <name locale="ru_RU">Главная страница. Бренды</name>
+        </setting>
+        <setting var="shop_homepage_brands" control_type="checkbox">
+            <value>1</value>
+            <name locale="en_US">Show brands</name>
+            <name locale="ru_RU">Показывать Бренды </name>
+            <description locale="en_US">Plugin <![CDATA[<a target="_blank" href="https://www.webasyst.com/store/plugin/shop/brands/">Brands</a><br/>]]></description>
+            <description locale="ru_RU">Плагин <![CDATA[<a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/productbrands/">Бренды с картинками и описаниями</a><br/>]]></description>
         </setting>
         
         <setting var="divider_homepage_photos" control_type="group_divider">
