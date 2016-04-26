@@ -3,11 +3,12 @@ $(function () {
     function updateCart(data)
     {
         $(".cart-total").html(data.total);
+        $('#cart-total').html(data.total);
         if (data.discount_numeric) {
             $(".cart-discount").closest('tr').show();
         }
         $(".cart-discount").html('&minus; ' + data.discount);
-        
+
         if (data.add_affiliate_bonus) {
             $(".affiliate").show().html(data.add_affiliate_bonus);
         } else {
@@ -67,23 +68,23 @@ $(function () {
         var div = $(this).closest('div');
         var tr = $(this).closest('tr');
         if ($(this).is(':checked')) {
-           var parent_id = $(this).closest('tr').data('id')
-           var data = {html: 1, parent_id: parent_id, service_id: $(this).val()};
-           var variants = $('select[name="service_variant[' + parent_id + '][' + $(this).val() + ']"]');
-           if (variants.length) {
-               data['service_variant_id'] = variants.val();
-           }
-           $.post('add/', data, function(response) {
-               div.data('id', response.data.id);
-               tr.find('.item-total').html(response.data.item_total);
-               updateCart(response.data);
-           }, "json");
+            var parent_id = $(this).closest('tr').data('id')
+            var data = {html: 1, parent_id: parent_id, service_id: $(this).val()};
+            var variants = $('select[name="service_variant[' + parent_id + '][' + $(this).val() + ']"]');
+            if (variants.length) {
+                data['service_variant_id'] = variants.val();
+            }
+            $.post('add/', data, function (response) {
+                div.data('id', response.data.id);
+                tr.find('.item-total').html(response.data.item_total);
+                updateCart(response.data);
+            }, "json");
         } else {
-           $.post('delete/', {html: 1, id: div.data('id')}, function (response) {
-               div.data('id', null);
-               tr.find('.item-total').html(response.data.item_total);
-               updateCart(response.data);
-           }, "json");
+            $.post('delete/', {html: 1, id: div.data('id')}, function (response) {
+                div.data('id', null);
+                tr.find('.item-total').html(response.data.item_total);
+                updateCart(response.data);
+            }, "json");
         }
     });
 

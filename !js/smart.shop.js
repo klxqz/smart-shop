@@ -254,57 +254,54 @@ $(document).ready(function () {
             loading.remove();
             if (response.status == 'ok') {
                 var cart_total = $("#cart-total");
-                if ($("table.cart").length) {
-                    $(".content").parent().load(location.href, function () {
-                        cart_total.html(response.data.total);
-                    });
-                } else {
-                    var origin = f.closest('.product-thumb');
-                    var block = $('<div></div>').append(origin.html());
-                    var topTo = cart_total.offset().top;
-                    if ($(window).scrollTop() > cart_total.offset().top) {
-                        topTo = $(window).scrollTop();
-                    }
-                    block.css({
-                        'z-index': 10,
-                        top: origin.offset().top,
-                        left: origin.offset().left,
-                        width: origin.width() + 'px',
-                        height: origin.height() + 'px',
-                        position: 'absolute',
-                        overflow: 'hidden'
-                    }).appendTo('body').animate({
-                        top: topTo,
-                        left: cart_total.offset().left,
-                        width: 0,
-                        height: 0,
-                        opacity: 0.5
-                    }, 500, function () {
-                        $(this).remove();
-                        cart_total.html(response.data.total);
-
-                        var cart_item = $('#cart .cart-items tr[data-id=' + response.data.item_id + ']');
-                        var quantity = 1;
-                        if (cart_item.length) {
-                            quantity = parseInt(cart_item.find('.quantity').text()) + quantity;
-                            cart_item.find('.quantity').text(quantity);
-                        } else {
-                            var info = origin.find('.ajax_product_info');
-                            var tpl_data = {
-                                url: info.data('url'),
-                                name: info.data('name'),
-                                img: info.data('img'),
-                                price: info.data('price'),
-                                quantity: quantity,
-                                id: response.data.item_id
-                            };
-                            $('#cart_item_tmpl').tmpl(tpl_data).appendTo('#cart .cart-items table tbody');
-                            $('#cart .cart-items').show();
-                            $('#cart .cart-buttons').show();
-                            $('#cart .cart-empty').hide();
-                        }
-                    });
+                var origin = f.closest('.product-thumb');
+                var block = $('<div></div>').append(origin.html());
+                var topTo = cart_total.offset().top;
+                if ($(window).scrollTop() > cart_total.offset().top) {
+                    topTo = $(window).scrollTop();
                 }
+                block.css({
+                    'z-index': 10,
+                    top: origin.offset().top,
+                    left: origin.offset().left,
+                    width: origin.width() + 'px',
+                    height: origin.height() + 'px',
+                    position: 'absolute',
+                    overflow: 'hidden'
+                }).appendTo('body').animate({
+                    top: topTo,
+                    left: cart_total.offset().left,
+                    width: 0,
+                    height: 0,
+                    opacity: 0.5
+                }, 500, function () {
+                    $(this).remove();
+                    cart_total.html(response.data.total);
+
+                    var cart_item = $('#cart .cart-items tr[data-id=' + response.data.item_id + ']');
+                    var quantity = 1;
+                    if (cart_item.length) {
+                        quantity = parseInt(cart_item.find('.quantity').text()) + quantity;
+                        cart_item.find('.quantity').text(quantity);
+                    } else {
+                        var info = origin.find('.ajax_product_info');
+                        var tpl_data = {
+                            url: info.data('url'),
+                            name: info.data('name'),
+                            img: info.data('img'),
+                            price: info.data('price'),
+                            quantity: quantity,
+                            id: response.data.item_id
+                        };
+                        $('#cart_item_tmpl').tmpl(tpl_data).appendTo('#cart .cart-items table tbody');
+                        $('#cart .cart-items').show();
+                        $('#cart .cart-buttons').show();
+                        $('#cart .cart-empty').hide();
+                    }
+                    if ($('table.cart').length) {
+                        location.reload();
+                    }
+                });
                 if (response.data.error) {
                     alert(response.data.error);
                 }
