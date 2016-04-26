@@ -139,7 +139,9 @@ function Product(form, options) {
                         $('#cart .cart-buttons').show();
                         $('#cart .cart-empty').hide();
                     }
-
+                    if ($('table.cart').length) {
+                        location.reload();
+                    }
                 });
                 if (cart_div.closest('.dialog').length) {
                     cart_div.closest('.dialog').trigger('close');
@@ -319,7 +321,7 @@ $(function () {
             showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + wishlist_url + '">Избранного</a>', 'warning');
         }
         $('.wishlist-total .count').text(wishlist.length);
-        
+
         if (wishlist.length > 0) {
             $.cookie('shop_wishlist', wishlist.join(','), {expires: 30, path: '/'});
         } else {
