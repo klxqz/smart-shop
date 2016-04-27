@@ -96,16 +96,16 @@
             <link href="{$wa_active_theme_url}!js/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen" />
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 <script type="text/javascript">
-                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}");
+                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}");
                 </script>
             {else}
-                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}"></script>
-                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}"></script>
-                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
-                <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
+                <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
             {/if}
         {/if}
     {/if}
