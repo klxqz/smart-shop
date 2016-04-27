@@ -17,10 +17,10 @@
 
     {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
         <script type="text/javascript">
-            window.delayJs.push("{$wa_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js");
+            window.delayJs.push("{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js");
         </script>
     {else}
-        <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
     {/if}
     {literal}
         <script id="cart_item_tmpl" type="text/x-jquery-tmpl">
