@@ -31,23 +31,23 @@
                         {if $theme_settings["banner4"] && $theme_settings["banner4_url"]}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
                                 <a href="{$theme_settings["banner4_url"]}">
-                                    <img src="{$wa_theme_url}{$theme_settings["banner4"]}" />
+                                    <img alt="" src="{$wa_theme_url}{$theme_settings["banner4"]}" />
                                 </a>
                             </div>
                         {elseif $theme_settings["banner4"]}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
-                                <img src="{$wa_theme_url}{$theme_settings["banner4"]}" />
+                                <img alt="" src="{$wa_theme_url}{$theme_settings["banner4"]}" />
                             </div>
                         {/if}
                         {if $theme_settings["banner5"] && $theme_settings["banner5_url"]}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
                                 <a href="{$theme_settings["banner5_url"]}">
-                                    <img src="{$wa_theme_url}{$theme_settings["banner5"]}" />
+                                    <img alt="" src="{$wa_theme_url}{$theme_settings["banner5"]}" />
                                 </a>
                             </div>
                         {elseif $theme_settings["banner5"]}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 moderns">
-                                <img src="{$wa_theme_url}{$theme_settings["banner5"]}" />
+                                <img alt="" src="{$wa_theme_url}{$theme_settings["banner5"]}" />
                             </div>
                         {/if}
                     </div>
@@ -161,12 +161,12 @@
                     {if $theme_settings["banner`$i`"] && $theme_settings["banner`$i`_url"]}
                         <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-6 col-xs-12 moderns">
                             <a href="{$theme_settings["banner`$i`_url"]}">
-                                <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
+                                <img alt="" src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
                             </a>
                         </div>
                     {elseif $theme_settings["banner`$i`"]}
                         <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-6 col-xs-12 moderns">
-                            <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
+                            <img alt="" src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
                         </div>
                     {/if}
                 {/for}
@@ -236,12 +236,12 @@
                         {if $theme_settings["banner`$i`"] && $theme_settings["banner`$i`_url"]}
                             <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
                                 <a href="{$theme_settings["banner`$i`_url"]}">
-                                    <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
+                                    <img alt="" src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
                                 </a>
                             </div>
                         {elseif $theme_settings["banner`$i`"]}
                             <div class="col-lg-{12 / $banners_count} col-md-{12 / $banners_count} col-sm-{12 / $banners_count} col-xs-12 moderns">
-                                <img src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
+                                <img alt="" src="{$wa_theme_url}{$theme_settings["banner`$i`"]}" />
                             </div>
                         {/if}
                     {/for}
@@ -257,7 +257,7 @@
                 {if $brand.image}
                     <div class="item text-center">
                         <a href="{$brand.url}">
-                            <img alt="{$brand.name}" src="{$wa_static_url}wa-data/public/shop/brands/{$brand.id}/{$brand.id}{$brand.image}" class="img-responsive">
+                            <img alt="{$brand.name|escape}" src="{$wa_static_url}wa-data/public/shop/brands/{$brand.id}/{$brand.id}{$brand.image}" class="img-responsive">
                         </a>
                     </div>
                 {/if}

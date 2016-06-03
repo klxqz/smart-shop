@@ -154,12 +154,12 @@
                 {if $theme_settings["sidebar_shop_banner`$i`"] && $theme_settings["sidebar_shop_banner`$i`_url"]}
                     <div class="item">
                         <a href="{$theme_settings["sidebar_shop_banner`$i`_url"]}">
-                            <img src="{$wa_active_theme_url}{$theme_settings["sidebar_shop_banner`$i`"]}" class="img-responsive" />
+                            <img alt="" src="{$wa_active_theme_url}{$theme_settings["sidebar_shop_banner`$i`"]}" class="img-responsive" />
                         </a>
                     </div>
                 {elseif $theme_settings["sidebar_shop_banner`$i`"] }
                     <div class="item">
-                        <img src="{$wa_active_theme_url}{$theme_settings["sidebar_shop_banner`$i`"]}" class="img-responsive" />
+                        <img alt="" src="{$wa_active_theme_url}{$theme_settings["sidebar_shop_banner`$i`"]}" class="img-responsive" />
                     </div>
                 {/if}
             {/for}
