@@ -1,6 +1,6 @@
 {strip}
     {if !empty($filters)}
-        <div class="adv_ajaxfilter_box hidden-xs">
+        <div class="adv_ajaxfilter_box{if empty($show)} hidden-xs{/if}">
             <h3>
                 [`Filter`]
                 <a href="#" class="toggle-menu"><i class="fa fa-bars"></i></a>
@@ -16,11 +16,7 @@
                         {$c = $wa->shop->currency(true)}
                         <div class="option_box">
                             <div class="option_name{if in_array($fid, $filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
-                            <div data-min="{floor($filter.min)}" 
-                                 data-max="{ceil($filter.max)}" 
-                                 data-name-min="price_min" 
-                                 data-name-max="price_max" 
-                                 class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                            <div data-min="{floor($filter.min)}" data-max="{ceil($filter.max)}" data-name-min="price_min" data-name-max="price_max" class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
                                 <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
                                 <label> - </label>
                                 <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
@@ -62,11 +58,7 @@
                                         </li>
                                     </ul>
                                 {elseif isset($filter.min)}
-                                    <div data-min="{$filter.min}" 
-                                         data-max="{$filter.max}" 
-                                         data-name-min="{$filter.code}[min]" 
-                                         data-name-max="{$filter.code}[max]" 
-                                         class="price_slider">
+                                    <div data-min="{$filter.min}" data-max="{$filter.max}" data-name-min="{$filter.code}[min]" data-name-max="{$filter.code}[max]" class="price_slider">
                                         <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
                                         <label> - </label>
                                         <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
@@ -89,11 +81,11 @@
                     {/if}
                 {/foreach}
                 <input class="btn btn-primary" type="submit" value="[`Filter products`]" />
-                <a class="btn btn-default float-right" href="{$wa->currentUrl(0,1)}" />[`Reset`]</a>
+                <a class="btn btn-default float-right" href="{$wa->currentUrl(0,1)}" >[`Reset`]</a>
             </form>
         </div>
         {if $jquery_ui_include && !waRequest::isXMLHttpRequest()}
-            <link href="{$wa_active_theme_url}!js/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen" />
+            <link href="{$wa_active_theme_url}!js/jquery-ui/css/jquery-ui.css" type="text/css" rel="stylesheet" property="stylesheet" media="screen" />
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 <script type="text/javascript">
                     window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}");
@@ -107,6 +99,16 @@
                 <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
                 <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
             {/if}
+            <script type="text/javascript"> 
+                var delayed_function = function(){
+                    initRangeSlider();
+                };
+                {if $theme_settings.jquery_delayed_loading}
+                    window.delayJsFunctions.push(delayed_function);
+                {else}
+                    $(delayed_function());
+                {/if}
+            </script>
         {/if}
     {/if}
 {/strip}

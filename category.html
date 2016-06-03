@@ -110,12 +110,12 @@
             </div>
 
             {$sorting=!empty($category.params.enable_sorting)}
-            <div class="col-sm-2 text-right">
+            <div class="sort-by-label col-sm-2 text-right">
                 {if !empty($sorting)}
                     <label class="control-label" for="input-sort">[`Sort by`]:</label>
                 {/if}
             </div>
-            <div class="col-md-3 col-sm-2 text-right">
+            <div class="col-md-3 col-sm-5 text-right">
                 {if !empty($sorting)}
                     {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
                     {if !isset($active_sort)}
@@ -137,7 +137,7 @@
             </div>
 
             {$products_pers = explode(',', $theme_settings.products_pers)}
-            <div class="col-sm-1 text-right">
+            <div class="show-by-label col-sm-1 text-right">
                 <label class="control-label" for="input-limit">[`Show`]:</label>
             </div>
             <div class="col-sm-2 text-right">
@@ -155,7 +155,7 @@
         </div>
     </div>
     <br />
-    {include file="`$wa_active_theme_path`/sidebar.filter.html"}
+    {include file="`$wa_active_theme_path`/sidebar.filter.html" show=true}
 
     <div class="row products-category">
         {if !$products}

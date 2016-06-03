@@ -14,19 +14,18 @@
         <div{if !empty($class)} class="{$class}"{/if}>
             {foreach $products as $p}
                 <div class="product-thumb n{$n} clearfix" itemscope itemtype ="http://schema.org/Product">
-                    <input type="hidden" class="ajax_product_info" 
-                           data-price="{shop_currency_html($p.price)|escape}"
-                           data-name="{$p.name|escape}" 
-                           data-url="{$p.frontend_url}" 
-                           data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}"
-                           />
+                    <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($p.price)|escape}" data-name="{$p.name|escape}" data-url="{$p.frontend_url}" data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}" />
                     <div class="image">
                         {$badge_html = $wa->shop->badgeHtml($p.badge)}
                         {if $badge_html}
                             <div class="corner">{$badge_html}</div>
                         {/if}  
                         <a href="{$p.frontend_url}">
-                            {$wa->shop->productImgHtml($p, $img_size, ['itemprop' => 'image', 'class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                            {if $p.image_id}
+                                {$wa->shop->productImgHtml($p, $img_size, ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name])}
+                            {else}
+                                <img src="{$wa_theme_url}img/dummy200.png" class="img-responsive" alt="" />
+                            {/if}
                         </a>
                         {if $theme_settings.product_images}
                             {$images_a = $wa->shop->images($p.id, [$img_size])}

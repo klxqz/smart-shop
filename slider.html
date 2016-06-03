@@ -134,10 +134,10 @@
                 {for $i = 1 to 5}
                     {if $theme_settings["slide`$i`"] && $theme_settings["slide`$i`_url"]}
                         <a href="{$theme_settings["slide`$i`_url"]}">
-                            <img src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
+                            <img alt="" src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
                         </a>
                     {elseif $theme_settings["slide`$i`"]}
-                        <img src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
+                        <img alt="" src="{$wa_active_theme_url}{$theme_settings["slide`$i`"]}" />
                     {/if}
                 {/for}
             </div>
@@ -180,7 +180,7 @@
                             {foreach $images_a as $image}
                                 <li data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{$image['url_1']}"  data-rotate="0"  data-saveperformance="off">
                                     <a href="{$product.frontend_url}">
-                                        <img src="{$image['url_0']}"  alt="" title="{$product.name|escape}">
+                                        <img alt="" src="{$image['url_0']}"  alt="" title="{$product.name|escape}">
                                     </a>
                                     <a class="tp-caption tp-resizeme" 
                                        href="{$product.frontend_url}"
@@ -206,7 +206,7 @@
                         {foreach $products as $product}
                             <li  data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '60x60', false)}"  data-rotate="0"  data-saveperformance="off">
                                 <a href="{$product.frontend_url}">
-                                    <img src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '530', false)}"   alt="" title="{$product.name|escape}">
+                                    <img alt="" src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '530', false)}"   alt="" title="{$product.name|escape}">
                                 </a>
                                 <a class="tp-caption tp-resizeme" 
                                    href="{$product.frontend_url}"

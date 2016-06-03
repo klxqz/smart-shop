@@ -111,7 +111,7 @@
                                 {$adapter = $auth_adapters[$current_auth_source]}
                                 <div class="provider-fields" data-provider="{$adapter->getId()}">
                                     <p class="review-field"><label>[`Your name`]</label>
-                                        <strong><img src="{$adapter->getIcon()}" class="userpic" />{$current_auth.name|escape}</strong>
+                                        <strong><img alt="" src="{$adapter->getIcon()}" class="userpic" />{$current_auth.name|escape}</strong>
                                         <a href="?logout">[`log out`]</a>
                                     </p>
                                 </div>

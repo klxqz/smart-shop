@@ -16,7 +16,7 @@
             <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
             <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
         {/if}
-        <link rel="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
+        <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
     {/if}
 
     <div itemscope itemtype="http://schema.org/Product">
@@ -29,13 +29,10 @@
                         <div class="corner">{$badge_html}</div>
                     {/if} 
                     {if $product.image_id}
-                        <img class="img-responsive" itemprop="image" id="zoom_01" 
-                             src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" 
-                             title="{$product.name|escape}" alt="{$product.name|escape}" 
-                             data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
+                        <img class="img-responsive" itemprop="image" id="zoom_01" src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" title="{$product.name|escape}" alt="{$product.name|escape}" data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
                     {else}
                         <div class="center-block text-center ">
-                            <img itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
+                            <img alt="" itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
                         </div>
                     {/if}
                 </div>
@@ -126,7 +123,9 @@
                 {include file="product.cart.html" inline}
 
                 <div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                    <meta itemprop="ratingValue" content="0" />
+                    <meta itemprop="worstRating" content = "1">
+                    <meta itemprop="ratingValue" content="{$product.rating}" />
+                    <meta itemprop="bestRating" content = "5">
                     <p>
                         {for $i = 1 to 5}
                             <span class="fa fa-stack">

@@ -79,6 +79,39 @@ function initWishlist() {
     });
 }
 
+function initRangeSlider() {
+    $('.price_slider').each(function () {
+        if (!$(this).find('.slider-range').length) {
+            var self = $(this);
+            var slider_range = $('<div class="slider-range"></div>').appendTo(self);
+            var min_input = $('input[name="' + $(this).data('name-min') + '"]');
+            var max_input = $('input[name="' + $(this).data('name-max') + '"]');
+            slider_range.slider({
+                range: true,
+                min: self.data('min'),
+                max: self.data('max'),
+                values: [min_input.val() ? min_input.val() : self.data('min'), max_input.val() ? max_input.val() : self.data('max')],
+                slide: function (event, ui) {
+                    var v = ui.values[0] == $(this).slider('option', 'min') ? '' : ui.values[0];
+                    min_input.val(v);
+                    v = ui.values[1] == $(this).slider('option', 'max') ? '' : ui.values[1];
+                    max_input.val(v);
+                },
+                stop: function (event, ui) {
+                    min_input.change();
+                }
+            });
+            min_input.add(max_input).change(function () {
+                var min_val = min_input.val() === '' ? slider_range.slider('option', 'min') : parseFloat(min_input.val());
+                var max_val = max_input.val() === '' ? slider_range.slider('option', 'max') : parseFloat(max_input.val());
+                if (max_val >= min_val) {
+                    slider_range.slider('option', 'values', [min_val, max_val]);
+                }
+            });
+        }
+    });
+}
+
 $(document).ready(function () {
     $(document).on('click', '.quick-view', function () {
         var d = $('#dialog');
@@ -182,36 +215,7 @@ $(document).ready(function () {
         });
     });
 
-    $('.price_slider').each(function () {
-        if (!$(this).find('.slider-range').length) {
-            var self = $(this);
-            var slider_range = $('<div class="slider-range"></div>').appendTo(self);
-            var min_input = $('input[name="' + $(this).data('name-min') + '"]');
-            var max_input = $('input[name="' + $(this).data('name-max') + '"]');
-            slider_range.slider({
-                range: true,
-                min: self.data('min'),
-                max: self.data('max'),
-                values: [min_input.val() ? min_input.val() : self.data('min'), max_input.val() ? max_input.val() : self.data('max')],
-                slide: function (event, ui) {
-                    var v = ui.values[0] == $(this).slider('option', 'min') ? '' : ui.values[0];
-                    min_input.val(v);
-                    v = ui.values[1] == $(this).slider('option', 'max') ? '' : ui.values[1];
-                    max_input.val(v);
-                },
-                stop: function (event, ui) {
-                    min_input.change();
-                }
-            });
-            min_input.add(max_input).change(function () {
-                var min_val = min_input.val() === '' ? slider_range.slider('option', 'min') : parseFloat(min_input.val());
-                var max_val = max_input.val() === '' ? slider_range.slider('option', 'max') : parseFloat(max_input.val());
-                if (max_val >= min_val) {
-                    slider_range.slider('option', 'values', [min_val, max_val]);
-                }
-            });
-        }
-    });
+
 
 
     initCompare();

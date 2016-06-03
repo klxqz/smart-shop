@@ -10,43 +10,38 @@
     {foreach $products as $p}
         <div class="product-layout product-list col-xs-12">
             <div class="product-thumb n{$n}" itemscope itemtype ="http://schema.org/Product">
-                <input type="hidden" class="ajax_product_info" 
-                       data-price="{shop_currency_html($p.price)|escape}"
-                       data-name="{$p.name|escape}" 
-                       data-url="{$p.frontend_url}" 
-                       {if $p.image_id}
-                           data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext], '47', false)}"
-                       {else}
-                           data-img="{$wa_theme_url}img/dummy47.png"  
-                       {/if}
-                       />
+                <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($p.price)|escape}" data-name="{$p.name|escape}" data-url="{$p.frontend_url}" {if $p.image_id}data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext], '47', false)}"{else}data-img="{$wa_theme_url}img/dummy47.png"{/if} />
                 <div class="image">
                     {$badge_html = $wa->shop->badgeHtml($p.badge)}
                     {if $badge_html}
                         <div class="corner">{$badge_html}</div>
                     {/if}  
                     <a href="{$p.frontend_url}">
-                        {$wa->shop->productImgHtml($p, $img_size, ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy160.png"])}
-                        {if $theme_settings.product_images}
-                            {$images_a = $wa->shop->images($p.id, [$img_size])}
-                            {if !empty($images_a[$p.id])  && count($images_a[$p.id]) > 1}
-                                {$images_a = $images_a[$p.id]}
-                                {$images = []}
-                                {foreach $images_a as $image}
-                                    {$images[] = $image['url_0']}
-                                {/foreach}
-                                <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
-                                    <div class="product-image-prev"><i class="fa fa-angle-left"></i></div>
-                                    <div class="product-image-next"><i class="fa fa-angle-right"></i></div>
-                                </div>
-                            {/if}
-                        {/if}
-                        {if $theme_settings.quick_view}
-                            <a href="{$p.frontend_url}" class="quick-view">
-                                <i class="fa fa-eye"></i>
-                            </a>
+                        {if $p.image_id}
+                            {$wa->shop->productImgHtml($p, $img_size, ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name])}
+                        {else}
+                            <img src="{$wa_theme_url}img/dummy160.png" class="img-responsive" alt="" />
                         {/if}
                     </a>
+                    {if $theme_settings.product_images}
+                        {$images_a = $wa->shop->images($p.id, [$img_size])}
+                        {if !empty($images_a[$p.id])  && count($images_a[$p.id]) > 1}
+                            {$images_a = $images_a[$p.id]}
+                            {$images = []}
+                            {foreach $images_a as $image}
+                                {$images[] = $image['url_0']}
+                            {/foreach}
+                            <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
+                                <div class="product-image-prev"><i class="fa fa-angle-left"></i></div>
+                                <div class="product-image-next"><i class="fa fa-angle-right"></i></div>
+                            </div>
+                        {/if}
+                    {/if}
+                    {if $theme_settings.quick_view}
+                        <a href="{$p.frontend_url}" class="quick-view">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    {/if}
                 </div>
                 <div>
                     <div class="caption">
