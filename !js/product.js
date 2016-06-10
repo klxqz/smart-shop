@@ -156,6 +156,64 @@ function Product(form, options) {
         }, "json");
         return false;
     });
+
+    this.form.find('.compare-add').click(function () {
+        var compare = $.cookie('shop_compare');
+        if (compare) {
+            compare = compare.split(',');
+        } else {
+            compare = [];
+        }
+        var info = self.form.find('.ajax_product_info');
+        var i = $.inArray($(this).data('id') + '', compare);
+        if (i == -1) {
+            compare.push($(this).data('id'));
+            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + url + '">Список сравнения</a>');
+        } else {
+            compare.splice(i, 1);
+            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + url + '">Списка сравнения</a>', 'warning');
+        }
+
+        $('.compare-total').attr('href', url);
+        $('.compare-total .count').text(compare.length);
+
+
+        if (compare.length > 0) {
+            $.cookie('shop_compare', compare.join(','), {expires: 30, path: '/'});
+        } else {
+            $.cookie('shop_compare', null, {expires: 30, path: '/'});
+        }
+        return false;
+    });
+
+    this.form.find('.wishlist-add').click(function () {
+        var wishlist = $.cookie('shop_wishlist');
+        if (wishlist) {
+            wishlist = wishlist.split(',');
+        } else {
+            wishlist = [];
+        }
+        var i = $.inArray($(this).data('id') + '', wishlist);
+        var info = self.form.find('.ajax_product_info');
+        if (i == -1) {
+            wishlist.push($(this).data('id'));
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + wishlist_url + '">Избранное</a>');
+        } else {
+            wishlist.splice(i, 1);
+            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + wishlist_url + '">Избранного</a>', 'warning');
+        }
+        $('.wishlist-total .count').text(wishlist.length);
+
+        if (wishlist.length > 0) {
+            $.cookie('shop_wishlist', wishlist.join(','), {expires: 30, path: '/'});
+        } else {
+            $.cookie('shop_wishlist', null, {expires: 30, path: '/'});
+        }
+        return false;
+    });
+
 }
 
 Product.prototype.currencyFormat = function (number, no_html) {
@@ -272,65 +330,6 @@ Product.prototype.updatePrice = function (price, compare_price) {
     });
     this.add2cart.find(".price-new").html(this.currencyFormat(price));
 }
-
-$(function () {
-    $('.cart .compare-add').click(function () {
-        var compare = $.cookie('shop_compare');
-        if (compare) {
-            compare = compare.split(',');
-        } else {
-            compare = [];
-        }
-        var info = $(this).closest('#cart-form').find('.ajax_product_info');
-        var i = $.inArray($(this).data('id') + '', compare);
-        if (i == -1) {
-            compare.push($(this).data('id'));
-            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
-            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + url + '">Список сравнения</a>');
-        } else {
-            compare.splice(i, 1);
-            var url = compare_url.replace(/compare\/.*$/, 'compare/' + compare.join(',') + '/');
-            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + url + '">Списка сравнения</a>', 'warning');
-        }
-
-        $('.compare-total').attr('href', url);
-        $('.compare-total .count').text(compare.length);
-
-
-        if (compare.length > 0) {
-            $.cookie('shop_compare', compare.join(','), {expires: 30, path: '/'});
-        } else {
-            $.cookie('shop_compare', null, {expires: 30, path: '/'});
-        }
-        return false;
-    });
-    $('.cart .wishlist-add').click(function () {
-        var wishlist = $.cookie('shop_wishlist');
-        if (wishlist) {
-            wishlist = wishlist.split(',');
-        } else {
-            wishlist = [];
-        }
-        var i = $.inArray($(this).data('id') + '', wishlist);
-        var info = $(this).closest('#cart-form').find('.ajax_product_info');
-        if (i == -1) {
-            wishlist.push($(this).data('id'));
-            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + wishlist_url + '">Избранное</a>');
-        } else {
-            wishlist.splice(i, 1);
-            showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> удален из <a href="' + wishlist_url + '">Избранного</a>', 'warning');
-        }
-        $('.wishlist-total .count').text(wishlist.length);
-
-        if (wishlist.length > 0) {
-            $.cookie('shop_wishlist', wishlist.join(','), {expires: 30, path: '/'});
-        } else {
-            $.cookie('shop_wishlist', null, {expires: 30, path: '/'});
-        }
-        return false;
-    });
-
-});
 
 $(function () {
     if (typeof product_reviews_display_mode == 'undefined' || product_reviews_display_mode != 'product_page') {
