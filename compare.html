@@ -3,7 +3,8 @@
     <h1>[`Compare products`]</h1>
 
     <script type="text/javascript">
-        var delayed_function = function () {
+        {$rand = rand()}
+        var delayed_function{$rand} = function () {
             $("#compare-all").click(function () {
                 $("#compare-table tr.same").show();
                 $(this).closest('ul').find('li.selected').removeClass('selected');
@@ -40,9 +41,11 @@
             });
         };
         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        window.delayJsFunctions.push(delayed_function);
+        window.delayJsFunctions.push(delayed_function{$rand});
         {else}
-        $(delayed_function());
+        $(function () {
+            $(document).ready(delayed_function{$rand}());
+        });
         {/if}
     </script>
 

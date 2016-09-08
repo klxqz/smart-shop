@@ -57,7 +57,8 @@
             </ul>
         </div>
         <script type="text/javascript">
-            var delayed_function = function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $(function () {
                     var n = 4;
                     if ($('.brands-block ul li:gt(' + n + ')').length) {
@@ -72,9 +73,11 @@
                 });
             };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function);
+            window.delayJsFunctions.push(delayed_function{$rand});
             {else}
-            $(delayed_function());
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
+            });
             {/if}
         </script>
     {/if}
@@ -122,7 +125,8 @@
             {/foreach}
         </div>
         <script type="text/javascript">
-            var delayed_function = function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $("#news0").owlCarousel({
                     singleItem: true,
                     lazyLoad: true,
@@ -132,9 +136,11 @@
                 });
             };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function);
+            window.delayJsFunctions.push(delayed_function{$rand});
             {else}
-            $(delayed_function());
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
+            });
             {/if}
         </script>
     {/if}
@@ -165,7 +171,8 @@
             {/for}
         </div>
         <script type="text/javascript">
-            var delayed_function = function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $('#banner0').owlCarousel({
                     items: 6,
                     autoPlay: 3000,
@@ -176,9 +183,11 @@
                 });
             };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function);
+            window.delayJsFunctions.push(delayed_function{$rand});
             {else}
-            $(delayed_function());
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
+            });
             {/if}
         </script>
     {/if}

@@ -98,6 +98,9 @@ function Product(form, options) {
 
 
                 var clone = $('<div class="product-info"></div>').append(f.clone());
+                var info = clone.find('.ajax_product_info');
+                showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + cart_url + '">корзину</a>');
+
                 if (cart_div.closest('.dialog').length) {
                     clone.insertAfter(cart_div.closest('.dialog'));
                 } else {
@@ -125,7 +128,6 @@ function Product(form, options) {
                         quantity = parseInt(cart_item.find('.quantity').text()) + quantity;
                         cart_item.find('.quantity').text(quantity);
                     } else {
-                        var info = clone.find('.ajax_product_info');
                         var tpl_data = {
                             url: info.data('url'),
                             name: info.data('name'),

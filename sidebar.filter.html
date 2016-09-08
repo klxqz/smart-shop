@@ -1,5 +1,6 @@
 {strip}
     {if !empty($filters)}
+        {$jquery_ui_include = false}
         <div class="adv_ajaxfilter_box{if empty($show)} hidden-xs{/if}">
             <h3>
                 [`Filter`]
@@ -89,9 +90,9 @@
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 <script type="text/javascript">
                     window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}");
-                    window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}");
+                        window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa_theme_version}");
+                            window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}");
+                                window.delayJs.push("{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}");
                 </script>
             {else}
                 <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa_theme_version}"></script>
@@ -99,14 +100,17 @@
                 <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa_theme_version}"></script>
                 <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa_theme_version}"></script>
             {/if}
-            <script type="text/javascript"> 
-                var delayed_function = function(){
+            <script type="text/javascript">
+                {$rand = rand()}
+                var delayed_function{$rand} = function () {
                     initRangeSlider();
                 };
                 {if $theme_settings.jquery_delayed_loading}
-                    window.delayJsFunctions.push(delayed_function);
+                window.delayJsFunctions.push(delayed_function{$rand});
                 {else}
-                    $(delayed_function());
+                $(function () {
+                    $(document).ready(delayed_function{$rand}());
+                });
                 {/if}
             </script>
         {/if}

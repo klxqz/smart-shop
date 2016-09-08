@@ -259,6 +259,9 @@ $(document).ready(function () {
             if (response.status == 'ok') {
                 var cart_total = $("#cart-total");
                 var origin = f.closest('.product-thumb');
+                var info = origin.find('.ajax_product_info');
+                showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + cart_url + '">корзину</a>');
+
                 var block = $('<div></div>').append(origin.html());
                 var topTo = cart_total.offset().top;
                 if ($(window).scrollTop() > cart_total.offset().top) {
@@ -288,7 +291,7 @@ $(document).ready(function () {
                         quantity = parseInt(cart_item.find('.quantity').text()) + quantity;
                         cart_item.find('.quantity').text(quantity);
                     } else {
-                        var info = origin.find('.ajax_product_info');
+
                         var tpl_data = {
                             url: info.data('url'),
                             name: info.data('name'),
