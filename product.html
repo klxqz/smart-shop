@@ -69,8 +69,16 @@
                             </a>
                         {/foreach}
                     </div>
+                    {if $theme_settings.zoom_images == 'swipebox'}
+                        <style>
+                            #zoom_01{
+                                z-index: 999 !important;
+                            }
+                        </style>
+                    {/if}
                     <script type="text/javascript">
-                        var delayed_function = function () {
+                        {$rand = rand()}
+                        var delayed_function{$rand} = function () {
                             var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}';
                             var swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}';
                             $("#zoom_01").elevateZoom({
@@ -131,9 +139,11 @@
                             }
                         };
                         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function);
+                        window.delayJsFunctions.push(delayed_function{$rand});
                         {else}
-                        $(delayed_function());
+                        $(function () {
+                            $(document).ready(delayed_function{$rand}());
+                        });
                         {/if}
                     </script>
                 {/if}
@@ -159,7 +169,8 @@
                         <a class="review-button" href="#">[`Reviews`]:&nbsp;<span itemprop="reviewCount">{$reviews_total_count}</span></a>&nbsp;/&nbsp;
                         <a class="write-review-button" href="#">[`Write a review`]</a>
                         <script type="text/javascript">
-                            var delayed_function = function () {
+                            {$rand = rand()}
+                            var delayed_function{$rand} = function () {
                                 $('.review-button').click(function () {
                                     $('a[href=\"#tab-review\"]').trigger('click');
                                     $("html, body").animate({
@@ -177,9 +188,11 @@
                                 });
                             };
                             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                            window.delayJsFunctions.push(delayed_function);
+                            window.delayJsFunctions.push(delayed_function{$rand});
                             {else}
-                            $(delayed_function());
+                            $(function () {
+                                $(document).ready(delayed_function{$rand}());
+                            });
                             {/if}
                         </script>
                     </p>
@@ -335,13 +348,16 @@
         {if $upselling}
             {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
             <script type="text/javascript">
-                var delayed_function = function () {
+                {$rand = rand()}
+                var delayed_function{$rand} = function () {
                     $(".owl-carousel.upselling_pro").owlCarousel(owl_carousel_params);
                 };
                 {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                window.delayJsFunctions.push(delayed_function);
+                window.delayJsFunctions.push(delayed_function{$rand});
                 {else}
-                $(delayed_function());
+                $(function () {
+                    $(document).ready(delayed_function{$rand}());
+                });
                 {/if}
             </script>
         {/if}
@@ -349,13 +365,16 @@
             {$title = sprintf('[`Customers who bought %s also bought`]', $product.name|escape)}
             {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
             <script type="text/javascript">
-                var delayed_function = function () {
+                {$rand = rand()}
+                var delayed_function{$rand} = function () {
                     $(".owl-carousel.crossselling_pro").owlCarousel(owl_carousel_params);
                 };
                 {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                window.delayJsFunctions.push(delayed_function);
+                window.delayJsFunctions.push(delayed_function{$rand});
                 {else}
-                $(delayed_function());
+                $(function () {
+                    $(document).ready(delayed_function{$rand}());
+                });
                 {/if}
             </script>
         {/if}

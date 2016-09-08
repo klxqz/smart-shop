@@ -136,13 +136,16 @@
     {if $theme_settings.productlist1_list}
         {include file="products-list.html" products=$wa->shop->products("`$theme_settings.productlist1_list`") list_title="`$theme_settings.productlist1_name`" class='owl-carousel productlist1_carousel'}
         <script type="text/javascript">
-            var delayed_function = function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $("#content .owl-carousel.productlist1_carousel").owlCarousel(owl_carousel_params);
             };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function);
+            window.delayJsFunctions.push(delayed_function{$rand});
             {else}
-            $(delayed_function());
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
+            });
             {/if}
         </script>
     {/if}
@@ -205,7 +208,8 @@
             </div>
         </div>
         <script type="text/javascript">
-            window.delayJsFunctions.push(function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $("#content #latest_category0 .owl-carousel.latest_category_tabs").owlCarousel(owl_carousel_params);
                 $("#latest_category0 .tab_content").addClass("deactive");
                 $("#latest_category0 .tab_content:first").show();
@@ -218,7 +222,14 @@
                     $(activeTab).fadeIn();
                     return false;
                 });
+            };
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            window.delayJsFunctions.push(delayed_function{$rand});
+            {else}
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
             });
+            {/if}
         </script>
     {/if}
 
@@ -264,7 +275,8 @@
             {/foreach}
         </div>
         <script type="text/javascript">
-            window.delayJsFunctions.push(function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $('#carousel0').owlCarousel({
                     items: 6,
                     autoPlay: 3000,
@@ -272,7 +284,14 @@
                     navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
                     pagination: true
                 });
+            };
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+            window.delayJsFunctions.push(delayed_function{$rand});
+            {else}
+            $(function () {
+                $(document).ready(delayed_function{$rand}());
             });
+            {/if}
         </script>
     {/if}
 

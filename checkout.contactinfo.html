@@ -17,7 +17,8 @@
                         </div>
                     </div>
                     <script>
-                        var delayed_function = function () {
+                        {$rand = rand()}
+                        var delayed_function{$rand} = function () {
                             "use strict";
                             if (!$) {
                                 return;
@@ -54,9 +55,11 @@
 
                         };
                         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function);
+                        window.delayJsFunctions.push(delayed_function{$rand});
                         {else}
-                        $(delayed_function());
+                        $(function () {
+                            $(document).ready(delayed_function{$rand}());
+                        });
                         {/if}
                     </script>
                 {/if}
@@ -97,7 +100,8 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                        var delayed_function = function () {
+                        {$rand = rand()}
+                        var delayed_function{$rand} = function () {
                             var e = $('input[name="customer[email]"]');
                             if (e.length) {
                                 e.on('keyup', function () {
@@ -122,9 +126,11 @@
                             }).change();
                         };
                         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function);
+                        window.delayJsFunctions.push(delayed_function{$rand});
                         {else}
-                        $(delayed_function());
+                        $(function () {
+                            $(document).ready(delayed_function{$rand}());
+                        });
                         {/if}
                     </script>
                 {/if}

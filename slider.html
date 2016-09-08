@@ -29,7 +29,8 @@
     {/function}
     {function name="initRevolutionSlider"}
         <script type="text/javascript">
-            var delayed_function = function () {
+            {$rand = rand()}
+            var delayed_function{$rand} = function () {
                 $("#rev_slider_15_1").show().revolution({
                     sliderType: "carousel",
                     dottedOverlay: "none",
@@ -122,9 +123,11 @@
                                     });
                                 };
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                                window.delayJsFunctions.push(delayed_function);
+                                window.delayJsFunctions.push(delayed_function{$rand});
             {else}
-                                $(delayed_function());
+                                $(function () {
+                                    $(document).ready(delayed_function{$rand}());
+                                });
             {/if}
         </script>
     {/function}

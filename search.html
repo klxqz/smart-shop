@@ -97,7 +97,8 @@
         </div>
     </div>
     <script type="text/javascript">
-        var delayed_function = function () {
+        {$rand = rand()}
+        var delayed_function{$rand} = function () {
             $("#list-view").click(function () {
                 $(".products-category > .clearfix.visible-lg-block").remove();
                 $("#content .product-layout").attr("class", "product-layout product-list col-xs-12");
@@ -183,9 +184,11 @@
             }
         };
         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        window.delayJsFunctions.push(delayed_function);
+        window.delayJsFunctions.push(delayed_function{$rand});
         {else}
-        $(delayed_function());
+        $(function () {
+            $(document).ready(delayed_function{$rand}());
+        });
         {/if}
     </script>
 {/strip}
