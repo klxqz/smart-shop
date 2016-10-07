@@ -264,3 +264,35 @@ h1 .order-status { font-size: 0.75em; margin-left: 10px; }
 .badge.low-price{
     background: #CE3900;
 }
+
+.video-container { text-align: center; margin-right: 50px; max-width: 750px; }
+.video-container iframe { box-shadow: 0 5px 15px rgba(0,0,0,0.15); max-width: 100%; }
+
+.home-bxslider li{
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center center;
+}
+
+.home-bxslider li a{
+    display: block;
+}
+
+.home-bxslider li h3{
+    display: block;
+    position: absolute;
+}
+
+#container .home-bxslider li h3{
+    border-bottom: none;
+}
+
+
+.home-bxslider li p{
+    display: block;
+    position: absolute;
+}
+
+.home-bxslider li .countdown{
+    position: absolute;
+}

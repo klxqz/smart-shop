@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.0.2">
+<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.1.0">
     <name locale="en_US">Smart</name>
     <name locale="ru_RU">Smart</name>
     <files>
@@ -56,6 +56,14 @@
         <file path="!js/product.min.js">
             <description locale="en_US">Product page JS. Compressed</description>
             <description locale="ru_RU">JS-скрипты страницы товара. Сжатый</description>
+        </file>
+        <file path="!js/product.gallery.js">
+            <description locale="en_US">Product page gallery JS</description>
+            <description locale="ru_RU">JS-скрипты для галереи страницы товара</description>
+        </file>
+        <file path="!js/product.gallery.min.js">
+            <description locale="en_US">Product page gallery JS. Compressed</description>
+            <description locale="ru_RU">JS-скрипты галереи страницы товара. Сжатый</description>
         </file>
         <file path="!js/reviews.js">
             <description locale="en_US">Reviews JS</description>
@@ -238,9 +246,10 @@
     $(function(){
         $('input[name="settings[homepage_slider_type]"]').change(function(){
             var slider_type = $(this).val();
-            console.log(slider_type);
             $('.home-slider-setting').closest('.field').hide();
-            if(slider_type == 'images') {
+            if(slider_type == 'promo') {
+                $('.slider-promo').closest('.field').show();
+            } else if(slider_type == 'images') {
                 $('.slider-images').closest('.field').show();
             } else if(slider_type == 'product') {
                 $('.slider-product').closest('.field').show();
@@ -260,7 +269,9 @@
         $('input[name="settings[homepage_slider_type]"]').change(function(){
             var slider_type = $(this).val();
             $('.home-slider-setting').closest('.field').hide();
-            if(slider_type == 'images') {
+            if(slider_type == 'promo') {
+                $('.slider-promo').closest('.field').show();
+            } else if(slider_type == 'images') {
                 $('.slider-images').closest('.field').show();
             } else if(slider_type == 'product') {
                 $('.slider-product').closest('.field').show();
@@ -418,6 +429,10 @@
             <name locale="en_US">Slider type</name>
             <name locale="ru_RU">Тип слайдера</name>
             <options>
+                <option value="promo">
+                    <name locale="en_US">Slider <![CDATA[<a target="_blank" href="?action=products#/promos/">promo-cards</a><br/>]]></name>
+                    <name locale="ru_RU">Слайдер <![CDATA[<a target="_blank" href="?action=products#/promos/">промо-карточек</a><br/>]]></name>
+                </option>
                 <option value="images">
                     <name locale="en_US">Slider images<![CDATA[<br/>]]></name>
                     <name locale="ru_RU">Слайдер изображений<![CDATA[<br/>]]></name>
@@ -435,6 +450,36 @@
                     <name locale="ru_RU">Не показывать<![CDATA[<br/>]]></name>
                 </option>
             </options>
+        </setting>
+        
+        <setting var="slider_promo_height" control_type="text">
+            <value>420px</value>
+            <name locale="en_US">Slider height<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <name locale="ru_RU">Высота слайдера<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+        </setting>
+        
+        <setting var="slider_promo_position_title" control_type="text">
+            <value>left: 30px; top: 30px;</value>
+            <name locale="en_US">Position title<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <name locale="ru_RU">Положение заголовка<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <description locale="en_US">top - top margin; left - left indent; right - the right indent; bottom - the bottom indent;</description>
+            <description locale="ru_RU">top - отступ сверху; left - отступ слева; right - отступ справа; bottom - отступ снизу;</description>
+        </setting>
+        
+        <setting var="slider_promo_position_description" control_type="text">
+            <value>left: 30px; top: 90px;</value>
+            <name locale="en_US">Position description<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <name locale="ru_RU">Положение описания<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <description locale="en_US">top - top margin; left - left indent; right - the right indent; bottom - the bottom indent;</description>
+            <description locale="ru_RU">top - отступ сверху; left - отступ слева; right - отступ справа; bottom - отступ снизу;</description>
+        </setting>
+        
+        <setting var="slider_promo_position_countdown" control_type="text">
+            <value>left: 30px; bottom: 40px</value>
+            <name locale="en_US">Position countdown<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <name locale="ru_RU">Положение обратного отсчета<![CDATA[<div class="home-slider-setting slider-promo"></div>]]></name>
+            <description locale="en_US">top - top margin; left - left indent; right - the right indent; bottom - the bottom indent;</description>
+            <description locale="ru_RU">top - отступ сверху; left - отступ слева; right - отступ справа; bottom - отступ снизу;</description>
         </setting>
         
         <setting var="slider_products_id" control_type="text">
@@ -1106,6 +1151,10 @@ VK.Widgets.Group("vk_groups", {mode: 0, width: "220", height: "400", color1: 'FF
         <locale>
             <msgid>Clear list</msgid>
             <msgstr locale="ru_RU">Очистить список</msgstr>
+        </locale>
+        <locale>
+            <msgid>Next</msgid>
+            <msgstr locale="ru_RU">Далее</msgstr>
         </locale>
     </locales>
 </theme>

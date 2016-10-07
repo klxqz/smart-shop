@@ -119,7 +119,7 @@ $(document).ready(function () {
         c.html('<i class="icon32 loading"><i>');
         d.find('.content').html(c);
         c.load($(this).attr('href') + '?cart=1&quick_view=1', function () {
-            c.prepend('<a href="#" class="dialog-close">&times;</a>');
+            c.prepend('<a href="#" class="dialog-close"><i class="fa fa-times" aria-hidden="true"></i></a>');
         });
         d.show();
         $('html').addClass('dialog-open');
@@ -246,7 +246,7 @@ $(document).ready(function () {
             d.find('.content').html(c);
             c.load(f.data('url'), function () {
                 loading.remove();
-                c.prepend('<a href="#" class="dialog-close">&times;</a>');
+                c.prepend('<a href="#" class="dialog-close"><i class="fa fa-times" aria-hidden="true"></i></a>');
             });
             d.show();
             $('html').addClass('dialog-open');

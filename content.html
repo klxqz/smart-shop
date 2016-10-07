@@ -22,23 +22,21 @@
     {else}
         <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
     {/if}
-    {literal}
-        <script id="cart_item_tmpl" type="text/x-jquery-tmpl">
-            <tr data-id="${id}">
+    <script id="cart_item_tmpl" type="text/x-jquery-tmpl">
+            <tr data-id="${ldelim}id{rdelim}">
             <td class="text-center image">            
-            <a href="${url}">
-            <img src="${img}" alt="${name}" title="${name}" /> 
+            <a href="${ldelim}url{rdelim}">
+            <img src="${ldelim}img{rdelim}" alt="${ldelim}name{rdelim}" title="${ldelim}name{rdelim}" /> 
             </a>
             </td>
             <td class="text-left">
-            <a href="${url}">${name}</a>
+            <a href="${ldelim}url{rdelim}">${ldelim}name{rdelim}</a>
             </td>
-            <td class="text-right nowrap">x<span class="quantity">${quantity}</span></td>
-            <td class="text-right nowrap">{{html price}}</td>
+            <td class="text-right nowrap">x<span class="quantity">${ldelim}quantity{rdelim}</span></td>
+            <td class="text-right nowrap">{ldelim}{ldelim}html price{rdelim}{rdelim}</td>
             <td class="text-center">
             <a class="btn btn-xs remove" title="[`Remove`]"><i class="fa fa-times"></i></a>
             </td>
             </tr>
-        </script>
-    {/literal}
+    </script>
 {/strip}
