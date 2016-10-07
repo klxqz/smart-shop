@@ -29,14 +29,14 @@
     {if $theme_settings.zoom_images != 'zoom'}
         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
             <script type="text/javascript">
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery.swipebox/js/ios-orientationchange-fix.js");
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery.swipebox/js/jquery.swipebox.min.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery-swipebox/js/ios-orientationchange-fix.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery-swipebox/js/jquery.swipebox.min.js");
             </script>
         {else}
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.swipebox/js/ios-orientationchange-fix.js"></script>
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.swipebox/js/jquery.swipebox.min.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/ios-orientationchange-fix.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/jquery.swipebox.min.js"></script>
         {/if}
-        <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery.swipebox/css/swipebox.min.css">
+        <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery-swipebox/css/swipebox.min.css">
     {/if}
 
     {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}

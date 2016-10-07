@@ -180,30 +180,57 @@
                     </li>
                 {/foreach}
             </ul>
-            <script type="text/javascript">
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery.bxslider/jquery.bxslider.min.js");
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery.countdowntimer/jquery.countdownTimer.min.js");
-                window.delayJsFunctions.push(function () {
-                    $('.home-bxslider').bxSlider({
-                        auto: true
-                    });
-                    if ($.fn.countdowntimer) {
-                        $('.js-promo-countdown').each(function () {
-                            var $this = $(this).html('');
-                            var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
-                            $this.attr('id', id);
-                            var start = $this.data('start').replace(/-/g, '/');
-                            var end = $this.data('end').replace(/-/g, '/');
-                            $this.countdowntimer({
-                                startDate: start,
-                                dateAndTime: end,
-                                size: 'lg'
-                            });
+            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+                <script type="text/javascript">
+                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-bxslider/jquery.bxslider.min.js");
+                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-countdowntimer/jquery.countdownTimer.min.js");
+                    window.delayJsFunctions.push(function () {
+                        $('.home-bxslider').bxSlider({
+                            auto: true
                         });
-                    }
+                        if ($.fn.countdowntimer) {
+                            $('.js-promo-countdown').each(function () {
+                                var $this = $(this).html('');
+                                var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
+                                $this.attr('id', id);
+                                var start = $this.data('start').replace(/-/g, '/');
+                                var end = $this.data('end').replace(/-/g, '/');
+                                $this.countdowntimer({
+                                    startDate: start,
+                                    dateAndTime: end,
+                                    size: 'lg'
+                                });
+                            });
+                        }
 
-                });
-            </script>
+                    });
+                </script>
+            {else}
+                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-bxslider/jquery.bxslider.min.js"></script>
+                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-countdowntimer/jquery.countdownTimer.min.js"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        $('.home-bxslider').bxSlider({
+                            auto: true
+                        });
+                        if ($.fn.countdowntimer) {
+                            $('.js-promo-countdown').each(function () {
+                                var $this = $(this).html('');
+                                var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
+                                $this.attr('id', id);
+                                var start = $this.data('start').replace(/-/g, '/');
+                                var end = $this.data('end').replace(/-/g, '/');
+                                $this.countdowntimer({
+                                    startDate: start,
+                                    dateAndTime: end,
+                                    size: 'lg'
+                                });
+                            });
+                        }
+
+                    });
+                </script>
+            {/if}
         {/if}
 
     {elseif $theme_settings.homepage_slider_type == 'images'}
