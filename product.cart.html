@@ -6,7 +6,7 @@
             </div>
         {/if}
 
-        <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($product.price)|escape}" data-name="{$product.name|escape}" data-url="{$product.frontend_url}" {if $product.image_id}data-img="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '47', false)}"{else}data-img="{$wa_theme_url}img/dummy47.png"{/if} />
+        <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($product.price)|escape}" data-name="{$product.name|escape}" data-url="{$product.frontend_url}" {if $product.image_id}data-img="{$wa->shop->imgUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext, 'filename' => $product.image_filename], '47', false)}"{else}data-img="{$wa_theme_url}img/dummy47.png"{/if} />
         {if !empty($features_selectable)}<h3>[`Please select the options you want`]:</h3>{/if}
         {if $product.sku_type}
 
@@ -224,7 +224,7 @@
                         });
                         });</script>
         {else}
-        <script type="text/javascript" src="{$wa_theme_url}!js/product.min.js?v{$wa_theme_version}"></script>
+        <script type="text/javascript" src="{$wa_real_theme_url}!js/product.min.js?v{$wa_theme_version}"></script>
         <script type="text/javascript">
                     $(function () {
                     new Product('#cart-form{if $wa->get('cart')}-dialog{/if}', {

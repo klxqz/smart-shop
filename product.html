@@ -9,27 +9,48 @@
     {if $theme_settings.zoom_images != 'zoom'}
         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
             <script type="text/javascript">
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js");
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery.swipebox/js/ios-orientationchange-fix.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery.swipebox/js/jquery.swipebox.min.js");
             </script>
         {else}
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/lib/ios-orientationchange-fix.js"></script>
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/swipebox/source/jquery.swipebox.min.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.swipebox/js/ios-orientationchange-fix.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.swipebox/js/jquery.swipebox.min.js"></script>
         {/if}
-        <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery/swipebox/source/swipebox.css">
+        <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery.swipebox/css/swipebox.min.css">
+    {/if}
+
+    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
+        <script type="text/javascript">
+            window.delayJs.push("{$wa_active_theme_url}!js/product.gallery.js");
+        </script>
+    {else}
+        <script type="text/javascript" src="{$wa_active_theme_url}!js/product.gallery.min.js"></script>
     {/if}
 
     <div itemscope itemtype="http://schema.org/Product">
         <h1 itemprop="name">{$product.name}</h1>
         <div class="row product-info">
-            <div class="col-sm-6"> 
-                <div class="image">
+            <div class="col-sm-6">
+                <div class="image image-video">
+                    {$video = $product->video}
+                    {if $video}
+                        <div id="video-container" class="video-container" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                            <div itemprop="embedHTML">
+                                <iframe src="{$video.url}" width="{$video.width}" height="{$video.height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+                            <meta itemprop="width" content="{$video.width}">
+                            <meta itemprop="height" content="{$video.height}">
+                        </div>
+                    {/if}
+                </div>
+                <div class="image image-image"{if $video} style="display:none"{/if}>
                     {$badge_html = $wa->shop->badgeHtml($product.badge)}
                     {if $badge_html}
                         <div class="corner">{$badge_html}</div>
                     {/if} 
                     {if $product.image_id}
-                        <img class="img-responsive" itemprop="image" id="zoom_01" src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '350', false)}" title="{$product.name|escape}" alt="{$product.name|escape}" data-zoom-image="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '900', false)}" /> 
+                        {$zoom_image = $wa->shop->imgUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext, 'filename' => $product.image_filename], '900', false)}
+                        {$wa->shop->productImgHtml($product, '350', ['data-zoom-image' => $zoom_image, 'id' => 'zoom_01', 'class' => 'img-responsive', 'itemprop' => 'image', 'alt' => $product.name, 'title' => $product.name])}
                     {else}
                         <div class="center-block text-center ">
                             <img alt="" itemprop="image" src="{$wa_theme_url}img/dummy200.png"  /> 
@@ -43,80 +64,39 @@
                         </div>
                     {/if}
                     <div class="image-additional" id="gallery_01">
+                        {if $video}
+                            <a id="product-image-video" href="{$video.url}" class="thumbnail active">
+                                <img src="{$video.images[0]}">
+                            </a>
+                        {/if}
                         {foreach $product.images as $image}
-                            <a class="thumbnail{if $image@first} active{/if}" href="#" data-zoom-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '900', false)}" data-image="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '350', false)}" title="{$product.name|escape}"> 
-                                <img src="{shopImage::getUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext], '66', false)}" title="{$product.name|escape}" alt = "{$product.name|escape}"/>
+                            <a class="elevate-zoom-thumbnail thumbnail{if $image@first && empty($video)} active{/if}" href="#" 
+                               data-zoom-image="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '900', false)}" 
+                               data-image="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '350', false)}" 
+                               title="{$product.name|escape}"> 
+                                {$wa->shop->imgHtml(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '66', ['alt' => $product.name, 'title' => $product.name])}
                             </a>
                         {/foreach}
                     </div>
                     {if $theme_settings.zoom_images == 'swipebox'}
                         <style>
                             #zoom_01{
-                                z-index: 999 !important;
+                                z-index: 1 !important;
                             }
                         </style>
                     {/if}
                     <script type="text/javascript">
                         {$rand = rand()}
                         var delayed_function{$rand} = function () {
-                            var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}';
-                            var swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}';
-                            $("#zoom_01").elevateZoom({
-                                zoomWindowWidth: 300,
-                                zoomWindowHeight: 300,
-                                gallery: 'gallery_01',
-                                cursor: 'pointer',
-                                galleryActiveClass: 'active',
-                                imageCrossfade: true,
-                                zoomWindowFadeIn: 500,
-                                zoomWindowFadeOut: 500,
-                                lensFadeIn: 500,
-                                lensFadeOut: 500,
-                                loadingIcon: '{$wa_parent_theme_url}img/icons/progress.gif'
-                            }).load(function () {
-                                $(this).removeAttr('style');
-                                $('.zoomWrapper').css({
-                                    'width': $(this).width(),
-                                    'height': $(this).height()
-                                });
-                            });
-
-                            if (zoomDisable) {
-                                var ez = $('#zoom_01').data('elevateZoom');
-                                ez.changeState('disable');
-                                $('.zoomContainer').hide();
-                            } else {
-                                function zoomResize() {
-                                    var ez = $('#zoom_01').data('elevateZoom');
-                                    if ($(document).width() > 767) {
-                                        ez.changeState('enable');
-                                        $('.zoomContainer').show();
-                                    } else {
-                                        ez.changeState('disable');
-                                        $('.zoomContainer').hide();
-                                    }
-                                }
-                                $(window).resize(zoomResize);
-                                zoomResize();
-                            }
-
-                            if (!swipeboxDisable) {
-                                var zoomimages = [];
-                                var images = [];
-                                $('.thumbnail').each(function () {
-                                    zoomimages.push({
-                                        'href': $(this).data('zoom-image')
-                                    });
-                                    images.push($(this).data('image'));
-                                });
-                                $("#zoom_01").on("click", function (e) {
-                                    var index = images.indexOf($(this).attr('src'));
-                                    $.swipebox(zoomimages, {
-                                        initialIndexOnArray: index
-                                    });
-                                    return false;
-                                });
-                            }
+                            var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}',
+                                    swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}',
+                                    wa_parent_theme_url = '{$wa_parent_theme_url}';
+                            var options = {
+                                zoomDisable: zoomDisable,
+                                swipeboxDisable: swipeboxDisable,
+                                wa_parent_theme_url: wa_parent_theme_url
+                            };
+                            $.product_gallery.init(options);
                         };
                         {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                         window.delayJsFunctions.push(delayed_function{$rand});

@@ -14,13 +14,13 @@
         <div{if !empty($class)} class="{$class}"{/if}>
             {foreach $products as $p}
                 <div class="product-thumb n{$n} clearfix" itemscope itemtype ="http://schema.org/Product">
-                    <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($p.price)|escape}" data-name="{$p.name|escape}" data-url="{$p.frontend_url}" data-img="{shopImage::getUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext, 'default' => "`$wa_theme_url`img/dummy200.png"], '47', false)}" />
+                    <input type="hidden" class="ajax_product_info" data-price="{shop_currency_html($p.price)|escape}" data-name="{$p.name|escape}" data-url="{$p.frontend_url}" {if $p.image_id}data-img="{$wa->shop->imgUrl(['id' => $p.image_id, 'product_id' => $p.id, 'ext' => $p.ext,'filename' => $p.image_filename], '47', false)}"{else}data-img="{$wa_theme_url}img/dummy47.png"{/if}/>
                     <div class="image">
                         {$badge_html = $wa->shop->badgeHtml($p.badge)}
                         {if $badge_html}
                             <div class="corner">{$badge_html}</div>
                         {/if}  
-                        <a href="{$p.frontend_url}">
+                        <a href="{$p.frontend_url}" data-toggle="tooltip" title="{$p.name}">
                             {if $p.image_id}
                                 {$wa->shop->productImgHtml($p, $img_size, ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name])}
                             {else}
@@ -76,7 +76,7 @@
                         {if $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
                             <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
                                 <input type="hidden" name="product_id" value="{$p.id}">
-                                <button class="btn-primary"><span>[`Add to cart`]</span></button>
+                                <button class="btn btn-primary">[`Add to cart`]</button>
                             </form>
                             <link itemprop="availability" href="http://schema.org/InStock" />
                         {else}

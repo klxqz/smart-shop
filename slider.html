@@ -131,7 +131,82 @@
             {/if}
         </script>
     {/function}
-    {if $theme_settings.homepage_slider_type == 'images'}
+
+
+
+
+    {if $theme_settings.homepage_slider_type == 'promo'}
+        {$promocards = $wa->shop->promos()}
+        {if $promocards}
+            {$wa->globals('include_css_bxslider', true)}
+
+            <style>
+                .home-bxslider li {
+                    max-height: {$theme_settings.slider_promo_height|default:'563px'};
+                }
+                .home-bxslider li a {
+                    height: {$theme_settings.slider_promo_height|default:'563px'};
+                }
+                .home-bxslider li h3 {
+                    {$theme_settings.slider_promo_position_title|default:'left: 30px; top: 30px;'}
+                }
+                .home-bxslider li p {
+                    {$theme_settings.slider_promo_position_description|default:'left: 30px; top: 90px;'}
+                }
+                .home-bxslider li .countdown {
+                    {$theme_settings.slider_promo_position_countdown|default:'left: 30px; top: 170px;'}
+                }
+            </style>
+            <ul class="home-bxslider">
+                {foreach $promocards as $promo}
+                    <li style="{if !empty($promo.background_color)}background-color: {$promo.background_color};{/if} background-image: url('{$promo.image}');">
+                        <a href="{$promo.link|escape}">
+                            {if !empty($promo.title)}
+                                <h3 class="title" style="color: {$promo.color};">{$promo.title|escape}</h3>
+                            {/if}
+                            {if !empty($promo.body)}
+                                <p style="color: {$promo.color};">{$promo.body|escape|nl2br}</p>
+                            {/if}
+                            {if !empty($promo.countdown_datetime) && time() <= strtotime($promo.countdown_datetime)}
+                                {$wa->globals('include_css_countdown', true)}
+                                <div class="countdown">
+                                    <span class="js-promo-countdown"
+                                          data-start="{date('Y-m-d H:i:s')}"
+                                          data-end="{$promo.countdown_datetime}">
+                                    </span>
+                                </div>
+                            {/if}
+                        </a>
+                    </li>
+                {/foreach}
+            </ul>
+            <script type="text/javascript">
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery.bxslider/jquery.bxslider.min.js");
+                window.delayJs.push("{$wa_active_theme_url}!js/jquery.countdowntimer/jquery.countdownTimer.min.js");
+                window.delayJsFunctions.push(function () {
+                    $('.home-bxslider').bxSlider({
+                        auto: true
+                    });
+                    if ($.fn.countdowntimer) {
+                        $('.js-promo-countdown').each(function () {
+                            var $this = $(this).html('');
+                            var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
+                            $this.attr('id', id);
+                            var start = $this.data('start').replace(/-/g, '/');
+                            var end = $this.data('end').replace(/-/g, '/');
+                            $this.countdowntimer({
+                                startDate: start,
+                                dateAndTime: end,
+                                size: 'lg'
+                            });
+                        });
+                    }
+
+                });
+            </script>
+        {/if}
+
+    {elseif $theme_settings.homepage_slider_type == 'images'}
         <div class="slider-wrapper">
             <div id="slideshow0" class="nivoSlider">
                 {for $i = 1 to 5}
@@ -207,9 +282,18 @@
                 <div id="rev_slider_15_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.2.0">
                     <ul>
                         {foreach $products as $product}
-                            <li  data-transition="fade" data-slotamount="7" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '60x60', false)}"  data-rotate="0"  data-saveperformance="off">
+                            <li data-transition="fade" 
+                                data-slotamount="7" 
+                                data-hideafterloop="0" 
+                                data-hideslideonmobile="off"  
+                                data-easein="default" 
+                                data-easeout="default" 
+                                data-masterspeed="300"  
+                                data-thumb="{$wa->shop->imgUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext,'filename' => $product.image_filename], '60x60', false)}"  
+                                data-rotate="0"  
+                                data-saveperformance="off">
                                 <a href="{$product.frontend_url}">
-                                    <img alt="" src="{shopImage::getUrl(['id' => $product.image_id, 'product_id' => $product.id, 'ext' => $product.ext], '530', false)}"   alt="" title="{$product.name|escape}">
+                                    {$wa->shop->productImgHtml($product, '530', ['alt' => $product.name, 'title' => $product.name])}
                                 </a>
                                 <a class="tp-caption tp-resizeme" 
                                    href="{$product.frontend_url}"

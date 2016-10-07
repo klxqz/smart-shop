@@ -1,5 +1,11 @@
 {strip}
     <link href="{$wa_active_theme_url}!css/smart.shop.min.css?v{$wa_theme_version}" rel="stylesheet" property="stylesheet" type="text/css">
+    {if $wa->globals('include_css_bxslider')}
+        <link rel='stylesheet' href='{$wa_active_theme_url}!js/jquery.bxslider/jquery.bxslider.min.css' type='text/css' media='all' />
+    {/if}
+    {if $wa->globals('include_css_countdown')}
+        <link rel='stylesheet' href='{$wa_active_theme_url}!js/jquery.countdowntimer/css/jquery.countdownTimer.min.css' type='text/css' media='all' />
+    {/if}
     <script type="text/javascript" src="{$wa_active_theme_url}!js/lazy.load.min.js?v{$wa->version()}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/smart.shop.min.js?v{$wa_theme_version}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/jquery.cookie.min.js"></script>

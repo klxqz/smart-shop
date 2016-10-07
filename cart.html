@@ -149,8 +149,10 @@
             {/foreach} 
 
             <div class="buttons">
-                <div class="pull-left"><a href="{$wa_app_url}" class="btn btn-default">&larr; [`Back to the store`]</a></div>
-                <div class="pull-right"><input name="checkout" type="submit" value="[`Proceed to checkout`]" class="btn btn-primary"></div>
+                <div class="pull-left"><a href="{$wa_app_url}" class="btn btn-default"><i class="fa fa-chevron-left" aria-hidden="true"></i> [`Back to the store`]</a></div>
+                <div class="pull-right">
+                    <button name="checkout" value="1" class="btn btn-primary">[`Proceed to checkout`] <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                </div>
             </div>
         </form>
 
