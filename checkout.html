@@ -38,13 +38,13 @@
                                                             if ($("input[name='user_type']:checked").val() == '1') {
                                                                 $("#login-form input").removeAttr('disabled');
                                                                 $(this).closest('div.auth').next(".checkout-step-content").hide();
-                                                                $("input[type=submit]:last").hide();
+                                                                $("button").hide();
                                                                 $("#login-form").show();
                                                             } else {
                                                                 $("#login-form input").attr('disabled', 'disabled');
                                                                 $("#login-form").hide();
                                                                 $(this).closest('div.auth').next(".checkout-step-content").show();
-                                                                $("input[type=submit]:last").show();
+                                                                $("button").show();
                                                             }
                                                         });
                                                     {if $checkout_current_step == $step_id}
@@ -175,7 +175,7 @@
                 if (f.hasClass('last') || ($("#login-form").length && !$("#login-form input:submit").attr('disabled'))) {
                     return true;
                 }
-                $('<span class="loading"> <i class="icon16 loading"></i></span>').insertAfter(f.find('input:submit:last').attr('disabled', 'disabled'));
+                $('<span class="loading"> <i class="icon16 loading"></i></span>').insertAfter(f.find('button').attr('disabled', 'disabled'));
                 $.post(f.attr('action') || window.location, f.serialize(), function (response) {
                     var content = $(response);
                     var step_id = content.data('step-id');
@@ -207,7 +207,7 @@
                     });
                 }).always(function () {
                     f.find('span.loading').remove();
-                    f.find('input:submit:last').removeAttr('disabled');
+                    f.find('button').removeAttr('disabled');
                     initFormControl($('#content'));
                 });
                 return false;
