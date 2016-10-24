@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.1.1">
+<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.2.0">
     <name locale="en_US">Smart</name>
     <name locale="ru_RU">Smart</name>
     <files>
+        <file path="!css/custom-styles.css" parent="1">
+        </file>
         <file path="!css/smart.css" parent="1">
         </file>
         <file path="!css/smart.min.css" parent="1">
@@ -247,7 +249,9 @@
         $('input[name="settings[homepage_slider_type]"]').change(function(){
             var slider_type = $(this).val();
             $('.home-slider-setting').closest('.field').hide();
-            if(slider_type == 'promo') {
+            if(slider_type == 'products-paralax') {
+                $('.slider-products-paralax').closest('.field').show();
+            } else if(slider_type == 'promo') {
                 $('.slider-promo').closest('.field').show();
             } else if(slider_type == 'images') {
                 $('.slider-images').closest('.field').show();
@@ -269,7 +273,9 @@
         $('input[name="settings[homepage_slider_type]"]').change(function(){
             var slider_type = $(this).val();
             $('.home-slider-setting').closest('.field').hide();
-            if(slider_type == 'promo') {
+            if(slider_type == 'products-paralax') {
+                $('.slider-products-paralax').closest('.field').show();
+            } else if(slider_type == 'promo') {
                 $('.slider-promo').closest('.field').show();
             } else if(slider_type == 'images') {
                 $('.slider-images').closest('.field').show();
@@ -418,10 +424,24 @@
             <name locale="ru_RU">Объединить слайдер и баннеры №4 и №5 в одну строку</name>
         </setting>
       
-        <setting var="homepage_slider_fullwidth" control_type="checkbox">
-            <value>0</value>
-            <name locale="en_US">full width</name>
-            <name locale="ru_RU">Во всю ширину экрана</name>
+        <setting var="homepage_width" control_type="radio">
+            <value>content_width</value>
+            <name locale="en_US">Slider width</name>
+            <name locale="ru_RU">Ширина слайдера</name>
+            <options>
+                <option value="full_width">
+                    <name locale="en_US">full width<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">Во всю ширину экрана<![CDATA[<br/>]]></name>
+                </option>
+                <option value="page_width">
+                    <name locale="en_US">page width<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">Ширина страницы<![CDATA[<br/>]]></name>
+                </option>
+                <option value="content_width">
+                    <name locale="en_US">content width<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">Ширина области контента<![CDATA[<br/>]]></name>
+                </option>
+            </options>
         </setting>
         
         <setting var="homepage_slider_type" control_type="radio">
@@ -429,6 +449,10 @@
             <name locale="en_US">Slider type</name>
             <name locale="ru_RU">Тип слайдера</name>
             <options>
+                <option value="products-paralax">
+                    <name locale="en_US">Slider items with parallax effect<![CDATA[<br/>]]></name>
+                    <name locale="ru_RU">Слайдер товаров с эффектом параллакса<![CDATA[<br/>]]></name>
+                </option>
                 <option value="promo">
                     <name locale="en_US">Slider <![CDATA[<a target="_blank" href="?action=products#/promos/">promo-cards</a><br/>]]></name>
                     <name locale="ru_RU">Слайдер <![CDATA[<a target="_blank" href="?action=products#/promos/">промо-карточек</a><br/>]]></name>
@@ -450,6 +474,33 @@
                     <name locale="ru_RU">Не показывать<![CDATA[<br/>]]></name>
                 </option>
             </options>
+        </setting>
+        
+        <setting var="slider_products_paralax_list_id" control_type="text">
+            <value>set/bestsellers</value>
+            <name locale="en_US">Products list<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+            <name locale="ru_RU">Список товаров<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+        </setting>
+        <setting var="slider_products_paralax_bg" control_type="image">
+            <value>img/slider/paralax-bg.jpg</value>
+            <filename>img/slider/paralax-bg.*</filename>
+            <name locale="en_US">Background<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+            <name locale="ru_RU">Фоновое изображение<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+        </setting>
+        <setting var="slider_products_paralax_main_color" control_type="color">
+            <value>#018CEF</value>
+            <name locale="en_US">Main color<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+            <name locale="ru_RU">Основной цвет<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+        </setting>
+        <setting var="slider_products_paralax_title_color" control_type="color">
+            <value>#FFFFFF</value>
+            <name locale="en_US">Title color<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+            <name locale="ru_RU">Цвет заголовка<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+        </setting>
+        <setting var="slider_products_paralax_desc_color" control_type="color">
+            <value>#666</value>
+            <name locale="en_US">Description color<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
+            <name locale="ru_RU">Цвет описания<![CDATA[<div class="home-slider-setting slider-products-paralax"></div>]]></name>
         </setting>
         
         <setting var="slider_promo_height" control_type="text">
@@ -1155,6 +1206,10 @@ VK.Widgets.Group("vk_groups", {mode: 0, width: "220", height: "400", color1: 'FF
         <locale>
             <msgid>Next</msgid>
             <msgstr locale="ru_RU">Далее</msgstr>
+        </locale>
+        <locale>
+            <msgid>More about product...</msgid>
+            <msgstr locale="ru_RU">Подробнее о товаре...</msgstr>
         </locale>
     </locales>
 </theme>

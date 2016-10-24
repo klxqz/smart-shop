@@ -21,7 +21,7 @@
     {if $theme_settings.homepage_slider_with_banners}
         <div class="row">
             <div class="col-sm-8">
-                {if !$theme_settings.homepage_slider_fullwidth}
+                {if $theme_settings.homepage_width == 'content_width'}
                     {include file="slider.html"}
                 {/if}
             </div>
@@ -55,7 +55,7 @@
             </div>
         </div>
     {else}
-        {if !$theme_settings.homepage_slider_fullwidth}
+        {if $theme_settings.homepage_width == 'content_width'}
             {include file="slider.html"}
         {/if}
     {/if}
@@ -309,7 +309,11 @@
                             {foreach $wa->photos->photos($theme_settings.shop_homepage_album_id, $size, null, $theme_settings.shop_homepage_number_photos) as $photo}
                                 <li>
                                     <a href="{$photo.frontend_link|default:'#'}">
-                                        <div class="image" style="background-image: url({$photo["thumb_$size"].url});"></div>
+                                        {if $theme_settings.image_lazy_load}
+                                            <div class="image" data-original="{$photo["thumb_$size"].url}" style="background-image: url({$wa_parent_theme_url}img/loading-animation.gif);"></div>
+                                        {else}
+                                            <div class="image" style="background-image: url({$photo["thumb_$size"].url});"></div>
+                                        {/if}
                                     </a>
                                 </li>
                             {/foreach}

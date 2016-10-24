@@ -6,7 +6,11 @@
                 <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="{$p.frontend_url}">
-                            {$wa->shop->productImgHtml($p, '50', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name, 'default' => "`$wa_theme_url`img/dummy50.png"])}
+                            {if $p.image_id}
+                                {$wa->shop->productImgHtml($p, '50', ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name])}
+                            {else}
+                                <img class="img-responsive" src="{$wa_theme_url}img/dummy50.png" />
+                            {/if}
                         </a>
                     </div>
                     <div class="caption">

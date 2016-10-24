@@ -53,8 +53,10 @@
                 $(this).removeAttr('style');
                 $('.zoomWrapper').css({
                     'width': $(this).width(),
-                    'height': $(this).height()
+                    'height': $(this).height(),
+                    'position': 'relative'
                 });
+                $('#zoom_01').css('position', 'absolute');
             });
         },
         initSwipebox: function () {

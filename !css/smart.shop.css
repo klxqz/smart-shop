@@ -296,3 +296,23 @@ h1 .order-status { font-size: 0.75em; margin-left: 10px; }
 .home-bxslider li .countdown{
     position: absolute;
 }
+
+#cart-form-dialog .image-preview{
+    position: relative
+}
+#cart-form-dialog .image-preview .image{
+    min-height: 206px;
+}
+
+#cart-form-dialog .product-image-prev,
+#cart-form-dialog .product-image-next{
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+}
+#cart-form-dialog .product-image-prev{
+    left: 0;
+}
+#cart-form-dialog .product-image-next{
+    right: 0;
+}

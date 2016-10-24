@@ -100,7 +100,8 @@ function Product(form, options) {
                 var clone = $('<div class="product-info"></div>').append(f.clone());
                 var info = clone.find('.ajax_product_info');
                 showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + cart_url + '">корзину</a>');
-
+                $('#cart').addClass('open');
+                
                 if (cart_div.closest('.dialog').length) {
                     clone.insertAfter(cart_div.closest('.dialog'));
                 } else {

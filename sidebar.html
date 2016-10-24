@@ -93,12 +93,12 @@
     {*custom-content-end*}
 
     {if $theme_settings.sidebar_shop_vk_widget}
-        <div class="list-group hidden-xs">
+        <div class="list-group hidden-xs hidden-sm">
             {$theme_settings.sidebar_shop_vk_widget_code}
         </div>
     {/if}
     {if $theme_settings.sidebar_shop_facebook_widget}
-        <div class="list-group hidden-xs">
+        <div class="list-group hidden-xs hidden-sm">
             {$theme_settings.sidebar_shop_facebook_widget_code}
         </div>
     {/if}
@@ -201,7 +201,7 @@
                 {foreach $wa->shop->tags() as $tag}
                     {if trim($tag.name)}
                         <li>
-                            <a href="{$wa->getUrl('shop/frontend/tag',['tag' => $tag.uri_name])}" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name|escape}</a>
+                            <a href="{$wa->getUrl('shop/frontend/tag',['tag' => $tag.uri_name])}" style="font-size: {$tag.size}%">{$tag.name|escape}</a>
                         </li>
                         {if $tag@iteration >= 10}
                             {break}

@@ -1,8 +1,24 @@
 {strip}
     <form id="cart-form{if $wa->get('cart')}-dialog{/if}" method="post" action="{$wa->getUrl('/frontendCart/add')}">
         {if $wa->get('cart')}
-            <div class="center-block text-center ">
-                {$wa->shop->productImgHtml($product, '200', ['itemprop' => 'image', 'alt' => $product.name, 'title' => $product.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+            <div class="image-preview">
+                <div class="center-block text-center ">
+                    <div class="image">
+                        {$wa->shop->productImgHtml($product, '200', ['itemprop' => 'image', 'alt' => $product.name, 'title' => $product.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                        {$images_a = $wa->shop->images($product.id, ['200'])}
+                        {if !empty($images_a[$product.id])  && count($images_a[$product.id]) > 1}
+                            {$images_a = $images_a[$product.id]}
+                            {$images = []}
+                            {foreach $images_a as $image}
+                                {$images[] = $image['url_0']}
+                            {/foreach}
+                            <div class="product-image-buttons" data-images="{json_encode($images)|escape}">
+                                <a href="#" class="product-image-prev"><i class="fa fa-angle-left"></i></a>
+                                <a href="#" class="product-image-next"><i class="fa fa-angle-right"></i></a>
+                            </div>
+                        {/if}
+                    </div>
+                </div>
             </div>
         {/if}
 
@@ -184,6 +200,12 @@
                 </div>
             </div>
 
+            <!-- plugin hook: 'frontend_product.cart' -->
+            {* @event frontend_product.%plugin_id%.cart *}
+            {foreach $frontend_product as $_}
+                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.cart}
+            {/foreach}
+
             <div class="cart">
                 <div>
                     <div class="qty">
@@ -200,14 +222,10 @@
                     <br>
                     <button data-id="{$product.id}"  class="compare-add wishlist" type="button"><i class="fa fa-exchange"></i> [`Compare this Product`]</button>
                 </div>
-
-                <!-- plugin hook: 'frontend_product.cart' -->
-                {* @event frontend_product.%plugin_id%.cart *}
-                {foreach $frontend_product as $_}
-                    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.cart}
-                {/foreach}
-
             </div>
+            {if $wa->get('cart')}
+                <a class="btn btn-default float-right" href="{$wa->shop->productUrl($product)}">[`More about product...`]</a>
+            {/if}
 
         </div>
 

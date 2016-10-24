@@ -203,6 +203,9 @@ $(document).ready(function () {
         $.get(url + '&_=_', function (html) {
             var tmp = $('<div></div>').html(html);
             $('.products-category').html(tmp.find('.products-category').html());
+            $('.products-category img[data-original]').lazyload({
+                effect: "fadeIn"
+            });
             $('.pagination-block').html(tmp.find('.pagination-block').html());
             if (localStorage.getItem('display') == 'list') {
                 $('#list-view').trigger('click');
@@ -261,6 +264,7 @@ $(document).ready(function () {
                 var origin = f.closest('.product-thumb');
                 var info = origin.find('.ajax_product_info');
                 showMsg('<i class="fa fa-check-circle"></i> Товар <a href="' + info.data('url') + '">' + info.data('name') + '</a> успешно добавлен в <a href="' + cart_url + '">корзину</a>');
+                $('#cart').addClass('open');
 
                 var block = $('<div></div>').append(origin.html());
                 var topTo = cart_total.offset().top;
@@ -367,7 +371,12 @@ $(document).ready(function () {
                     $.get(url, function (html) {
                         var tmp = $('<div></div>').html(html);
                         if ($.Retina) {
-                            tmp.find('#product-list .product-list img').retina();
+                            tmp.find('.product-list img').retina();
+                        }
+                        if (img_lazyload) {
+                            tmp.find('.product-list img[data-original]').lazyload({
+                                effect: "fadeIn"
+                            });
                         }
                         product_list.append(tmp.find('.products-category').children());
                         if (localStorage.getItem('display') == 'list') {
