@@ -2,7 +2,7 @@
     <!-- plugin hook: 'frontend_header' -->
     {* @event frontend_header.%plugin_id% *}
     {foreach $frontend_header as $_}
-        {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+        {$_}
     {/foreach}            
 
 
@@ -12,31 +12,25 @@
     <!-- plugin hook: 'frontend_footer' -->
     {* @event frontend_footer.%plugin_id% *}
     {foreach $frontend_footer as $_}
-        {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+        {$_}
     {/foreach}
 
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js");
-        </script>
-    {else}
-        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
-    {/if}
+    <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery-plugins/jquery.tmpl.min.js"></script>
     <script id="cart_item_tmpl" type="text/x-jquery-tmpl">
-            <tr data-id="${ldelim}id{rdelim}">
-            <td class="text-center image">            
-            <a href="${ldelim}url{rdelim}">
-            <img data-disable-lazyloading="1" src="${ldelim}img{rdelim}" alt="${ldelim}name{rdelim}" title="${ldelim}name{rdelim}" /> 
-            </a>
-            </td>
-            <td class="text-left">
-            <a href="${ldelim}url{rdelim}">${ldelim}name{rdelim}</a>
-            </td>
-            <td class="text-right nowrap">x<span class="quantity">${ldelim}quantity{rdelim}</span></td>
-            <td class="text-right nowrap">{ldelim}{ldelim}html price{rdelim}{rdelim}</td>
-            <td class="text-center">
-            <a class="btn btn-xs remove" title="[`Remove`]"><i class="fa fa-times"></i></a>
-            </td>
-            </tr>
+        <tr data-id="${ldelim}id{rdelim}">
+        <td class="text-center image">            
+        <a href="${ldelim}url{rdelim}">
+        <img data-disable-lazyloading="1" src="${ldelim}img{rdelim}" alt="${ldelim}name{rdelim}" title="${ldelim}name{rdelim}" /> 
+        </a>
+        </td>
+        <td class="text-left">
+        <a href="${ldelim}url{rdelim}">${ldelim}name{rdelim}</a>
+        </td>
+        <td class="text-right nowrap">x<span class="quantity">${ldelim}quantity{rdelim}</span></td>
+        <td class="text-right nowrap">{ldelim}{ldelim}html price{rdelim}{rdelim}</td>
+        <td class="text-center">
+        <a class="btn btn-xs remove" title="[`Remove`]"><i class="fa fa-times"></i></a>
+        </td>
+        </tr>
     </script>
 {/strip}

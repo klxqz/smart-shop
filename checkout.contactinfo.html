@@ -2,10 +2,10 @@
     <div class="checkout-content" data-step-id="contactinfo">
         <div id="checkout-contact-form">
             {if $wa->isAuthEnabled() && !$wa->user()->isAuth()}
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$wa->authAdapters()}
+                {$wa->authAdapters()}
             {/if}
             <div class="wa-form">
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$checkout_contact_form->html()}
+                {$checkout_contact_form->html()}
 
                 {* When both billing and shipping addresses are enabled, billing address matches shipping address
                 * unless user specifically wants to edit billing address separately. *}
@@ -17,50 +17,44 @@
                         </div>
                     </div>
                     <script>
-                        {$rand = rand()}
-                        var delayed_function{$rand} = function () {
-                            "use strict";
-                            if (!$) {
-                                return;
-                            }
-                            var $edit_billing_address_link = $('#edit-billing-address-link');
-                            var $billing_address_fake = $edit_billing_address_link.closest('.wa-field');
-                            var $billing_address_wrapper = $edit_billing_address_link.closest('.wa-form').find('.wa-field-address-billing');
-                            var $shipping_address_wrapper = $edit_billing_address_link.closest('.wa-form').find('.wa-field-address-shipping');
-                            if (!$edit_billing_address_link.length || !$billing_address_fake.length || !$billing_address_wrapper.length || !$shipping_address_wrapper.length) {
-                                return;
-                            }
-
-                            $billing_address_fake.insertAfter($billing_address_wrapper)
-                                    .append('<input type="hidden" name="billing_matches_shipping" value="1">')
-                                    .show();
-                            $billing_address_wrapper.hide();
-
-                            $edit_billing_address_link.on('click', function () {
-                                $billing_address_wrapper.show();
-                                $billing_address_fake.remove();
-
-                                // Fill all fields in billing address
-                                $shipping_address_wrapper.find(':input[name^="customer[address.shipping]"]').each(function () {
-                                    var $fld = $(this);
-                                    $billing_address_wrapper.find('[name="' + $fld.attr('name').replace('address.shipping', 'address.billing') + '"]').val($fld.val()).change();
-                                });
-                            });
-
-                            // Update billing country when user selects shipping country
-                            // so that region field is able to reload itself
-                            $shipping_address_wrapper.find(':input[name="customer[address.shipping][country]"]').change(function () {
-                                $billing_address_wrapper.find(':input[name="customer[address.billing][country]"]').val($(this).val()).change();
-                            });
-
-                        };
-                        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function{$rand});
-                        {else}
                         $(function () {
-                            $(document).ready(delayed_function{$rand}());
+                            $(document).ready(function () {
+                                "use strict";
+                                if (!$) {
+                                    return;
+                                }
+                                var $edit_billing_address_link = $('#edit-billing-address-link');
+                                var $billing_address_fake = $edit_billing_address_link.closest('.wa-field');
+                                var $billing_address_wrapper = $edit_billing_address_link.closest('.wa-form').find('.wa-field-address-billing');
+                                var $shipping_address_wrapper = $edit_billing_address_link.closest('.wa-form').find('.wa-field-address-shipping');
+                                if (!$edit_billing_address_link.length || !$billing_address_fake.length || !$billing_address_wrapper.length || !$shipping_address_wrapper.length) {
+                                    return;
+                                }
+
+                                $billing_address_fake.insertAfter($billing_address_wrapper)
+                                        .append('<input type="hidden" name="billing_matches_shipping" value="1">')
+                                        .show();
+                                $billing_address_wrapper.hide();
+
+                                $edit_billing_address_link.on('click', function () {
+                                    $billing_address_wrapper.show();
+                                    $billing_address_fake.remove();
+
+                                    // Fill all fields in billing address
+                                    $shipping_address_wrapper.find(':input[name^="customer[address.shipping]"]').each(function () {
+                                        var $fld = $(this);
+                                        $billing_address_wrapper.find('[name="' + $fld.attr('name').replace('address.shipping', 'address.billing') + '"]').val($fld.val()).change();
+                                    });
+                                });
+
+                                // Update billing country when user selects shipping country
+                                // so that region field is able to reload itself
+                                $shipping_address_wrapper.find(':input[name="customer[address.shipping][country]"]').change(function () {
+                                    $billing_address_wrapper.find(':input[name="customer[address.billing][country]"]').val($(this).val()).change();
+                                });
+
+                            });
                         });
-                        {/if}
                     </script>
                 {/if}
 
@@ -100,38 +94,32 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                        {$rand = rand()}
-                        var delayed_function{$rand} = function () {
-                            var e = $('input[name="customer[email]"]');
-                            if (e.length) {
-                                e.on('keyup', function () {
-                                    if ($("#create-user-div").is(':visible')) {
-                                        $('#create-user-div input[name="login"]').val($(this).val());
-                                    }
-                                });
-                                $('#create-user-div input[name="login"]').on('keyup', function () {
-                                    e.val($(this).val());
-                                })
-                            }
-                            $("#create-user").change(function () {
-                                if ($(this).is(':checked')) {
-                                    $("#create-user-div").show().find('input').removeAttr('disabled');
-                                    var l = $(this).closest('form').find('input[name="customer[email]"]');
-                                    if (l.length && l.val()) {
-                                        $('#create-user-div input[name="login"]').val(l.val());
-                                    }
-                                } else {
-                                    $("#create-user-div").hide().find('input').attr('disabled', 'disabled').val('');
-                                }
-                            }).change();
-                        };
-                        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function{$rand});
-                        {else}
                         $(function () {
-                            $(document).ready(delayed_function{$rand}());
+                            $(document).ready(function () {
+                                var e = $('input[name="customer[email]"]');
+                                if (e.length) {
+                                    e.on('keyup', function () {
+                                        if ($("#create-user-div").is(':visible')) {
+                                            $('#create-user-div input[name="login"]').val($(this).val());
+                                        }
+                                    });
+                                    $('#create-user-div input[name="login"]').on('keyup', function () {
+                                        e.val($(this).val());
+                                    })
+                                }
+                                $("#create-user").change(function () {
+                                    if ($(this).is(':checked')) {
+                                        $("#create-user-div").show().find('input').removeAttr('disabled');
+                                        var l = $(this).closest('form').find('input[name="customer[email]"]');
+                                        if (l.length && l.val()) {
+                                            $('#create-user-div input[name="login"]').val(l.val());
+                                        }
+                                    } else {
+                                        $("#create-user-div").hide().find('input').attr('disabled', 'disabled').val('');
+                                    }
+                                }).change();
+                            });
                         });
-                        {/if}
                     </script>
                 {/if}
                 {if !empty($errors.all)}
@@ -144,7 +132,7 @@
         <!-- plugin hook: 'frontend_checkout' -->
         {* @event frontend_checkout.%plugin_id% *}
         {foreach $frontend_checkout as $_}
-            {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+            {$_}
         {/foreach}
 
         {if !empty($error)}

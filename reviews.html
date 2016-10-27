@@ -1,13 +1,6 @@
 {strip}
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_app_static_url}js/rate.widget.js");
-            window.delayJs.push("{$wa_theme_url}!js/reviews.min.js");
-        </script>
-    {else}
-        <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
-        <script type="text/javascript" src="{$wa_theme_url}!js/reviews.min.js"></script>
-    {/if}
+    <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
+    <script type="text/javascript" src="{$wa_theme_url}!js/reviews.min.js"></script>
 
     <h1>{sprintf('[`%s reviews`]', $product.name|escape)}</h1>
 

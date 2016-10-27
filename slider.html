@@ -1,18 +1,9 @@
 {strip}
     {function name="includeRevolutionSlider"}
-        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            <script type="text/javascript">
-                window.delayCss.push("{$wa_active_theme_url}!js/revolution/css/revolution.min.css");
-                window.delayCss.push("{$wa_active_theme_url}!js/revolution/css/revolution_custom.min.css");
-                window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js");
-                window.delayJs.push("{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js");
-            </script>
-        {else}
-            <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution.min.css' type='text/css' media='all' />
-            <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution_custom.min.css' type='text/css' media='all' />
-            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
-            <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
-        {/if}
+        <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution.min.css' type='text/css' media='all' />
+        <link rel='stylesheet' href='{$wa_active_theme_url}!js/revolution/css/revolution_custom.min.css' type='text/css' media='all' />
+        <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.tools.min.js'></script>
+        <script type='text/javascript' src='{$wa_active_theme_url}!js/revolution/jquery.themepunch.revolution.min.js'></script>
         <style>
             #rev_slider_15_1_wrapper{
                 margin:0px auto;
@@ -29,106 +20,100 @@
     {/function}
     {function name="initRevolutionSlider"}
         <script type="text/javascript">
-            {$rand = rand()}
-            var delayed_function{$rand} = function () {
-                $("#rev_slider_15_1").show().revolution({
-                    sliderType: "carousel",
-                    dottedOverlay: "none",
-                    delay: 9000,
-                    navigation: {
-                        keyboardNavigation: "on",
-                        keyboard_direction: "horizontal",
-                        mouseScrollNavigation: "off",
-                        mouseScrollReverse: "default",
-                        onHoverStop: "off",
-                        arrows: {
-                            style: "erinyen",
-                            enable: true,
-                            hide_onmobile: false,
-                            hide_onleave: false,
-                            tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
-                            left: {
-                                h_align: "left",
-                                v_align: "center",
-                                h_offset: 30,
-                                v_offset: 0
-                            },
-                            right: {
-                                h_align: "right",
-                                v_align: "center",
-                                h_offset: 30,
-                                v_offset: 0
+            $(function () {
+                $(document).ready(function () {
+                    $("#rev_slider_15_1").show().revolution({
+                        sliderType: "carousel",
+                        dottedOverlay: "none",
+                        delay: 9000,
+                        navigation: {
+                            keyboardNavigation: "on",
+                            keyboard_direction: "horizontal",
+                            mouseScrollNavigation: "off",
+                            mouseScrollReverse: "default",
+                            onHoverStop: "off",
+                            arrows: {
+                                style: "erinyen",
+                                enable: true,
+                                hide_onmobile: false,
+                                hide_onleave: false,
+                                tmp: '<div class="tp-title-wrap"><div class="tp-arr-imgholder"></div><div class="tp-arr-img-over"></div><span class="tp-arr-titleholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </div>',
+                                left: {
+                                    h_align: "left",
+                                    v_align: "center",
+                                    h_offset: 30,
+                                    v_offset: 0
+                                },
+                                right: {
+                                    h_align: "right",
+                                    v_align: "center",
+                                    h_offset: 30,
+                                    v_offset: 0
+                                }
                             }
-                        }
-                        ,
-                        thumbnails: {
-                            style: "gyges",
-                            enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
-                                                width: 60,
-                                                height: 60,
-                                                min_width: 60,
-                                                wrapper_padding: 20,
-                                                wrapper_color: "#000000",
-                                                wrapper_opacity: "0.15",
-                                                tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
-                                                visibleAmount: 9,
-                                                hide_onmobile: false,
-                                                hide_onleave: false,
-                                                direction: "horizontal",
-                                                span: true,
-                                                position: "outer-bottom",
-                                                space: 10,
-                                                h_align: "center",
-                                                v_align: "bottom",
-                                                h_offset: 0,
-                                                v_offset: 0
-                                            }
-                                        },
-                                        carousel: {
-                                            maxRotation: 65,
-                                            vary_rotation: "on",
-                                            minScale: 55,
-                                            vary_scale: "off",
-                                            horizontal_align: "center",
-                                            vertical_align: "center",
-                                            fadeout: "on",
-                                            vary_fade: "on",
-                                            maxVisibleItems: 5,
-                                            infinity: "off",
-                                            space: -150,
-                                            stretch: "off"
-                                        },
-                                        visibilityLevels: [1240, 1024, 778, 480],
-                                        gridwidth: 600,
-                                        gridheight: 600,
-                                        lazyType: "none",
-                                        shadow: 0,
-                                        spinner: "off",
-                                        stopLoop: "on",
-                                        stopAfterLoops: 0,
-                                        stopAtSlide: 1,
-                                        shuffle: "off",
-                                        autoHeight: "off",
-                                        disableProgressBar: "on",
-                                        hideThumbsOnMobile: "off",
-                                        hideSliderAtLimit: 0,
-                                        hideCaptionAtLimit: 0,
-                                        hideAllCaptionAtLilmit: 0,
-                                        debugMode: false,
-                                        fallbacks: {
-                                            simplifyAll: "off",
-                                            nextSlideOnWindowFocus: "off",
-                                            disableFocusListener: false,
-                                        }
+                            ,
+                            thumbnails: {
+                                style: "gyges",
+                                enable: {if $theme_settings.slider_thumbnails}true{else}false{/if},
+                                                        width: 60,
+                                                        height: 60,
+                                                        min_width: 60,
+                                                        wrapper_padding: 20,
+                                                        wrapper_color: "#000000",
+                                                        wrapper_opacity: "0.15",
+                                                        tmp: '<span class="tp-thumb-img-wrap"><span class="tp-thumb-image"></span></span>',
+                                                        visibleAmount: 9,
+                                                        hide_onmobile: false,
+                                                        hide_onleave: false,
+                                                        direction: "horizontal",
+                                                        span: true,
+                                                        position: "outer-bottom",
+                                                        space: 10,
+                                                        h_align: "center",
+                                                        v_align: "bottom",
+                                                        h_offset: 0,
+                                                        v_offset: 0
+                                                    }
+                                                },
+                                                carousel: {
+                                                    maxRotation: 65,
+                                                    vary_rotation: "on",
+                                                    minScale: 55,
+                                                    vary_scale: "off",
+                                                    horizontal_align: "center",
+                                                    vertical_align: "center",
+                                                    fadeout: "on",
+                                                    vary_fade: "on",
+                                                    maxVisibleItems: 5,
+                                                    infinity: "off",
+                                                    space: -150,
+                                                    stretch: "off"
+                                                },
+                                                visibilityLevels: [1240, 1024, 778, 480],
+                                                gridwidth: 600,
+                                                gridheight: 600,
+                                                lazyType: "none",
+                                                shadow: 0,
+                                                spinner: "off",
+                                                stopLoop: "on",
+                                                stopAfterLoops: 0,
+                                                stopAtSlide: 1,
+                                                shuffle: "off",
+                                                autoHeight: "off",
+                                                disableProgressBar: "on",
+                                                hideThumbsOnMobile: "off",
+                                                hideSliderAtLimit: 0,
+                                                hideCaptionAtLimit: 0,
+                                                hideAllCaptionAtLilmit: 0,
+                                                debugMode: false,
+                                                fallbacks: {
+                                                    simplifyAll: "off",
+                                                    nextSlideOnWindowFocus: "off",
+                                                    disableFocusListener: false,
+                                                }
+                                            });
+                                        });
                                     });
-                                };
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                                window.delayJsFunctions.push(delayed_function{$rand});
-            {else}
-                                $(function () {
-                                    $(document).ready(delayed_function{$rand}());
-                                });
-            {/if}
         </script>
     {/function}
 
@@ -153,29 +138,16 @@
                     <span class="da-arrows-next"></span>
                 </nav>
             </div>
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                <script type="text/javascript">
-                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-cslider/modernizr.custom.28468.js");
-                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-cslider/jquery.cslider.min.js");
-                    window.delayJsFunctions.push(function () {
-                        $('#da-slider').cslider({
-                            autoplay: true,
-                            bgincrement: 450
-                        });
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-cslider/modernizr.custom.28468.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-cslider/jquery.cslider.min.js"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $('#da-slider').cslider({
+                        autoplay: true,
+                        bgincrement: 450
                     });
-                </script>
-            {else}
-                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-cslider/modernizr.custom.28468.js"></script>
-                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-cslider/jquery.cslider.min.js"></script>
-                <script type="text/javascript">
-                    $(function () {
-                        $('#da-slider').cslider({
-                            autoplay: true,
-                            bgincrement: 450
-                        });
-                    });
-                </script>
-            {/if}
+                });
+            </script>
         {/if}
     {elseif $theme_settings.homepage_slider_type == 'promo'}
         {$promocards = $wa->shop->promos()}
@@ -222,57 +194,30 @@
                     </li>
                 {/foreach}
             </ul>
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                <script type="text/javascript">
-                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-bxslider/jquery.bxslider.min.js");
-                    window.delayJs.push("{$wa_active_theme_url}!js/jquery-countdowntimer/jquery.countdownTimer.min.js");
-                    window.delayJsFunctions.push(function () {
-                        $('.home-bxslider').bxSlider({
-                            auto: true
-                        });
-                        if ($.fn.countdowntimer) {
-                            $('.js-promo-countdown').each(function () {
-                                var $this = $(this).html('');
-                                var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
-                                $this.attr('id', id);
-                                var start = $this.data('start').replace(/-/g, '/');
-                                var end = $this.data('end').replace(/-/g, '/');
-                                $this.countdowntimer({
-                                    startDate: start,
-                                    dateAndTime: end,
-                                    size: 'lg'
-                                });
-                            });
-                        }
-
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-bxslider/jquery.bxslider.min.js"></script>
+            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-countdowntimer/jquery.countdownTimer.min.js"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $('.home-bxslider').bxSlider({
+                        auto: true
                     });
-                </script>
-            {else}
-                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-bxslider/jquery.bxslider.min.js"></script>
-                <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-countdowntimer/jquery.countdownTimer.min.js"></script>
-                <script type="text/javascript">
-                    $(function () {
-                        $('.home-bxslider').bxSlider({
-                            auto: true
-                        });
-                        if ($.fn.countdowntimer) {
-                            $('.js-promo-countdown').each(function () {
-                                var $this = $(this).html('');
-                                var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
-                                $this.attr('id', id);
-                                var start = $this.data('start').replace(/-/g, '/');
-                                var end = $this.data('end').replace(/-/g, '/');
-                                $this.countdowntimer({
-                                    startDate: start,
-                                    dateAndTime: end,
-                                    size: 'lg'
-                                });
+                    if ($.fn.countdowntimer) {
+                        $('.js-promo-countdown').each(function () {
+                            var $this = $(this).html('');
+                            var id = ($this.attr('id') || 'js-promo-countdown' + ('' + Math.random()).slice(2));
+                            $this.attr('id', id);
+                            var start = $this.data('start').replace(/-/g, '/');
+                            var end = $this.data('end').replace(/-/g, '/');
+                            $this.countdowntimer({
+                                startDate: start,
+                                dateAndTime: end,
+                                size: 'lg'
                             });
-                        }
+                        });
+                    }
 
-                    });
-                </script>
-            {/if}
+                });
+            </script>
         {/if}
 
     {elseif $theme_settings.homepage_slider_type == 'images'}
@@ -291,29 +236,17 @@
         </div>
 
 
-        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            <script type="text/javascript">
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js");
-                window.delayJsFunctions.push(function () {
-                    $('#slideshow0').nivoSlider({
-                        prevText: '<i class="fa fa-chevron-left"></i>',
-                        nextText: '<i class="fa fa-chevron-right"></i>',
-                        pauseTime: 5000
-                    });
+        <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#slideshow0').nivoSlider({
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    pauseTime: 5000
                 });
-            </script>
-        {else}
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.nivo.slider.pack.js"></script>
-            <script type="text/javascript">
-                $(function () {
-                    $('#slideshow0').nivoSlider({
-                        prevText: '<i class="fa fa-chevron-left"></i>',
-                        nextText: '<i class="fa fa-chevron-right"></i>',
-                        pauseTime: 5000
-                    });
-                });
-            </script>
-        {/if}
+            });
+        </script>
+        
     {elseif $theme_settings.homepage_slider_type == 'product'}
         {$product_id = $theme_settings.slider_product_id}
         {$products = $wa->shop->products([$product_id])}

@@ -14,7 +14,7 @@
                     </h4>
                     {if $m.description}<p>{$m.description}</p>{/if}
                     {if !empty($m.error)}<p class="error"><em>{$m.error}</em></p>{/if}
-                    {if !empty($m.custom_html)}<div class="wa-form" {if $m.id != $payment_id}style="display:none"{/if}>{include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$m.custom_html}</div>{/if}
+                    {if !empty($m.custom_html)}<div class="wa-form" {if $m.id != $payment_id}style="display:none"{/if}>{$m.custom_html}</div>{/if}
                 </li>
             {foreachelse}
                 <li>
@@ -23,28 +23,22 @@
             {/foreach}
         </ul>
         <script type="text/javascript">
-            {$rand = rand()}
-            var delayed_function{$rand} = function () {
-                $(".checkout-options.payment input:radio").change(function () {
-                    if ($(this).is(':checked')) {
-                        $(".checkout-options.payment .wa-form").hide();
-                        $(this).closest('li').find('.wa-form').show();
-                    }
-                });
-            };
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function{$rand});
-            {else}
             $(function () {
-                $(document).ready(delayed_function{$rand}());
+                $(document).ready(function () {
+                    $(".checkout-options.payment input:radio").change(function () {
+                        if ($(this).is(':checked')) {
+                            $(".checkout-options.payment .wa-form").hide();
+                            $(this).closest('li').find('.wa-form').show();
+                        }
+                    });
+                });
             });
-            {/if}
         </script>
 
         <!-- plugin hook: 'frontend_checkout' -->
         {* @event frontend_checkout.%plugin_id% *}
         {foreach $frontend_checkout as $_}
-            {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+            {$_}
         {/foreach}
 
         {if !empty($error)}

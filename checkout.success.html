@@ -6,7 +6,7 @@
 
         {if !empty($payment)}
             <div class="plugin">
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$payment}
+                {$payment}
             </div>
         {/if}
 
@@ -21,7 +21,7 @@
         <!-- plugin hook: 'frontend_checkout' -->
         {* @event frontend_checkout.%plugin_id% *}
         {foreach $frontend_checkout as $_}
-            {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+            {$_}
         {/foreach}
 
     </div>

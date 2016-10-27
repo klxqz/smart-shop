@@ -203,7 +203,7 @@
             <!-- plugin hook: 'frontend_product.cart' -->
             {* @event frontend_product.%plugin_id%.cart *}
             {foreach $frontend_product as $_}
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.cart}
+                {$_.cart}
             {/foreach}
 
             <div class="cart">
@@ -231,26 +231,15 @@
 
     </form>
 
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_theme_url}!js/product.min.js?v{$wa_theme_version}");
-                        window.delayJsFunctions.push(function () {
-                        new Product('#cart-form{if $wa->get('cart')}-dialog{/if}', {
-                        currency: {json_encode($currency_info)}
-            {if count($product.skus) > 1 or $product.sku_type}, services: {json_encode($sku_services)}{/if}
-            {if $product.sku_type}, features: {json_encode($sku_features_selectable)}{/if}
-                        });
-                        });</script>
-        {else}
-        <script type="text/javascript" src="{$wa_real_theme_url}!js/product.min.js?v{$wa_theme_version}"></script>
-        <script type="text/javascript">
-                    $(function () {
-                    new Product('#cart-form{if $wa->get('cart')}-dialog{/if}', {
-                    currency: {json_encode($currency_info)}
-            {if count($product.skus) > 1 or $product.sku_type}, services: {json_encode($sku_services)}{/if}
-            {if $product.sku_type}, features: {json_encode($sku_features_selectable)}{/if}
-                    });
-                    });
-        </script>
-    {/if}
+
+    <script type="text/javascript" src="{$wa_real_theme_url}!js/product.min.js?v{$wa_theme_version}"></script>
+    <script type="text/javascript">
+        $(function () {
+            new Product('#cart-form{if $wa->get('cart')}-dialog{/if}', {
+            currency: {json_encode($currency_info)}
+        {if count($product.skus) > 1 or $product.sku_type}, services: {json_encode($sku_services)}{/if}
+        {if $product.sku_type}, features: {json_encode($sku_features_selectable)}{/if}
+        });
+        });
+    </script>
 {/strip}

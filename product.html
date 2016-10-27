@@ -19,33 +19,17 @@
 {/foreach}
 
 {strip}
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_active_theme_url}!js/jquery.elevatezoom.min.js");
-        </script>
-    {else}
-        <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
-    {/if}
+
+    <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery.elevatezoom.min.js"></script>
     {if $theme_settings.zoom_images != 'zoom'}
-        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            <script type="text/javascript">
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery-swipebox/js/ios-orientationchange-fix.js");
-                window.delayJs.push("{$wa_active_theme_url}!js/jquery-swipebox/js/jquery.swipebox.min.js");
-            </script>
-        {else}
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/ios-orientationchange-fix.js"></script>
-            <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/jquery.swipebox.min.js"></script>
-        {/if}
+        <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/ios-orientationchange-fix.js"></script>
+        <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery-swipebox/js/jquery.swipebox.min.js"></script>
         <link rel="stylesheet" property="stylesheet" href="{$wa_active_theme_url}!js/jquery-swipebox/css/swipebox.min.css">
     {/if}
 
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_active_theme_url}!js/product.gallery.js");
-        </script>
-    {else}
-        <script type="text/javascript" src="{$wa_active_theme_url}!js/product.gallery.min.js"></script>
-    {/if}
+
+    <script type="text/javascript" src="{$wa_active_theme_url}!js/product.gallery.min.js"></script>
+
 
     <div itemscope itemtype="http://schema.org/Product">
         <h1 itemprop="name">{$product.name}</h1>
@@ -106,25 +90,20 @@
                         </style>
                     {/if}
                     <script type="text/javascript">
-                        {$rand = rand()}
-                        var delayed_function{$rand} = function () {
-                            var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}',
-                                    swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}',
-                                    wa_parent_theme_url = '{$wa_parent_theme_url}';
-                            var options = {
-                                zoomDisable: zoomDisable,
-                                swipeboxDisable: swipeboxDisable,
-                                wa_parent_theme_url: wa_parent_theme_url
-                            };
-                            $.product_gallery.init(options);
-                        };
-                        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        window.delayJsFunctions.push(delayed_function{$rand});
-                        {else}
+
                         $(function () {
-                            $(document).ready(delayed_function{$rand}());
+                            $(document).ready(function () {
+                                var zoomDisable = '{$theme_settings.zoom_images == 'swipebox'}',
+                                        swipeboxDisable = '{$theme_settings.zoom_images == 'zoom'}',
+                                        wa_parent_theme_url = '{$wa_parent_theme_url}';
+                                var options = {
+                                    zoomDisable: zoomDisable,
+                                    swipeboxDisable: swipeboxDisable,
+                                    wa_parent_theme_url: wa_parent_theme_url
+                                };
+                                $.product_gallery.init(options);
+                            });
                         });
-                        {/if}
                     </script>
                 {/if}
             </div>
@@ -149,31 +128,25 @@
                         <a class="review-button" href="#">[`Reviews`]:&nbsp;<span itemprop="reviewCount">{$reviews_total_count}</span></a>&nbsp;/&nbsp;
                         <a class="write-review-button" href="#">[`Write a review`]</a>
                         <script type="text/javascript">
-                            {$rand = rand()}
-                            var delayed_function{$rand} = function () {
-                                $('.review-button').click(function () {
-                                    $('a[href=\"#tab-review\"]').trigger('click');
-                                    $("html, body").animate({
-                                        scrollTop: $('.nav.nav-tabs').offset().top
-                                    }, "slow");
-                                    return false;
-                                });
-                                $('.write-review-button').click(function () {
-                                    $('a[href=\"#tab-review\"]').trigger('click');
-                                    $('.write-review a').trigger('click');
-                                    $("html, body").animate({
-                                        scrollTop: $('.nav.nav-tabs').offset().top
-                                    }, "slow");
-                                    return false;
-                                });
-                            };
-                            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                            window.delayJsFunctions.push(delayed_function{$rand});
-                            {else}
                             $(function () {
-                                $(document).ready(delayed_function{$rand}());
+                                $(document).ready(function () {
+                                    $('.review-button').click(function () {
+                                        $('a[href=\"#tab-review\"]').trigger('click');
+                                        $("html, body").animate({
+                                            scrollTop: $('.nav.nav-tabs').offset().top
+                                        }, "slow");
+                                        return false;
+                                    });
+                                    $('.write-review-button').click(function () {
+                                        $('a[href=\"#tab-review\"]').trigger('click');
+                                        $('.write-review a').trigger('click');
+                                        $("html, body").animate({
+                                            scrollTop: $('.nav.nav-tabs').offset().top
+                                        }, "slow");
+                                        return false;
+                                    });
+                                });
                             });
-                            {/if}
                         </script>
                     </p>
                 </div>
@@ -211,7 +184,7 @@
                 <!-- plugin hook: 'frontend_product.block_aux' -->
                 {* @event frontend_product.%plugin_id%.block_aux *}
                 {foreach $frontend_product as $_}
-                    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.block_aux}
+                    {$_.block_aux}
                 {/foreach}   
 
             </div>
@@ -234,7 +207,7 @@
             <!-- plugin hook: 'frontend_product.menu' -->
             {* @event frontend_product.%plugin_id%.menu *}
             {foreach $frontend_product as $_}
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.menu}
+                {$_.menu}
             {/foreach}
         </ul>
         <div class="tab-content">
@@ -245,7 +218,7 @@
                     <!-- plugin hook: 'frontend_product.block' -->
                     {* @event frontend_product.%plugin_id%.block *}
                     {foreach $frontend_product as $_}
-                        {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_.block}
+                        {$_.block}
                     {/foreach}
                 </div>
             </div>
@@ -300,14 +273,8 @@
                     <div class="text-right"></div>
                 </div>
                 {if $theme_settings.product_reviews_display_mode == 'product_page'}
-                    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                        <script type="text/javascript">
-                            window.delayJs.push("{$wa_app_static_url}js/rate.widget.js");
-                        </script>
-                    {else}
-                        <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
-                    {/if}
-                    <script type="text/javascript">
+                    <script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
+                    <script data-disable-delayed-loading="1" type="text/javascript">
                         var product_reviews_display_mode = 'product_page';
                         var product_url = '{$wa->shop->productUrl($product)}';
                     </script>
@@ -328,34 +295,22 @@
         {if $upselling}
             {include file="products-list.html" products=$upselling list_title='[`See also`]' class='owl-carousel upselling_pro'}
             <script type="text/javascript">
-                {$rand = rand()}
-                var delayed_function{$rand} = function () {
-                    $(".owl-carousel.upselling_pro").owlCarousel(owl_carousel_params);
-                };
-                {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                window.delayJsFunctions.push(delayed_function{$rand});
-                {else}
                 $(function () {
-                    $(document).ready(delayed_function{$rand}());
+                    $(document).ready(function () {
+                        $(".owl-carousel.upselling_pro").owlCarousel(owl_carousel_params);
+                    });
                 });
-                {/if}
             </script>
         {/if}
         {if $crossselling}
             {$title = sprintf('[`Customers who bought %s also bought`]', $product.name|escape)}
             {include file="products-list.html" products=$crossselling list_title=$title class='owl-carousel crossselling_pro'}
             <script type="text/javascript">
-                {$rand = rand()}
-                var delayed_function{$rand} = function () {
-                    $(".owl-carousel.crossselling_pro").owlCarousel(owl_carousel_params);
-                };
-                {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                window.delayJsFunctions.push(delayed_function{$rand});
-                {else}
                 $(function () {
-                    $(document).ready(delayed_function{$rand}());
+                    $(document).ready(function () {
+                        $(".owl-carousel.crossselling_pro").owlCarousel(owl_carousel_params);
+                    });
                 });
-                {/if}
             </script>
         {/if}
     </div>

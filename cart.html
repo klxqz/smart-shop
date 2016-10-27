@@ -19,13 +19,7 @@
 {/foreach}
 
 {strip}
-    {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        <script type="text/javascript">
-            window.delayJs.push("{$wa_theme_url}!js/cart.min.js");
-        </script>
-    {else}
-        <script type="text/javascript" src="{$wa_theme_url}!js/cart.min.js"></script>
-    {/if}
+    <script type="text/javascript" src="{$wa_theme_url}!js/cart.min.js"></script>
 
     {if !$cart.count}
         <h1>[`Shopping cart`]</h1>
@@ -167,7 +161,7 @@
             <!-- plugin hook: 'frontend_cart' -->
             {* @event frontend_cart.%plugin_id% *}
             {foreach $frontend_cart as $_}
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}<br/>
+                {$_}<br/>
             {/foreach} 
 
             <div class="buttons">
@@ -183,17 +177,11 @@
         {if $crossselling}
             {include file="products-list.html" products=$crossselling list_title="[`Better together`]" class='owl-carousel cart_carousel'}
             <script type="text/javascript">
-                {$rand = rand()}
-                var delayed_function{$rand} = function () {
-                    $("#content .owl-carousel.cart_carousel").owlCarousel(owl_carousel_params);
-                };
-                {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-                window.delayJsFunctions.push(delayed_function{$rand});
-                {else}
                 $(function () {
-                    $(document).ready(delayed_function{$rand}());
+                    $(document).ready(function () {
+                        $("#content .owl-carousel.cart_carousel").owlCarousel(owl_carousel_params);
+                    });
                 });
-                {/if}
             </script>
         {/if}
     {/if}

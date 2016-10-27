@@ -7,12 +7,12 @@
 <!-- plugin hook: 'frontend_head' -->
 {* @event frontend_head.%plugin_id% *}
 {foreach $frontend_head as $_}
-    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+    {$_}
 {/foreach}
 
 
 {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
-<script type="text/javascript">
+<script data-disable-delayed-loading="1" type="text/javascript">
     var wishlist_url = '{$wa->getUrl('shop/frontend/search')}?list=wishlist';
     var compare_url = '{$wa->getUrl('/frontend/compare/', ['id' => implode(',', $compare) ])}';
     var cart_url = '{$wa->getUrl('/frontend/cart/')}';

@@ -3,50 +3,44 @@
     <h1>[`Compare products`]</h1>
 
     <script type="text/javascript">
-        {$rand = rand()}
-        var delayed_function{$rand} = function () {
-            $("#compare-all").click(function () {
-                $("#compare-table tr.same").show();
-                $(this).closest('ul').find('li.selected').removeClass('selected');
-                $(this).parent().addClass('selected');
-                return false;
-            });
-            $("#compare-diff").click(function () {
-                $("#compare-table tr.same").hide();
-                $(this).closest('ul').find('li.selected').removeClass('selected');
-                $(this).parent().addClass('selected');
-                return false;
-            });
-            var compare = $.cookie('shop_compare');
-            $(".compare-remove").on('click', function () {
-                var compare = $.cookie('shop_compare');
-                if (compare) {
-                    compare = compare.split(',');
-                } else {
-                    compare = [];
-                }
-                var i = $.inArray($(this).data('product') + '', compare);
-                if (i != -1) {
-                    compare.splice(i, 1)
-                }
-                if (compare) {
-                    $.cookie('shop_compare', compare.join(','), {
-                        expires: 30, path: '/'
-                    });
-                } else {
-                    $.cookie('shop_compare', null, {
-                        expires: 30, path: '/'
-                    });
-                }
-            });
-        };
-        {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-        window.delayJsFunctions.push(delayed_function{$rand});
-        {else}
         $(function () {
-            $(document).ready(delayed_function{$rand}());
+            $(document).ready(function () {
+                $("#compare-all").click(function () {
+                    $("#compare-table tr.same").show();
+                    $(this).closest('ul').find('li.selected').removeClass('selected');
+                    $(this).parent().addClass('selected');
+                    return false;
+                });
+                $("#compare-diff").click(function () {
+                    $("#compare-table tr.same").hide();
+                    $(this).closest('ul').find('li.selected').removeClass('selected');
+                    $(this).parent().addClass('selected');
+                    return false;
+                });
+                var compare = $.cookie('shop_compare');
+                $(".compare-remove").on('click', function () {
+                    var compare = $.cookie('shop_compare');
+                    if (compare) {
+                        compare = compare.split(',');
+                    } else {
+                        compare = [];
+                    }
+                    var i = $.inArray($(this).data('product') + '', compare);
+                    if (i != -1) {
+                        compare.splice(i, 1)
+                    }
+                    if (compare) {
+                        $.cookie('shop_compare', compare.join(','), {
+                            expires: 30, path: '/'
+                        });
+                    } else {
+                        $.cookie('shop_compare', null, {
+                            expires: 30, path: '/'
+                        });
+                    }
+                });
+            });
         });
-        {/if}
     </script>
 
     {if count($products)}

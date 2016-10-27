@@ -57,28 +57,22 @@
             </ul>
         </div>
         <script type="text/javascript">
-            {$rand = rand()}
-            var delayed_function{$rand} = function () {
-                $(function () {
-                    var n = 4;
-                    if ($('.brands-block ul li:gt(' + n + ')').length) {
-                        $('.brands-block ul li:gt(' + n + ')').hide();
-                        $('<a class="show-more-button" href="#">[`More`]</a>').appendTo('.brands-block');
-                        $('.show-more-button').click(function () {
-                            $('.brands-block ul li').show();
-                            $(this).hide();
-                            return false;
-                        });
-                    }
-                });
-            };
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function{$rand});
-            {else}
             $(function () {
-                $(document).ready(delayed_function{$rand}());
+                $(document).ready(function () {
+                    $(function () {
+                        var n = 4;
+                        if ($('.brands-block ul li:gt(' + n + ')').length) {
+                            $('.brands-block ul li:gt(' + n + ')').hide();
+                            $('<a class="show-more-button" href="#">[`More`]</a>').appendTo('.brands-block');
+                            $('.show-more-button').click(function () {
+                                $('.brands-block ul li').show();
+                                $(this).hide();
+                                return false;
+                            });
+                        }
+                    });
+                });
             });
-            {/if}
         </script>
     {/if}
     {*brands-end*}
@@ -125,23 +119,17 @@
             {/foreach}
         </div>
         <script type="text/javascript">
-            {$rand = rand()}
-            var delayed_function{$rand} = function () {
-                $("#news0").owlCarousel({
-                    singleItem: true,
-                    lazyLoad: true,
-                    navigation: true,
-                    navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                    scrollPerPage: true
-                });
-            };
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function{$rand});
-            {else}
             $(function () {
-                $(document).ready(delayed_function{$rand}());
+                $(document).ready(function () {
+                    $("#news0").owlCarousel({
+                        singleItem: true,
+                        lazyLoad: true,
+                        navigation: true,
+                        navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+                        scrollPerPage: true
+                    });
+                });
             });
-            {/if}
         </script>
     {/if}
     {*news-end*}
@@ -171,24 +159,18 @@
             {/for}
         </div>
         <script type="text/javascript">
-            {$rand = rand()}
-            var delayed_function{$rand} = function () {
-                $('#banner0').owlCarousel({
-                    items: 6,
-                    autoPlay: 3000,
-                    singleItem: true,
-                    navigation: false,
-                    pagination: false,
-                    transitionStyle: 'fade'
-                });
-            };
-            {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
-            window.delayJsFunctions.push(delayed_function{$rand});
-            {else}
             $(function () {
-                $(document).ready(delayed_function{$rand}());
+                $(document).ready(function () {
+                    $('#banner0').owlCarousel({
+                        items: 6,
+                        autoPlay: 3000,
+                        singleItem: true,
+                        navigation: false,
+                        pagination: false,
+                        transitionStyle: 'fade'
+                    });
+                });
             });
-            {/if}
         </script>
     {/if}
     {*banners-end*}
@@ -218,7 +200,7 @@
     {foreach $frontend_nav as $plugin_id => $_}
         {if $plugin_id != 'brands-plugin' && $plugin_id != 'productbrands-plugin'}
             <div class="list-group hidden-xs">
-                {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+                {$_}
             </div>
         {/if}
     {/foreach}
@@ -227,7 +209,7 @@
     {* @event frontend_nav_aux.%plugin_id% *}
     {foreach $frontend_nav_aux as $plugin_id => $_}
         <div class="list-group hidden-xs">
-            {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+            {$_}
         </div>
     {/foreach}
 {/strip}

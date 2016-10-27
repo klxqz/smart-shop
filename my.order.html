@@ -130,5 +130,5 @@
 
 <!-- plugin hook: 'frontend_my_order' -->
 {* @event frontend_my_order.%plugin_id% *}
-{foreach $frontend_my_order as $_}{include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}{/foreach}
+{foreach $frontend_my_order as $_}{$_}{/foreach}
 {/strip}

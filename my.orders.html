@@ -53,6 +53,6 @@
     <!-- plugin hook: 'frontend_my_orders' -->
     {* @event frontend_my_orders.%plugin_id% *}
     {foreach $frontend_my_orders as $_}
-        {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$_}
+        {$_}
     {/foreach}
 {/strip}
