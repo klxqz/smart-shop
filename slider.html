@@ -136,6 +136,7 @@
     {if $theme_settings.homepage_slider_type == 'products-paralax'}
         {$list_products = $wa->shop->products($theme_settings.slider_products_paralax_list_id)}
         {if $list_products}
+            {$wa->globals('include_css_cslider', true)}
             <div id="da-slider" class="da-slider">
                 {foreach $list_products as $product}
                     {if $product.image_id}
@@ -152,23 +153,6 @@
                     <span class="da-arrows-next"></span>
                 </nav>
             </div>
-            <link rel="stylesheet" type="text/css" href="{$wa_active_theme_url}!js/jquery-cslider/css/style.min.css" />
-            <style>
-                .da-slider{
-                    background: transparent url({$wa_active_theme_url}{$theme_settings.slider_products_paralax_bg}) repeat 0% 0%;
-                    border-color: {$theme_settings.slider_products_paralax_main_color};
-                }
-                .da-dots span,.da-arrows span{
-                    background: {$theme_settings.slider_products_paralax_main_color};
-                }
-                .da-slide h2,
-                #container .da-slide h2{
-                    color: {$theme_settings.slider_products_paralax_title_color};
-                }
-                .da-slide p{
-                    color: {$theme_settings.slider_products_paralax_desc_color};
-                }
-            </style>
             {if $theme_settings.jquery_delayed_loading && !waRequest::isXMLHttpRequest()}
                 <script type="text/javascript">
                     window.delayJs.push("{$wa_active_theme_url}!js/jquery-cslider/modernizr.custom.28468.js");
@@ -314,6 +298,7 @@
                     $('#slideshow0').nivoSlider({
                         prevText: '<i class="fa fa-chevron-left"></i>',
                         nextText: '<i class="fa fa-chevron-right"></i>',
+                        pauseTime: 5000
                     });
                 });
             </script>
@@ -324,6 +309,7 @@
                     $('#slideshow0').nivoSlider({
                         prevText: '<i class="fa fa-chevron-left"></i>',
                         nextText: '<i class="fa fa-chevron-right"></i>',
+                        pauseTime: 5000
                     });
                 });
             </script>

@@ -1,4 +1,4 @@
 {strip}
     <h1>{$page.name}</h1>
-    {$page.content}
+    {include file="`$wa_parent_theme_path`/function.hookPrepare.html" content=$page.content}
 {/strip}

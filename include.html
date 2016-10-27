@@ -6,6 +6,25 @@
     {if $wa->globals('include_css_countdown')}
         <link rel='stylesheet' href='{$wa_active_theme_url}!js/jquery-countdowntimer/css/jquery.countdownTimer.min.css' type='text/css' media='all' />
     {/if}
+    {if $wa->globals('include_css_cslider')}
+        <link rel="stylesheet" type="text/css" href="{$wa_active_theme_url}!js/jquery-cslider/css/style.min.css" />
+        <style>
+            .da-slider{
+                background: transparent url({$wa_active_theme_url}{$theme_settings.slider_products_paralax_bg}) repeat 0% 0%;
+                border-color: {$theme_settings.slider_products_paralax_main_color};
+            }
+            .da-dots span,.da-arrows span{
+                background: {$theme_settings.slider_products_paralax_main_color};
+            }
+            .da-slide h2,
+            #container .da-slide h2{
+                color: {$theme_settings.slider_products_paralax_title_color};
+            }
+            .da-slide p{
+                color: {$theme_settings.slider_products_paralax_desc_color};
+            }
+        </style>
+    {/if}
     <script type="text/javascript" src="{$wa_active_theme_url}!js/lazy.load.min.js?v{$wa->version()}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/smart.shop.min.js?v{$wa_theme_version}"></script>
     <script type="text/javascript" src="{$wa_active_theme_url}!js/jquery/jquery.cookie.min.js"></script>
