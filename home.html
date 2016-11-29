@@ -292,7 +292,7 @@
                                 <li>
                                     <a href="{$photo.frontend_link|default:'#'}">
                                         {if $theme_settings.image_lazy_load}
-                                            <div class="image" data-original="{$photo["thumb_$size"].url}" style="background-image: url({$wa_parent_theme_url}img/loading-animation.gif);"></div>
+                                            <div class="image" data-original="{$photo["thumb_$size"].url}" style="background-image: url({$wa_parent_theme_url}img/loading-animation.png);"></div>
                                         {else}
                                             <div class="image" style="background-image: url({$photo["thumb_$size"].url});"></div>
                                         {/if}

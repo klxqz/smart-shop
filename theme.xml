@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.2.1">
+<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.3.0">
     <name locale="en_US">Smart</name>
     <name locale="ru_RU">Smart</name>
     <files>
@@ -946,6 +946,11 @@ VK.Widgets.Group("vk_groups", {mode: 0, width: "220", height: "400", color1: 'FF
             <name locale="en_US">Show news</name>
             <name locale="ru_RU">Показывать новости</name>
         </setting> 
+        <setting var="sidebar_news_count" control_type="text">
+            <value>5</value>
+            <name locale="en_US">Number of news</name>
+            <name locale="ru_RU">Количество новостей в сайдбаре</name>
+        </setting>
         <setting var="sidebar_news_img" control_type="checkbox">
             <value>1</value>
             <name locale="en_US">Show images from news</name>

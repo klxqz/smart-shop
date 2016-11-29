@@ -116,6 +116,9 @@
                     {/if}
                     {$post.text|strip_tags|truncate:255}
                 </div>
+                {if $post@iteration == $theme_settings.sidebar_news_count}
+                    {break}
+                {/if}
             {/foreach}
         </div>
         <script type="text/javascript">

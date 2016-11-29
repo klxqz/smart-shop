@@ -49,7 +49,7 @@
                             <h4>
                                 <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
                             </h4>
-                            <p class="description" itemprop="description">{$p.summary|truncate:180}</p>
+                            <p class="description" itemprop="description">{$p.summary|strip_tags|truncate:180}</p>
                             <p class="price">
                                 <span class="price-new">{shop_currency_html($p.price)}</span>&nbsp;
                                 {if $p.compare_price > 0}
@@ -103,7 +103,7 @@
         {/foreach}
     {/capture}
     {if waRequest::isXMLHttpRequest()}
-        {include file="`$wa_parent_theme_path`/function.imgPrepare.html" content=$product_thumbs}
+        {include file="`$wa_parent_theme_path`/function.imgPrepare.html" content=$product_thumbs ignore=true}
     {else}
         {$product_thumbs}
     {/if}

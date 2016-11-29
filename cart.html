@@ -40,9 +40,9 @@
 
                                 <a href="{$wa->shop->productUrl($item.product)}" title="{$item.product.name|escape}">
                                     {if $item.product.image_id}
-                                        {$wa->shop->productImgHtml($item.product, '47', ['alt' => $item.product, 'title' => $item.product])}
+                                        {$wa->shop->productImgHtml($item.product, '47', ['class' => 'img-responsive', 'alt' => $item.product.name, 'title' => $item.product.name])}
                                     {else}
-                                        <img src="{$wa_theme_url}img/dummy47.png" alt="{$item.product.name|escape}" />
+                                        <img class="img-responsive" src="{$wa_theme_url}img/dummy47.png" alt="{$item.product.name|escape}" />
                                     {/if}
                                 </a>
                             </td>

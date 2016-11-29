@@ -74,7 +74,7 @@
                             </a>
                         {/if}
                         {foreach $product.images as $image}
-                            <a class="elevate-zoom-thumbnail thumbnail{if $image@first && empty($video)} active{/if}" href="#" 
+                            <a id="product-image-{$image.id}" class="elevate-zoom-thumbnail thumbnail{if $image@first && empty($video)} active{/if}" href="#" 
                                data-zoom-image="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '900', false)}" 
                                data-image="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '350', false)}" 
                                title="{$product.name|escape}"> 
