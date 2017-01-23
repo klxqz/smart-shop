@@ -346,7 +346,7 @@ $(document).ready(function () {
         var next = current.next();
         if (next.length) {
             win.lazyLoad({
-                container: '#content',
+                container: '.products-category',
                 load: function () {
                     win.lazyLoad('sleep');
 
