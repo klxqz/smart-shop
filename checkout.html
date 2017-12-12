@@ -38,12 +38,14 @@
                                                                 if ($("input[name='user_type']:checked").val() == '1') {
                                                                     $("#login-form input").removeAttr('disabled');
                                                                     $(this).closest('div.auth').next(".checkout-step-content").hide();
+                                                                    $(this).closest('div.auth').next(".checkout-step-content").find('input').attr('disabled', 'disabled');
                                                                     $("button").hide();
                                                                     $("#login-form").show();
                                                                 } else {
                                                                     $("#login-form input").attr('disabled', 'disabled');
                                                                     $("#login-form").hide();
                                                                     $(this).closest('div.auth').next(".checkout-step-content").show();
+                                                                    $(this).closest('div.auth').next(".checkout-step-content").find('input').removeAttr('disabled');
                                                                     $("button").show();
                                                                 }
                                                             });

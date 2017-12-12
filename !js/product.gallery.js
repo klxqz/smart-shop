@@ -51,6 +51,7 @@
                 loadingIcon: this.options.wa_parent_theme_url + 'img/icons/progress.gif'
             }).load(function () {
                 $(this).removeAttr('style');
+                $('.zoomWrapper').removeAttr('style');
                 $('.zoomWrapper').css({
                     'width': $(this).width(),
                     'height': $(this).height(),

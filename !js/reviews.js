@@ -1,5 +1,5 @@
 $(function () {
-    $(document).on('js_loaded', function () {
+    $(document).on('ready', function () {
         /**
          * Hotkey combinations
          * {Object}

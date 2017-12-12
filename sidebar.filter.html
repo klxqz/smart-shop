@@ -17,7 +17,7 @@
                         {$c = $wa->shop->currency(true)}
                         <div class="option_box">
                             <div class="option_name{if in_array($fid, $filter_collapsible)} hided{/if}" data-filter="{$fid}">[`Price`] ({$c.sign})</div>
-                            <div data-min="{floor($filter.min)}" data-max="{ceil($filter.max)}" data-name-min="price_min" data-name-max="price_max" class="price_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
+                            <div data-min="{floor($filter.min)}" data-max="{ceil($filter.max)}" data-name-min="price_min" data-name-max="price_max" class="range_slider collapsible"{if in_array($fid,$filter_collapsible)} style="display: none;"{/if}>
                                 <input class="price_limit" type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
                                 <label> - </label>
                                 <input class="price_limit" type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
@@ -59,7 +59,7 @@
                                         </li>
                                     </ul>
                                 {elseif isset($filter.min)}
-                                    <div data-min="{$filter.min}" data-max="{$filter.max}" data-name-min="{$filter.code}[min]" data-name-max="{$filter.code}[max]" class="price_slider">
+                                    <div data-min="{$filter.min}" data-max="{$filter.max}" data-name-min="{$filter.code}[min]" data-name-max="{$filter.code}[max]" class="range_slider">
                                         <input class="price_limit" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
                                         <label> - </label>
                                         <input class="price_limit" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>

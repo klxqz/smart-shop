@@ -80,12 +80,12 @@ function initWishlist() {
 }
 
 function initRangeSlider() {
-    $('.price_slider').each(function () {
+    $('.range_slider').each(function () {
         if (!$(this).find('.slider-range').length) {
             var self = $(this);
             var slider_range = $('<div class="slider-range"></div>').appendTo(self);
-            var min_input = $('input[name="' + $(this).data('name-min') + '"]');
-            var max_input = $('input[name="' + $(this).data('name-max') + '"]');
+            var min_input = $(this).find('input[name="' + $(this).data('name-min') + '"]');
+            var max_input = $(this).find('input[name="' + $(this).data('name-max') + '"]');
             slider_range.slider({
                 range: true,
                 min: self.data('min'),
@@ -196,7 +196,7 @@ $(document).ready(function () {
     });
 
     $('.filters.ajax input').change(function () {
-        var f = $('.filters.ajax');
+        var f = $(this).closest('.filters.ajax');
         var url = '?' + f.serialize();
         $('.products-category .product-thumb').append('<div class="loadmask"></div>');
 
@@ -207,6 +207,8 @@ $(document).ready(function () {
                 effect: "fadeIn"
             });
             $('.pagination-block').html(tmp.find('.pagination-block').html());
+            $('#input-sort').html(tmp.find('#input-sort').html());
+            initLazyLoad();
             if (localStorage.getItem('display') == 'list') {
                 $('#list-view').trigger('click');
             } else {
@@ -299,6 +301,7 @@ $(document).ready(function () {
                         var tpl_data = {
                             url: info.data('url'),
                             name: info.data('name'),
+                            truncate_name: info.data('truncate-name'),
                             img: info.data('img'),
                             price: info.data('price'),
                             quantity: quantity,
@@ -323,86 +326,91 @@ $(document).ready(function () {
         return false;
     });
 
-    //LAZYLOADING
-    if ($.fn.lazyLoad) {
 
-        var paging = $('.lazyloading-paging');
-        if (!paging.length) {
-            return;
-        }
-        // check need to initialize lazy-loading
-        var current = paging.find('li.selected');
-        if (current.children('a').text() != '1') {
-            return;
-        }
-        paging.hide();
-        var loading_str = paging.data('loading-str') || 'Loading...';
-        var win = $(window);
+    function initLazyLoad() {
+        //LAZYLOADING
+        if ($.fn.lazyLoad) {
 
-        // prevent previous launched lazy-loading
-        win.lazyLoad('stop');
+            var paging = $('.lazyloading-paging');
+            if (!paging.length) {
+                return;
+            }
+            // check need to initialize lazy-loading
+            var current = paging.find('li.selected');
+            if (current.children('a').text() != '1') {
+                return;
+            }
+            paging.hide();
+            var loading_str = paging.data('loading-str') || 'Loading...';
+            var win = $(window);
 
-        // check need to initialize lazy-loading
-        var next = current.next();
-        if (next.length) {
-            win.lazyLoad({
-                container: '.products-category',
-                load: function () {
-                    win.lazyLoad('sleep');
+            // prevent previous launched lazy-loading
+            win.lazyLoad('stop');
 
-                    var paging = $('.lazyloading-paging').hide();
+            // check need to initialize lazy-loading
+            var next = current.next();
+            if (next.length) {
+                win.lazyLoad({
+                    container: '.products-category',
+                    load: function () {
+                        win.lazyLoad('sleep');
 
-                    // determine actual current and next item for getting actual url
-                    var current = paging.find('li.selected');
-                    var next = current.next();
-                    var url = next.find('a').attr('href');
-                    if (!url) {
-                        win.lazyLoad('stop');
-                        return;
-                    }
+                        var paging = $('.lazyloading-paging').hide();
 
-                    var product_list = $('.products-category');
-                    var loading = paging.parent().find('.loading').parent();
-                    if (!loading.length) {
-                        loading = $('<div><i class="icon16 loading"></i>' + loading_str + '</div>').insertBefore(paging);
-                    }
-
-                    loading.show();
-                    $.get(url, function (html) {
-                        var tmp = $('<div></div>').html(html);
-                        if ($.Retina) {
-                            tmp.find('.product-list img').retina();
-                        }
-                        if (img_lazyload) {
-                            tmp.find('.product-list img[data-original]').lazyload({
-                                effect: "fadeIn"
-                            });
-                        }
-                        product_list.append(tmp.find('.products-category').children());
-                        if (localStorage.getItem('display') == 'list') {
-                            $('#list-view').trigger('click');
-                        } else {
-                            $('#grid-view').trigger('click');
-                        }
-                        var tmp_paging = tmp.find('.lazyloading-paging').hide();
-                        paging.replaceWith(tmp_paging);
-                        paging = tmp_paging;
-
-                        // check need to stop lazy-loading
+                        // determine actual current and next item for getting actual url
                         var current = paging.find('li.selected');
                         var next = current.next();
-                        if (next.length) {
-                            win.lazyLoad('wake');
-                        } else {
+                        var url = next.find('a').attr('href');
+                        if (!url) {
                             win.lazyLoad('stop');
+                            return;
                         }
 
-                        loading.hide();
-                        tmp.remove();
-                    });
-                }
-            });
-        }
+                        var product_list = $('.products-category');
+                        var loading = paging.parent().find('.loading').parent();
+                        if (!loading.length) {
+                            loading = $('<div><i class="icon16 loading"></i>' + loading_str + '</div>').insertBefore(paging);
+                        }
 
+                        loading.show();
+                        $.get(url, function (html) {
+                            var tmp = $('<div></div>').html(html);
+                            if ($.Retina) {
+                                tmp.find('.product-list img').retina();
+                            }
+                            if (img_lazyload) {
+                                tmp.find('.product-list img[data-original]').lazyload({
+                                    effect: "fadeIn"
+                                });
+                            }
+                            product_list.append(tmp.find('.products-category').children());
+                            if (localStorage.getItem('display') == 'list') {
+                                $('#list-view').trigger('click');
+                            } else {
+                                $('#grid-view').trigger('click');
+                            }
+                            var tmp_paging = tmp.find('.lazyloading-paging').hide();
+                            paging.replaceWith(tmp_paging);
+                            paging = tmp_paging;
+
+                            // check need to stop lazy-loading
+                            var current = paging.find('li.selected');
+                            var next = current.next();
+                            if (next.length) {
+                                win.lazyLoad('wake');
+                            } else {
+                                win.lazyLoad('stop');
+                            }
+
+                            loading.hide();
+                            tmp.remove();
+                        });
+                    }
+                });
+            }
+
+        }
     }
+    initLazyLoad();
+
 });
