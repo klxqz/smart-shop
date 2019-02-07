@@ -27,7 +27,7 @@
         {$data_active = waRequest::get()}
         {$data['sort'] = $sort}
         {$data_active['sort'] = $sort}
-        {if $sort == $active_sort} 
+        {if $sort == $active_sort}
             {if waRequest::get('order') == 'asc'}
                 {$data['order'] = 'desc'}
                 {$data_active['order'] = 'asc'}
@@ -49,14 +49,14 @@
             {/if}
         {/if}
         {if $active_sort == $sort}
-            <option style="display: none;" value="?{http_build_query($data_active)}" {if $active_sort == $sort}selected="selected"{/if}>{$name} {if $active_sort == $sort}{if $data_active['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
+            <option style="display: none;" value="?{http_build_query($data_active)}"
+                    {if $active_sort == $sort}selected="selected"{/if}>{$name} {if $active_sort == $sort}{if $data_active['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
         {/if}
         <option value="?{http_build_query($data)}">{$name} {if $active_sort == $sort}{if $data['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
     {/strip}
 {/function}
 {strip}
     <h1>{$category.name}</h1>
-
     <!-- plugin hook: 'frontend_category' -->
     {* @event frontend_category.%plugin_id% *}
     {foreach $frontend_category as $_}
@@ -77,17 +77,16 @@
                     {if $theme_settings.category_image_plugin}
                         <a href="{$sc.url}">
                             {if $theme_settings.category_image_plugin == 'logocategory' && class_exists(shopLogocategoryPlugin) && shopLogocategoryPlugin::getImgUrl($sc.id)}
-                                <img src="{shopLogocategoryPlugin::getImgUrl($sc.id)}" alt="{$sc.name|escape}" />
+                                <img src="{shopLogocategoryPlugin::getImgUrl($sc.id)}" alt="{$sc.name|escape}"/>
                             {else}
-                                <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}" />
+                                <img src="{$wa_theme_url}img/dummy96.png" alt="{$sc.name|escape}"/>
                             {/if}
                         </a>
                     {/if}
-                    <a href="{$sc.url}">{$sc.name}</a> 
+                    <a href="{$sc.url}">{$sc.name}</a>
                 </div>
             {/foreach}
         </div>
-
         <script type="text/javascript">
             $(function () {
                 $(document).ready(function () {
@@ -114,81 +113,83 @@
             });
         </script>
     {/if}
-
-    {if $category.subcategories}
-        <div class="product-filter">
-            <div class="row">
-                <div class="col-md-4 col-sm-5">
-                    <div class="btn-group">
-                        <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="[`List`]"><i class="fa fa-th-list"></i></button>
-                        <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="[`Grid`]"><i class="fa fa-th"></i></button>
-                    </div>
-                    {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
-                    {$compare = array_diff($compare,[0])}
-                    {if !empty($compare)}
-                        {$compare_url = $wa->getUrl('/frontend/compare', ['id' => implode(',', $compare) ])}
-                    {else}
-                        {$compare_url = $wa->getUrl('/frontend/compare')}
-                    {/if}
-                    <a href="{$compare_url}" class="compare-total">[`Compare products`] (<span class="count">{count($compare)}</span>)</a> 
+    <div class="product-filter">
+        <div class="row">
+            <div class="col-md-4 col-sm-5">
+                <div class="btn-group">
+                    <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="[`List`]">
+                        <i class="fa fa-th-list"></i></button>
+                    <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="[`Grid`]">
+                        <i class="fa fa-th"></i></button>
                 </div>
+                {$compare = waRequest::cookie('shop_compare', array(), waRequest::TYPE_ARRAY_INT)}
+                {$compare = array_diff($compare,[0])}
+                {if !empty($compare)}
+                    {$compare_url = $wa->getUrl('/frontend/compare', ['id' => implode(',', $compare) ])}
+                {else}
+                    {$compare_url = $wa->getUrl('/frontend/compare')}
+                {/if}
+                <a href="{$compare_url}" class="compare-total">[`Compare products`] (<span
+                            class="count">{count($compare)}</span>)</a>
+            </div>
 
-                {$sorting=!empty($category.params.enable_sorting)}
-                <div class="sort-by-label col-sm-2 text-right">
-                    {if !empty($sorting)}
-                        <label class="control-label" for="input-sort">[`Sort by`]:</label>
+            {$sorting=!empty($category.params.enable_sorting)}
+            <div class="sort-by-label col-sm-2 text-right">
+                {if !empty($sorting)}
+                    <label class="control-label" for="input-sort">[`Sort by`]:</label>
+                {/if}
+            </div>
+            <div class="col-md-3 col-sm-5 text-right">
+                {if !empty($sorting)}
+
+                    {$active_order = null}
+                    {if $category.sort_products}
+                        {$sort = explode(' ', $category.sort_products)}
+                        {$active_order = $sort[1]}
                     {/if}
-                </div>
-                <div class="col-md-3 col-sm-5 text-right">
-                    {if !empty($sorting)}
 
-                        {$active_order = null}
-                        {if $category.sort_products}
-                            {$sort = explode(' ', $category.sort_products)}
-                            {$active_order = $sort[1]}
+                    {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
+                    {if !isset($active_sort)}
+                        {$active_sort = $wa->get('sort', 'create_datetime')}
+                    {/if}
+                    <select id="input-sort" class="form-control col-sm-3">
+                        {if !empty($category) && !$category.sort_products}
+                            <option value="{$wa->currentUrl(0, 1)}" {if !$active_sort} selected="selected"{/if} >[`New &
+                                Popular`]
+                            </option>
                         {/if}
-
-                        {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
-                        {if !isset($active_sort)}
-                            {$active_sort = $wa->get('sort', 'create_datetime')}
-                        {/if}
-                        <select id="input-sort" class="form-control col-sm-3">
-                            {if !empty($category) && !$category.sort_products}
-                                <option value="{$wa->currentUrl(0, 1)}" {if !$active_sort} selected="selected"{/if} >[`New & Popular`]</option>
+                        {foreach $sort_fields as $sort => $name}
+                            {$params = ['sort' => $sort, 'name' => $name, 'active_sort' => $active_sort, 'active_order' => $active_order]}
+                            {sortOption $params}
+                            {if $wa->get('sort') == $sort}
+                                {$wa->title( $wa->title()|cat:' — '|cat:$name)}
                             {/if}
-                            {foreach $sort_fields as $sort => $name}
-                                {$params = ['sort' => $sort, 'name' => $name, 'active_sort' => $active_sort, 'active_order' => $active_order]}
-                                {sortOption $params}
-                                {if $wa->get('sort') == $sort}
-                                    {$wa->title( $wa->title()|cat:' — '|cat:$name)}
-                                {/if}
-                            {/foreach}
-                        </select>
-                    {/if}
-                </div>
-
-                {$products_pers = explode(',', $theme_settings.products_pers)}
-                <div class="show-by-label col-sm-1 text-right">
-                    <label class="control-label" for="input-limit">[`Show`]:</label>
-                </div>
-                <div class="col-sm-2 text-right">
-                    {if !empty($smarty.cookies.products_per_page)}
-                        {$products_per_page = $smarty.cookies.products_per_page}
-                    {else}
-                        {$products_per_page = 50}
-                    {/if}
-                    <select id="input-limit" class="form-control">
-                        {foreach $products_pers as $products_per}
-                            <option value="{$products_per}" {if $products_per_page  == $products_per}selected="selected"{/if} >{$products_per}</option>
                         {/foreach}
                     </select>
-                </div>
+                {/if}
+            </div>
+
+            {$products_pers = explode(',', $theme_settings.products_pers)}
+            <div class="show-by-label col-sm-1 text-right">
+                <label class="control-label" for="input-limit">[`Show`]:</label>
+            </div>
+            <div class="col-sm-2 text-right">
+                {if !empty($smarty.cookies.products_per_page)}
+                    {$products_per_page = $smarty.cookies.products_per_page}
+                {else}
+                    {$products_per_page = 50}
+                {/if}
+                <select id="input-limit" class="form-control">
+                    {foreach $products_pers as $products_per}
+                        <option value="{$products_per}"
+                                {if $products_per_page  == $products_per}selected="selected"{/if} >{$products_per}</option>
+                    {/foreach}
+                </select>
             </div>
         </div>
-        <br />
-        {include file="`$wa_active_theme_path`/sidebar.filter.html" show=true}
-    {/if}
-
+    </div>
+    <br/>
+    {include file="`$wa_active_theme_path`/sidebar.filter.html" show=true}
     <div class="row products-category">
         {if !$products}
             {if !empty($filters)}
@@ -202,7 +203,8 @@
     </div>
     <div class="row">
         <div class="col-sm-6 text-left"></div>
-        <div class="col-sm-6 text-right pagination-block{if $theme_settings.lazyloading} lazyloading-paging{/if}" data-loading-str="[`Loading...`]">
+        <div class="col-sm-6 text-right pagination-block{if $theme_settings.lazyloading} lazyloading-paging{/if}"
+             data-loading-str="[`Loading...`]">
             {wa_pagination total=$pages_count attrs=['class' => "pagination"] next = '<i class="fa fa-chevron-right"></i>' prev = '<i class="fa fa-chevron-left"></i> '}
         </div>
     </div>
@@ -219,8 +221,8 @@
                         $(".btn-group").find("#grid-view").removeClass("selected");
                     });
                     $(document).on('click', '#grid-view', function (e) {
-            {$n = $theme_settings.number_products_in_row}
-            {if $n == 5}
+                        {$n = $theme_settings.number_products_in_row}
+                        {if $n == 5}
                         $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-5ths col-md-5ths col-sm-3 col-xs-12');
                         $(window).resize(function () {
                             $screensize = $(window).width();
@@ -241,7 +243,7 @@
                             }
                         });
                         $(window).resize();
-            {elseif $n == 4}
+                        {elseif $n == 4}
                         $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-3 col-xs-12');
                         $(window).resize(function () {
                             $screensize = $(window).width();
@@ -262,7 +264,7 @@
                             }
                         });
                         $(window).resize();
-            {elseif $n == 3}
+                        {elseif $n == 3}
                         $('#content .product-layout').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-4 col-xs-12');
                         $(window).resize(function () {
                             $screensize = $(window).width();
@@ -283,7 +285,7 @@
                             }
                         });
                         $(window).resize();
-            {/if}
+                        {/if}
                         localStorage.setItem('display', 'grid');
                         $('.btn-group').find('#grid-view').addClass('selected');
                         $('.btn-group').find('#list-view').removeClass('selected');

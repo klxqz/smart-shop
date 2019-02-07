@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.3.1">
+<theme id="smart" system="0" vendor="985310" author="wa-plugins.ru" app="shop" parent_theme_id="site:smart" version="1.3.3">
     <name locale="en_US">Smart</name>
     <name locale="ru_RU">Smart</name>
     <files>
@@ -87,6 +87,10 @@
         <file path="cart.html">
             <description locale="en_US">Shopping cart page</description>
             <description locale="ru_RU">Страница с товарами корзины</description>
+        </file>
+        <file path="order.html">
+            <description locale="en_US">Single page ordering</description>
+            <description locale="ru_RU">Одностраничное оформление заказа</description>
         </file>
         <file path="category.html">
             <description locale="en_US">Wrapper for a category page</description>

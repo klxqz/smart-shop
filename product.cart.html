@@ -219,8 +219,10 @@
                 </div>
                 <div>
                     <button data-id="{$product.id}" class="wishlist-add wishlist" type="button"><i class="fa fa-heart"></i> [`Add to Wish List`]</button>
-                    <br>
-                    <button data-id="{$product.id}"  class="compare-add wishlist" type="button"><i class="fa fa-exchange"></i> [`Compare this Product`]</button>
+                    {if $theme_settings.products_add_compare_button}
+                        <br>
+                        <button data-id="{$product.id}"  class="compare-add wishlist" type="button"><i class="fa fa-exchange"></i> [`Compare this Product`]</button>
+                    {/if}
                 </div>
             </div>
             {if $wa->get('cart')}
