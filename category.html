@@ -50,9 +50,13 @@
         {/if}
         {if $active_sort == $sort}
             <option style="display: none;" value="?{http_build_query($data_active)}"
-                    {if $active_sort == $sort}selected="selected"{/if}>{$name} {if $active_sort == $sort}{if $data_active['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
+                    {if $active_sort == $sort}selected="selected"{/if}>
+                {$name} {if $active_sort == $sort}{if $data_active['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}
+            </option>
         {/if}
-        <option value="?{http_build_query($data)}">{$name} {if $active_sort == $sort}{if $data['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}</option>
+        <option value="?{http_build_query($data)}">
+            {$name} {if $active_sort == $sort}{if $data['order'] == 'asc'}&uarr;{else}&darr;{/if}{/if}
+        </option>
     {/strip}
 {/function}
 {strip}
@@ -148,14 +152,19 @@
                         {$active_order = $sort[1]}
                     {/if}
 
-                    {$sort_fields = ['rating' => '[`Customer rating`]', 'total_sales' => '[`Bestsellers`]', 'price' => '[`Price`]', 'name' => '[`Name`]', 'create_datetime'=>'[`Date added`]', 'stock' => '[`In stock`]']}
+                    {$sort_fields = [   'rating' => '[`Customer rating`]',
+                    'total_sales' => '[`Bestsellers`]',
+                    'price' => '[`Price`]',
+                    'name' => '[`Name`]',
+                    'create_datetime'=>'[`Date added`]',
+                    'stock' => '[`In stock`]']}
                     {if !isset($active_sort)}
                         {$active_sort = $wa->get('sort', 'create_datetime')}
                     {/if}
                     <select id="input-sort" class="form-control col-sm-3">
                         {if !empty($category) && !$category.sort_products}
-                            <option value="{$wa->currentUrl(0, 1)}" {if !$active_sort} selected="selected"{/if} >[`New &
-                                Popular`]
+                            <option value="{$wa->currentUrl(0, 1)}" {if !$active_sort} selected="selected"{/if} >
+                                [`New & Popular`]
                             </option>
                         {/if}
                         {foreach $sort_fields as $sort => $name}
